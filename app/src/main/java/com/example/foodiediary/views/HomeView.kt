@@ -6,6 +6,6 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun HomeView(modifier: Modifier = Modifier) {
-    Text("Hello, World!")
+    Text("Hello, World! :)")
 }
 
