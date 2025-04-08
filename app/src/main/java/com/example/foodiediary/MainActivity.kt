@@ -4,11 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -27,8 +32,21 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.PureBlack
 import com.example.foodiediary.ui.theme.PurpleGrey40
-import com.example.foodiediary.views.HomeView
 import kotlinx.coroutines.launch
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
+import com.example.foodiediary.ui.theme.AppleRed
+import com.example.foodiediary.ui.theme.GrassGreen
+import com.example.foodiediary.ui.theme.LightGreen
+import com.example.foodiediary.ui.theme.PureWhite
+import com.example.foodiediary.ui.theme.YellowStone
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +74,8 @@ fun HomeScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
+        modifier = Modifier
+            .background(brush = Brush.verticalGradient(colors = listOf(AppleRed, LightGreen, GrassGreen))),
         drawerState = drawerState,
         drawerContent = {
             Column(modifier = Modifier
@@ -96,17 +116,42 @@ fun HomeScreen(navController: NavController) {
             }
         },
         content = {
-            Column {
-                Text("Home Screen")
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = {
-                    scope.launch {
-                        drawerState.open()
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Row {
+                    Column {
+                        IconButton(modifier = Modifier.padding(15.dp), onClick = {
+                            scope.launch {
+                                drawerState.open()
+                            }
+                        }) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        }
                     }
-                }) {
-                    Text("Open Navigation")
+                    Spacer(modifier = Modifier.width(30.dp))
+                    Column(modifier = Modifier
+                            .padding(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("Home Screen")
+                    }
                 }
-                // You can keep other content of your home screen here
+                Column() {
+                    Box(modifier = Modifier
+                        .background(PureWhite)
+                        .padding(20.dp)
+                        )
+                     {
+                            Text("Item 1")
+                        }
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Box(modifier = Modifier
+                        .background(PureWhite)
+                        .padding(20.dp)
+                        ) {
+                            Text("Item 2")
+                        }
+                        }
+
             }
         }
     )
@@ -121,12 +166,14 @@ fun Page1Screen() {
 fun Page2Screen() {
     Text("This is Page 2")
 }
-
 // Create more Composable functions for additional pages
+
+
 @Preview(showBackground = true)
 @Composable
 fun MainViewPreview() {
     FoodieDiaryTheme {
-        HomeView()
+        AppNavigation()
+
     }
 }
