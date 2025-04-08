@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -38,15 +36,11 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
-import com.example.foodiediary.ui.theme.YellowStone
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,8 +110,8 @@ fun HomeScreen(navController: NavController) {
             }
         },
         content = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Row {
+            Column() {
+                Row() {
                     Column {
                         IconButton(modifier = Modifier.padding(15.dp), onClick = {
                             scope.launch {
@@ -127,30 +121,65 @@ fun HomeScreen(navController: NavController) {
                             Icon(Icons.Filled.Menu, contentDescription = "Menu")
                         }
                     }
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
                     Column(modifier = Modifier
                             .padding(20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
                     ) {
                         Text("Home Screen")
                     }
                 }
-                Column() {
+                Spacer(modifier = Modifier.height(30.dp))
+                Column(modifier = Modifier
+                    .width(500.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ) {
                     Box(modifier = Modifier
                         .background(PureWhite)
                         .padding(20.dp)
+                        .width(200.dp)
+                        .height(100.dp)
                         )
                      {
-                            Text("Item 1")
+                            Text("Proteins, Fats, Carbs, Calories")
                         }
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
                     Box(modifier = Modifier
                         .background(PureWhite)
                         .padding(20.dp)
+                        .width(200.dp)
+                        .height(100.dp)
                         ) {
-                            Text("Item 2")
+                            Text("Water intake")
                         }
-                        }
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Box(modifier = Modifier
+                        .background(PureWhite)
+                        .padding(20.dp)
+                        .width(200.dp)
+                        .height(30.dp)
+                    ) {
+                        Text("Scan items button")
+                    }
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Box(modifier = Modifier
+                        .background(PureWhite)
+                        .padding(20.dp)
+                        .width(200.dp)
+                        .height(30.dp)
+                    ) {
+                        Text("History")
+                    }
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Box(modifier = Modifier
+                        .background(PureWhite)
+                        .padding(20.dp)
+                        .width(200.dp)
+                        .height(30.dp)
+                    ) {
+                        Text("Favorites")
+                    }
+                }
 
             }
         }
