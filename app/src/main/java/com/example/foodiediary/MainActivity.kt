@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +35,7 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import kotlinx.coroutines.launch
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
@@ -45,6 +47,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
 import com.example.foodiediary.ui.theme.ShyGreen
+import com.example.foodiediary.views.Prelude
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +69,12 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeScreenContent()
+                HomeScreenContent(navController)
+            }
+        }
+        composable("cameraView") {
+            ScreenWithDrawer(navController, currentRoute) {
+                Prelude()
             }
         }
         composable("page1") {
@@ -148,9 +156,11 @@ fun DrawerContent(
             .background(ShyGreen)
             .padding(16.dp)
             .clip(RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp))
+            .fillMaxHeight()
     ) {
         // Navigation items
         DrawerItem("Home", "home", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Scan EAN", "cameraView", currentRoute, navController, onCloseDrawer)
         DrawerItem("Page 1", "page1", currentRoute, navController, onCloseDrawer)
         DrawerItem("Page 2", "page2", currentRoute, navController, onCloseDrawer)
         DrawerItem("Page 3", "page3", currentRoute, navController, onCloseDrawer)
@@ -178,7 +188,9 @@ fun DrawerItem(
 }
 
 @Composable
-fun HomeScreenContent() {
+fun HomeScreenContent(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -212,13 +224,8 @@ fun HomeScreenContent() {
                     Text("Water intake")
                 }
                 Spacer(modifier = Modifier.height(30.dp))
-                Box(modifier = Modifier
-                    .background(PureWhite)
-                    .padding(20.dp)
-                    .width(200.dp)
-                    .height(30.dp)
-                ) {
-                    Text("Scan items button")
+                Button(onClick = { navController.navigate("cameraView") }) {
+                    Text("Scan Barcode (EAN)")
                 }
                 Spacer(modifier = Modifier.height(30.dp))
                 Box(modifier = Modifier
