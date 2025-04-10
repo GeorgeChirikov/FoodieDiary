@@ -268,7 +268,7 @@ fun Page2ScreenContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Page 1")
+        Text("This is Page 2")
     }
 }
 
@@ -282,7 +282,7 @@ fun Page3ScreenContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Page 1")
+        Text("This is Page 3")
     }
 }
 
