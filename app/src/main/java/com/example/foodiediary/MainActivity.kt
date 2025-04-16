@@ -11,13 +11,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
 import com.example.foodiediary.views.Prelude
-import com.example.foodiediary.viewmodels.ScreenWithDrawer
-import com.example.foodiediary.viewmodels.HomeViewmodel
-import com.example.foodiediary.viewmodels.SearchViewmodel
-import com.example.foodiediary.viewmodels.FavoritesViewmodel
-import com.example.foodiediary.viewmodels.LoginViewmodel
-import com.example.foodiediary.viewmodels.SettingsViewmodel
-import com.example.foodiediary.viewmodels.SignupViewmodel
+import com.example.foodiediary.views.ScreenWithDrawer
+import com.example.foodiediary.views.HomeViewmodel
+import com.example.foodiediary.views.SearchViewmodel
+import com.example.foodiediary.views.FavoritesViewmodel
+import com.example.foodiediary.views.LoginViewmodel
+import com.example.foodiediary.views.SettingsViewmodel
+import com.example.foodiediary.views.SignupView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ fun AppNavigation() {
         }
         composable("signupView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SignupViewmodel(navController)
+                SignupView(navController)
             }
         }
         // ... other screens ...

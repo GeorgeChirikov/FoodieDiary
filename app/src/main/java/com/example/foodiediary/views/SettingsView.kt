@@ -1,4 +1,4 @@
-package com.example.foodiediary.viewmodels
+package com.example.foodiediary.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun FavoritesViewmodel() {
+fun SettingsViewmodel() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,6 +25,6 @@ fun FavoritesViewmodel() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Favorites page")
+        Text("This is Settings page")
     }
 }

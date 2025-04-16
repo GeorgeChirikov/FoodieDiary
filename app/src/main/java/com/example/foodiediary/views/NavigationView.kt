@@ -1,4 +1,4 @@
-package com.example.foodiediary.viewmodels
+package com.example.foodiediary.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
