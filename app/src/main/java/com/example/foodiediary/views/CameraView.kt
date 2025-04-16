@@ -50,7 +50,6 @@ fun CameraView(modifier: Modifier = Modifier) {
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
     cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-    var ean13code by remember { mutableStateOf<String?>(null) }
     var buttonText by remember { mutableStateOf("Scan EAN") }
     var ean13Result by remember { mutableStateOf<String>("No EAN Code") }
     var isScanning by remember { mutableStateOf(false) }
@@ -62,9 +61,8 @@ fun CameraView(modifier: Modifier = Modifier) {
         viewmodel.onScanEAN(
             imageProxy = imageProxy,
             onResult = { ean13Code ->
-                Log.d("CameraView", "EAN 13 code returned: $ean13Code")
-                ean13code = ean13Code
                 if (ean13Code != null) {
+                    Log.d("CameraView", "EAN 13 code returned: $ean13Code")
                     cameraController.clearImageAnalysisAnalyzer()
                     ean13Result = "EAN 13 code: $ean13Code"
                     buttonText = "Scan EAN"
