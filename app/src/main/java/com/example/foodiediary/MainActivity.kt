@@ -17,6 +17,7 @@ import com.example.foodiediary.viewmodels.SearchViewmodel
 import com.example.foodiediary.viewmodels.FavoritesViewmodel
 import com.example.foodiediary.viewmodels.LoginViewmodel
 import com.example.foodiediary.viewmodels.SettingsViewmodel
+import com.example.foodiediary.viewmodels.SignupViewmodel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +64,12 @@ fun AppNavigation() {
         }
         composable("loginView") {
             ScreenWithDrawer(navController, currentRoute) {
-                LoginViewmodel()
+                LoginViewmodel(navController)
+            }
+        }
+        composable("signupView") {
+            ScreenWithDrawer(navController, currentRoute) {
+                SignupViewmodel(navController)
             }
         }
         // ... other screens ...

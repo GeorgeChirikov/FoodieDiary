@@ -1,4 +1,6 @@
 package com.example.foodiediary.viewmodels
 
-class SignupViewmodel {
+import androidx.navigation.NavController
+
+class SignupViewmodel(navController: NavController) {
 }
