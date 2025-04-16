@@ -23,7 +23,7 @@ import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
 
 @Composable
-fun HomeScreenContent(
+fun HomeViewmodel(
     navController: NavController
 ) {
     Column(

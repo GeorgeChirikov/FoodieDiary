@@ -15,7 +15,7 @@ import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.ShyGreen
 
 @Composable
-fun Page1ScreenContent() {
+fun SearchViewmodel() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -24,6 +24,6 @@ fun Page1ScreenContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Page 1")
+        Text("This is Search page")
     }
 }

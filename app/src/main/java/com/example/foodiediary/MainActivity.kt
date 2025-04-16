@@ -12,10 +12,11 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.viewmodels.ScreenWithDrawer
-import com.example.foodiediary.viewmodels.HomeScreenContent
-import com.example.foodiediary.viewmodels.Page1ScreenContent
-import com.example.foodiediary.viewmodels.Page2ScreenContent
-import com.example.foodiediary.viewmodels.Page3ScreenContent
+import com.example.foodiediary.viewmodels.HomeViewmodel
+import com.example.foodiediary.viewmodels.SearchViewmodel
+import com.example.foodiediary.viewmodels.FavoritesViewmodel
+import com.example.foodiediary.viewmodels.LoginViewmodel
+import com.example.foodiediary.viewmodels.SettingsViewmodel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +33,12 @@ fun AppNavigation() {
     val currentRoute = navController.currentBackStackEntryFlow
         .collectAsState(initial = navController.currentBackStackEntry)
         .value?.destination?.route
-        ?: "home" // Default route if null
+        ?: "homeView" // Default route if null
 
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
+    NavHost(navController = navController, startDestination = "homeView") {
+        composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeScreenContent(navController)
+                HomeViewmodel(navController)
             }
         }
         composable("cameraView") {
@@ -45,19 +46,24 @@ fun AppNavigation() {
                 Prelude()
             }
         }
-        composable("page1") {
+        composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Page1ScreenContent()
+                SearchViewmodel()
             }
         }
-        composable("page2") {
+        composable("favoritesView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Page2ScreenContent()
+                FavoritesViewmodel()
             }
         }
-        composable("page3") {
+        composable("settingsView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Page3ScreenContent()
+                SettingsViewmodel()
+            }
+        }
+        composable("loginView") {
+            ScreenWithDrawer(navController, currentRoute) {
+                LoginViewmodel()
             }
         }
         // ... other screens ...

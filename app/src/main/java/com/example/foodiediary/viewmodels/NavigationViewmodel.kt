@@ -93,11 +93,12 @@ fun DrawerContent(
             .fillMaxHeight()
     ) {
         // Navigation items
-        DrawerItem("Home", "home", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Home", "homeView", currentRoute, navController, onCloseDrawer)
         DrawerItem("Scan EAN", "cameraView", currentRoute, navController, onCloseDrawer)
-        DrawerItem("Page 1", "page1", currentRoute, navController, onCloseDrawer)
-        DrawerItem("Page 2", "page2", currentRoute, navController, onCloseDrawer)
-        DrawerItem("Page 3", "page3", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Search", "searchView", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Favorites", "favoritesView", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Settings", "settingsView", currentRoute, navController, onCloseDrawer)
+        DrawerItem("Logout", "loginView", currentRoute, navController, onCloseDrawer)
     }
 }
 

@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun Page2ScreenContent() {
+fun FavoritesViewmodel() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,6 +25,6 @@ fun Page2ScreenContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Page 2")
+        Text("This is Favorites page")
     }
 }

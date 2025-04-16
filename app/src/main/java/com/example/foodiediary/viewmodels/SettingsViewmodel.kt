@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun Page3ScreenContent() {
+fun SettingsViewmodel() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,6 +25,6 @@ fun Page3ScreenContent() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("This is Page 3")
+        Text("This is Settings page")
     }
 }
