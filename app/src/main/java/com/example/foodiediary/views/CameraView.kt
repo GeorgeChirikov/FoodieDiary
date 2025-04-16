@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +36,9 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -49,6 +53,10 @@ fun CameraView(modifier: Modifier = Modifier) {
     var ean13code by remember { mutableStateOf<String?>(null) }
     var buttonText by remember { mutableStateOf("Scan EAN") }
     var ean13Result by remember { mutableStateOf<String>("No EAN Code") }
+    var isScanning by remember { mutableStateOf(false) }
+    val scanningDelay = 10_000L // 10 seconds
+
+    val coroutineScope = rememberCoroutineScope()
 
     val imageAnalyzer = ImageAnalysis.Analyzer { imageProxy ->
         viewmodel.onScanEAN(
@@ -60,16 +68,11 @@ fun CameraView(modifier: Modifier = Modifier) {
                     cameraController.clearImageAnalysisAnalyzer()
                     ean13Result = "EAN 13 code: $ean13Code"
                     buttonText = "Scan EAN"
+                    isScanning = false
                 }
             }
         )
     }
-
-
-    // Pitääköhän tää olla optimisoitu?
-    // Tällä hetkellä analysoi jokaisen kuvan, joka tulee kamerasta
-
-    //cameraController.setImageAnalysisAnalyzer(context.mainExecutor, imageAnalyzer)
 
     Scaffold(modifier = modifier.fillMaxSize()) {
         Box(
@@ -100,20 +103,41 @@ fun CameraView(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .padding(12.dp)
                         .background(
-                            // color in rgb(255, 255, 255, 255)
-                            color = Color(0x8FFFFFFF),
+                            color = Color(0xBFFFFFFF),
                             shape = RoundedCornerShape(8.dp)
                         )
                         .padding(16.dp)
                 )
                 Button(
                     onClick = {
-                        Log.d("CameraView", "Scan EAN button clicked")
-                        buttonText = "Scanning..."
-                        cameraController.setImageAnalysisAnalyzer(
-                            context.mainExecutor,
-                            imageAnalyzer
-                        )
+                        if (!isScanning) {
+                            Log.d("CameraView", "Scan EAN button clicked")
+                            buttonText = "Scanning..."
+                            isScanning = true
+                            cameraController.setImageAnalysisAnalyzer(
+                                context.mainExecutor,
+                                imageAnalyzer
+                            )
+
+                            // Stop scanning after 10 seconds
+                            coroutineScope.launch {
+                                for (i in 1..(scanningDelay/1000).toInt()) {
+                                    delay(1000)
+                                    if (isScanning) {
+                                        buttonText = "Scanning" + ".".repeat(i % 4)
+                                        Log.d("CameraView", "$buttonText $i seconds passed")
+                                    }
+                                }
+                                if (isScanning) {
+                                    cameraController.clearImageAnalysisAnalyzer()
+                                    buttonText = "Scan EAN"
+                                    isScanning = false
+                                    ean13Result = "No EAN Code"
+                                    Log.d("CameraView", "Scanning timeout")
+                                }
+                            }
+                        }
+
                     },
                     modifier = Modifier
                         .padding(16.dp),
