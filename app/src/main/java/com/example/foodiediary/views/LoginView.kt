@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foodiediary.ui.theme.LightGreen
+import com.example.foodiediary.ui.theme.NatureWhite
 import com.example.foodiediary.ui.theme.YellowStone
 
 @Composable
@@ -36,15 +37,17 @@ fun LoginViewmodel(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
-        Text(modifier = Modifier.padding(20.dp), fontSize = 35.sp, text = "Login")
-        Spacer(modifier = Modifier.size(20.dp))
-        Text("Username or Email")
-        TextField(value = "", onValueChange = {})
-        Spacer(modifier = Modifier.size(20.dp))
-        Text("Password")
-        TextField(value = "", onValueChange = {})
-        Spacer(modifier = Modifier.size(20.dp))
-        Button(onClick = { navController.navigate("homeView") }) { Text("Login") }
-        Button(onClick = { navController.navigate("signupView") }) { Text("Don't have an account? Sign up instead") }
+        Column(modifier = Modifier.background(NatureWhite).padding(35.dp)) {
+            Text(modifier = Modifier.padding(20.dp), fontSize = 35.sp, text = "Login")
+            Spacer(modifier = Modifier.size(20.dp))
+            Text("Username or Email")
+            TextField(value = "", onValueChange = {})
+            Spacer(modifier = Modifier.size(20.dp))
+            Text("Password")
+            TextField(value = "", onValueChange = {})
+            Spacer(modifier = Modifier.size(20.dp))
+            Button(onClick = { navController.navigate("homeView") }) { Text("Login") }
+            Button(onClick = { navController.navigate("signupView") }) { Text("Don't have an account? Sign up instead") }
         }
     }
+}
