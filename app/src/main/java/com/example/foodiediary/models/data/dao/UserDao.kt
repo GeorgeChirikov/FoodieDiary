@@ -1,4 +1,4 @@
-package com.example.foodiediary.data.dao
+package com.example.foodiediary.models.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.foodiediary.models.entity.User
+import com.example.foodiediary.models.data.entity.User
 
 @Dao
 interface UserDao {

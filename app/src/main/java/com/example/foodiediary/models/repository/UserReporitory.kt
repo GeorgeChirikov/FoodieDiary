@@ -1,8 +1,8 @@
-package com.example.foodiediary.data.repository
+package com.example.foodiediary.models.repository
 
 import androidx.lifecycle.LiveData
-import com.example.foodiediary.data.dao.UserDao
-import com.example.foodiediary.models.entity.User
+import com.example.foodiediary.models.data.dao.UserDao
+import com.example.foodiediary.models.data.entity.User
 
 class UserRepository(private val userDao: UserDao) {
 
