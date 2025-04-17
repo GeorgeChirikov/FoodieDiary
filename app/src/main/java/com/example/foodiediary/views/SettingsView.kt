@@ -1,4 +1,4 @@
-package com.example.foodiediary.viewmodels
+package com.example.foodiediary.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun SettingsViewmodel() {
+fun SettingsView() {
     Column(
         modifier = Modifier
             .fillMaxSize()

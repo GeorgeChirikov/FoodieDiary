@@ -11,12 +11,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
 import com.example.foodiediary.views.Prelude
-import com.example.foodiediary.viewmodels.ScreenWithDrawer
-import com.example.foodiediary.viewmodels.HomeViewmodel
-import com.example.foodiediary.viewmodels.SearchViewmodel
-import com.example.foodiediary.viewmodels.FavoritesViewmodel
-import com.example.foodiediary.viewmodels.LoginViewmodel
-import com.example.foodiediary.viewmodels.SettingsViewmodel
+import com.example.foodiediary.views.ScreenWithDrawer
+import com.example.foodiediary.views.HomeView
+import com.example.foodiediary.views.SearchView
+import com.example.foodiediary.views.FavoritesView
+import com.example.foodiediary.views.LoginView
+import com.example.foodiediary.views.SettingsView
+import com.example.foodiediary.views.SignupView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "homeView") {
         composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeViewmodel(navController)
+                HomeView(navController)
             }
         }
         composable("cameraView") {
@@ -48,22 +49,27 @@ fun AppNavigation() {
         }
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SearchViewmodel()
+                SearchView()
             }
         }
         composable("favoritesView") {
             ScreenWithDrawer(navController, currentRoute) {
-                FavoritesViewmodel()
+                FavoritesView()
             }
         }
         composable("settingsView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SettingsViewmodel()
+                SettingsView()
             }
         }
         composable("loginView") {
             ScreenWithDrawer(navController, currentRoute) {
-                LoginViewmodel()
+                LoginView(navController)
+            }
+        }
+        composable("signupView") {
+            ScreenWithDrawer(navController, currentRoute) {
+                SignupView(navController)
             }
         }
         // ... other screens ...
