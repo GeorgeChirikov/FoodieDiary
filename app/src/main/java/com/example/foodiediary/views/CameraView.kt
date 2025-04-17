@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.example.foodiediary.viewmodels.CameraViewmodel
+import com.example.foodiediary.viewmodels.CameraViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CameraView(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val viewmodel: CameraViewmodel = viewModel()
+    val viewmodel: CameraViewModel = viewModel()
 
     val cameraController = LifecycleCameraController(context)
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
