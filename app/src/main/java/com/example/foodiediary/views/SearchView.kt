@@ -15,7 +15,7 @@ import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.ShyGreen
 
 @Composable
-fun SearchViewmodel() {
+fun SearchView() {
     Column(
         modifier = Modifier
             .fillMaxSize()

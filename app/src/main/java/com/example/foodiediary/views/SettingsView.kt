@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun SettingsViewmodel() {
+fun SettingsView() {
     Column(
         modifier = Modifier
             .fillMaxSize()

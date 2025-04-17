@@ -21,7 +21,7 @@ import com.example.foodiediary.ui.theme.NatureWhite
 import com.example.foodiediary.ui.theme.YellowStone
 
 @Composable
-fun LoginViewmodel(navController: NavController) {
+fun LoginView(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()

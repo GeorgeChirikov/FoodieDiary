@@ -12,11 +12,11 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
-import com.example.foodiediary.views.HomeViewmodel
-import com.example.foodiediary.views.SearchViewmodel
-import com.example.foodiediary.views.FavoritesViewmodel
-import com.example.foodiediary.views.LoginViewmodel
-import com.example.foodiediary.views.SettingsViewmodel
+import com.example.foodiediary.views.HomeView
+import com.example.foodiediary.views.SearchView
+import com.example.foodiediary.views.FavoritesView
+import com.example.foodiediary.views.LoginView
+import com.example.foodiediary.views.SettingsView
 import com.example.foodiediary.views.SignupView
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +39,7 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "homeView") {
         composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeViewmodel(navController)
+                HomeView(navController)
             }
         }
         composable("cameraView") {
@@ -49,22 +49,22 @@ fun AppNavigation() {
         }
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SearchViewmodel()
+                SearchView()
             }
         }
         composable("favoritesView") {
             ScreenWithDrawer(navController, currentRoute) {
-                FavoritesViewmodel()
+                FavoritesView()
             }
         }
         composable("settingsView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SettingsViewmodel()
+                SettingsView()
             }
         }
         composable("loginView") {
             ScreenWithDrawer(navController, currentRoute) {
-                LoginViewmodel(navController)
+                LoginView(navController)
             }
         }
         composable("signupView") {

@@ -16,7 +16,7 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 
 @Composable
-fun FavoritesViewmodel() {
+fun FavoritesView() {
     Column(
         modifier = Modifier
             .fillMaxSize()
