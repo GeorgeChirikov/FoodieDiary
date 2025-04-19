@@ -30,7 +30,6 @@ import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
 import com.example.foodiediary.viewmodels.DatabaseViewModel
-import com.example.foodiediary.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.Flow
 
 @Composable
