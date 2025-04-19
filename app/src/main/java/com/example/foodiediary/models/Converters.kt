@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import java.sql.Date
 
 class Converters {
+    // Pitää selvittää miten käytetään
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }

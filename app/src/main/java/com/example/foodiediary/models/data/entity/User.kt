@@ -2,7 +2,6 @@ package com.example.foodiediary.models.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Timestamp
 
 @Entity(tableName = "users")
 data class User(
@@ -15,6 +14,6 @@ data class User(
     val weight : Double,
     val height : Double,
     val sex : String,
-    val createdAt: Timestamp = Timestamp(System.currentTimeMillis())
-
+    // Ei toimi
+    //val createdAt: Long = System.currentTimeMillis()
 )

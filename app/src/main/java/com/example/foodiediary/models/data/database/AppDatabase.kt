@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.foodiediary.models.Converters
+import com.example.foodiediary.models.data.dao.ItemDao
 import com.example.foodiediary.models.data.dao.UserDao
 import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.models.data.entity.User
@@ -13,7 +14,11 @@ import com.example.foodiediary.models.data.entity.User
 @Database(entities = [User::class, Item::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract val userDao: UserDao
+    abstract fun userDao(): UserDao
+    abstract fun itemDao(): ItemDao
+
+
+    // Pitää selvittää mitä tekee
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
