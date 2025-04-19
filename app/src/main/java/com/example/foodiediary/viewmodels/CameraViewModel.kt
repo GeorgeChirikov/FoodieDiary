@@ -1,5 +1,6 @@
 package com.example.foodiediary.viewmodels
 
+import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
@@ -17,6 +18,7 @@ class CameraViewModel : ViewModel() {
 
 
 
+
     @OptIn(ExperimentalGetImage::class)
     fun onScanEAN(imageProxy: ImageProxy, onResult: (String?) -> Unit) {
         val mediaImage = imageProxy.image
@@ -26,12 +28,15 @@ class CameraViewModel : ViewModel() {
                 .addOnSuccessListener { barcodes ->
                     val ean13Code = barcodes.firstOrNull()?.displayValue
                     onResult(ean13Code) // Pass the scanned EAN-13 code
+                    //Log.d("CameraViewModel_onSuccess", "EAN 13 code: $ean13Code")
                 }
                 .addOnFailureListener {
                     onResult(null) // Handle failure
+                    Log.d("CameraViewModel_onFailure", "Failed to scan barcode: ${it.message}")
                 }
                 .addOnCompleteListener {
                     imageProxy.close()
+                    //Log.d("CameraViewModel_onComplete", "ImageProxy closed")
                 }
         } else {
             imageProxy.close()

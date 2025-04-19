@@ -1,12 +1,13 @@
-package com.example.foodiediary.data.repository
+package com.example.foodiediary.models.repository
 
 import androidx.lifecycle.LiveData
-import com.example.foodiediary.data.dao.UserDao
-import com.example.foodiediary.models.entity.User
+import com.example.foodiediary.models.data.dao.UserDao
+import com.example.foodiediary.models.data.entity.User
+import kotlinx.coroutines.flow.Flow
 
 class UserRepository(private val userDao: UserDao) {
 
-    val allUsers: LiveData<List<User>> = userDao.getAllUsers()
+    val allUsers: Flow<List<User>> = userDao.getAllUsers()
 
     suspend fun insertUser(user: User) {
         userDao.insertUser(user)
