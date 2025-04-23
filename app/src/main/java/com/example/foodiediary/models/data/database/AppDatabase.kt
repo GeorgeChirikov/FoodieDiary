@@ -29,6 +29,14 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        /*
+            TÄTÄ EI SAA POISTAA.
+            Se on tärkeä ja pysyvä, koska...
+            se varmistaa, että käyttäjän tiedot eivät katoa kun tietokanta päivitetään versiosta 1 versioon 2
+            ja kun päivitetään versiosta 2 versioon 3 (eli MIGRATION_2_3) jos käyttäjällä on vieläkin versio 1 niin
+            MIGRATION_1_2 auttaa käyttäjää siirtämään tiedot versiosta 1 versioon 2 ja sitten
+            MIGRATION_2_3 auttaa käyttäjää siirtämään tiedot versiosta 2 versioon 3
+         */
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Drop the old table users
