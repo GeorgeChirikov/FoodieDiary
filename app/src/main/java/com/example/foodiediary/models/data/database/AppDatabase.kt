@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.foodiediary.models.Converters
 import com.example.foodiediary.models.data.dao.ItemDao
+import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
 
-@Database(entities = [Item::class], version = 1, exportSchema = false)
+@Database(entities = [Item::class, Favorite::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
