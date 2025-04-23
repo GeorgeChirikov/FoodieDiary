@@ -3,19 +3,19 @@ package com.example.foodiediary.viewmodels
 import android.content.Context
 import androidx.room.Room
 import com.example.foodiediary.models.data.database.AppDatabase
+import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
 import kotlinx.coroutines.flow.Flow
 
 // pitääks implementoida ViewModel()
 class DatabaseViewModel(context: Context) {
-    val db = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        "foodie-diary-db"
-    ).build()
+    private val db = AppDatabase.getInstance(context)
 
     val itemDao = db.itemDao()
     val items: Flow<List<Item>> = itemDao.getAllItems()
+    val favoriteDao = db.favoriteDao()
+    // väliaikaisesti itemDao.getAllItems() pitäs olla favoriteDao.getAllFavorites()
+    val favorites: Flow<List<Item>> = itemDao.getAllItems()
 
     suspend fun getItemByEan(ean: Long): Item? {
         return itemDao.getItemByEan(ean)
