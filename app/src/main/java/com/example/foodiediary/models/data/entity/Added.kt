@@ -1,0 +1,12 @@
+package com.example.foodiediary.models.data.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "added")
+data class Added(
+    @PrimaryKey
+    val timeStamp: Long,
+    val ean: Long,
+
+    )
