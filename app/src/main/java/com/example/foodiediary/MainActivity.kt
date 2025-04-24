@@ -15,9 +15,8 @@ import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
 import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
-import com.example.foodiediary.views.LoginView
-import com.example.foodiediary.views.SettingsView
-import com.example.foodiediary.views.SignupView
+import com.example.foodiediary.views.HistoryView
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +56,12 @@ fun AppNavigation() {
                 FavoritesView()
             }
         }
+        composable("historyView") {
+            ScreenWithDrawer(navController, currentRoute) {
+                HistoryView(navController)
+            }
+        }
+        /*
         composable("settingsView") {
             ScreenWithDrawer(navController, currentRoute) {
                 SettingsView()
@@ -67,11 +72,13 @@ fun AppNavigation() {
                 LoginView(navController)
             }
         }
+
         composable("signupView") {
             ScreenWithDrawer(navController, currentRoute) {
                 SignupView(navController)
             }
         }
+        */
         // ... other screens ...
     }
 }
