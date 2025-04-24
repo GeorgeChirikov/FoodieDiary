@@ -86,8 +86,7 @@ fun CameraView(modifier: Modifier = Modifier) {
                                     carbohydrates = 20.0,
                                     sugar = 10.0,
                                     fiber = 5.0,
-                                    salt = 0.5,
-                                    review = 4.5
+                                    salt = 0.5
                                 )
                             )
                             Log.d("CameraView", "Item with EAN $ean13Code inserted into the database")

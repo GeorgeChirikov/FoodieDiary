@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "items")
 data class Item(
-    @PrimaryKey(autoGenerate = true)
-    val ean : Long? = null,
+    @PrimaryKey
+    val ean : Long,
     val name: String,
     val energy: Double,
     val fat: Double,
@@ -14,6 +14,5 @@ data class Item(
     val sugar: Double,
     val fiber: Double,
     val protein: Double,
-    val salt: Double,
-    val review: Double
+    val salt: Double
 )
