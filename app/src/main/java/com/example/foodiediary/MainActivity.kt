@@ -10,6 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import com.example.foodiediary.viewmodels.DatabaseViewModel
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
@@ -31,26 +37,32 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val db = DatabaseViewModel(context)
+    var showPopup by remember { mutableStateOf(false) }
+    var eanToSearch by remember { mutableStateOf<Long?>(null) }
     val currentRoute = navController.currentBackStackEntryFlow
         .collectAsState(initial = navController.currentBackStackEntry)
         .value?.destination?.route
         ?: "homeView" // Default route if null
 
-
     NavHost(navController = navController, startDestination = "homeView") {
         composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeView(navController)
+                HomeView(db, navController)
             }
         }
         composable("cameraView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Prelude()
+                Prelude(db, showPopup = { barcode ->
+                    showPopup = true
+                    eanToSearch = barcode
+                })
             }
         }
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SearchView( onSearch = { query -> navController.navigate("searchResultsView/$query") })
+                SearchView(onSearch = { query -> navController.navigate("searchResultsView/$query") })
             }
         }
         composable("favoritesView") {
@@ -63,8 +75,22 @@ fun AppNavigation() {
                 HistoryView(navController)
             }
         }
-        composable("popupView") {
-            PopUpView(true, closePopup = { navController.popBackStack() })
+    }
+    if (showPopup && eanToSearch == null) {
+        PopUpView(
+            showPopup = showPopup,
+            closePopup = { showPopup = false },
+            barcode = 0, db = db,
+            navController = navController)
+    }
+    if (showPopup && eanToSearch != null) {
+        eanToSearch?.let {
+            PopUpView(
+                showPopup = showPopup,
+                closePopup = { showPopup = false },
+                barcode = it,
+                db = db,
+                navController = navController)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.foodiediary.views
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,9 +29,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavController
+import com.example.foodiediary.viewmodels.DatabaseViewModel
+import com.example.foodiediary.viewmodels.PopUpViewModel
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Composable
-fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
+fun PopUpView(
+    showPopup: Boolean,
+    closePopup: () -> Unit,
+    barcode: Long,
+    db: DatabaseViewModel,
+    navController: NavController
+) {
+    val viewModel = PopUpViewModel(db)
+    viewModel.getBarcodeData(barcode)
+    val item by viewModel.barcodeItem.collectAsState()
     var isVisible by remember { mutableStateOf(showPopup) }
     val alpha: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
@@ -44,8 +59,8 @@ fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
     )
 
     if (showPopup) {
-        if(alpha == 0f) {
-            LaunchedEffect(Unit){
+        if (alpha == 0f) {
+            LaunchedEffect(Unit) {
                 closePopup()
             }
         } else {
@@ -54,7 +69,10 @@ fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
                     isVisible = false
                     closePopup()
                 },
-                properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnClickOutside = true)
+                properties = DialogProperties(
+                    usePlatformDefaultWidth = false,
+                    dismissOnClickOutside = true
+                )
             ) {
                 Box(
                     modifier = Modifier
@@ -72,10 +90,25 @@ fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text("This is a centered popup!")
+                        if (item.ean != 0L) {
+                            Text(
+                                text = """
+                                    ${item.ean} 
+                                    - ${item.name} 
+                                    - ${item.protein}g 
+                                    - ${item.fat}g 
+                                    - ${item.carbohydrates}g 
+                                    - ${item.energy}kcal
+                                    """.trimIndent(),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        } else {
+                            Text("No item found")
+                        }
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(onClick = {
                             isVisible = false
+                            navController.navigate("homeView")
                         }) {
                             Text("Close")
                         }

@@ -18,7 +18,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.foodiediary.models.data.entity.Item
@@ -30,10 +29,9 @@ import com.example.foodiediary.viewmodels.DatabaseViewModel
 
 @Composable
 fun HomeView(
+    db: DatabaseViewModel,
     navController: NavController
 ) {
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
     val allItems = db.items.collectAsState(initial = listOf<Item>())
 
     LazyColumn(
@@ -89,11 +87,6 @@ fun HomeView(
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(onClick = { navController.navigate("cameraView") }) {
                     Text("Scan Barcode (EAN)")
-                }
-                Spacer(modifier = Modifier.height(30.dp))
-                //Button for quick way of testing popup, will be removed in the future
-                Button(onClick = { navController.navigate("popupView") }) {
-                    Text("Show Popup")
                 }
                 Spacer(modifier = Modifier.height(30.dp))
                 Box(
