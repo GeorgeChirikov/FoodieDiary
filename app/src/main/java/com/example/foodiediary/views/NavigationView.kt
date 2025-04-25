@@ -20,7 +20,11 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +44,9 @@ fun ScreenWithDrawer(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    var showPopup by remember { mutableStateOf(false) }
+    PopUpView(showPopup, { showPopup = false })
+
     ModalNavigationDrawer(
         modifier = Modifier
             .background(AppleRed),
@@ -57,6 +64,7 @@ fun ScreenWithDrawer(
                     onMenuClick = { scope.launch { drawerState.open() } }
                 )
                 content() // Screen's content will be placed
+                PopUpView(showPopup = showPopup, closePopup = { showPopup = false })
             }
         }
     )
@@ -120,3 +128,4 @@ fun DrawerItem(
         }
     )
 }
+

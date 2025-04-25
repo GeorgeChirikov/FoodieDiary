@@ -16,8 +16,7 @@ class CameraViewModel : ViewModel() {
         .build()
     private val scanner = BarcodeScanning.getClient(scannerOptions)
 
-
-
+    // private val popUpViewModel = PopUpViewModel()
 
     @OptIn(ExperimentalGetImage::class)
     fun onScanEAN(imageProxy: ImageProxy, onResult: (String?) -> Unit) {
@@ -27,6 +26,7 @@ class CameraViewModel : ViewModel() {
             scanner.process(image)
                 .addOnSuccessListener { barcodes ->
                     val ean13Code = barcodes.firstOrNull()?.displayValue
+                    // popUpViewModel.getBarcodeItem(barcodes.firstOrNull()!!)
                     onResult(ean13Code) // Pass the scanned EAN-13 code
                     //Log.d("CameraViewModel_onSuccess", "EAN 13 code: $ean13Code")
                 }
