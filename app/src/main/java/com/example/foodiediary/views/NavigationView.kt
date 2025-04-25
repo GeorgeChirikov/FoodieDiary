@@ -98,8 +98,6 @@ fun DrawerContent(
         DrawerItem("Search", "searchView", currentRoute, navController, onCloseDrawer)
         DrawerItem("Favorites", "favoritesView", currentRoute, navController, onCloseDrawer)
         DrawerItem("History", "historyView", currentRoute, navController, onCloseDrawer)
-        // DrawerItem("Settings", "settingsView", currentRoute, navController, onCloseDrawer)
-        // DrawerItem("Logout", "loginView", currentRoute, navController, onCloseDrawer)
     }
 }
 

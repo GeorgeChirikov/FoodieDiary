@@ -61,25 +61,6 @@ fun AppNavigation() {
                 HistoryView(navController)
             }
         }
-        /*
-        composable("settingsView") {
-            ScreenWithDrawer(navController, currentRoute) {
-                SettingsView()
-            }
-        }
-        composable("loginView") {
-            ScreenWithDrawer(navController, currentRoute) {
-                LoginView(navController)
-            }
-        }
-
-        composable("signupView") {
-            ScreenWithDrawer(navController, currentRoute) {
-                SignupView(navController)
-            }
-        }
-        */
-        // ... other screens ...
     }
 }
 
