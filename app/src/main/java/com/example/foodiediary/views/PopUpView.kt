@@ -35,7 +35,6 @@ import com.example.foodiediary.viewmodels.DatabaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.navigation.NavController
 import com.example.foodiediary.viewmodels.PopUpViewModel
 
 @SuppressLint("ViewModelConstructorInComposable")
@@ -44,7 +43,6 @@ fun PopUpView(
     ean: String?,
     showPopup: Boolean,
     closePopup: () -> Unit,
-    navController: NavController
 ) {
     val barcode = ean?.toLongOrNull() ?: 0L
     val context = LocalContext.current
@@ -134,7 +132,6 @@ fun PopUpView(
                         }
                         Button(onClick = {
                             isVisible = false
-                            navController.navigate("homeView")
                         }) {
                             Text("Close")
                         }
