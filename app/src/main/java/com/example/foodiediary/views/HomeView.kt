@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.foodiediary.models.data.entity.Item
@@ -29,9 +30,10 @@ import com.example.foodiediary.viewmodels.DatabaseViewModel
 
 @Composable
 fun HomeView(
-    db: DatabaseViewModel,
     navController: NavController
 ) {
+    val context = LocalContext.current
+    val db = DatabaseViewModel(context)
     val allItems = db.items.collectAsState(initial = listOf<Item>())
 
     LazyColumn(

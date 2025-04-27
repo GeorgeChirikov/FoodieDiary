@@ -32,6 +32,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.example.foodiediary.viewmodels.DatabaseViewModel
 import com.example.foodiediary.viewmodels.PopUpViewModel
+import androidx.compose.ui.platform.LocalContext
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
@@ -39,9 +40,10 @@ fun PopUpView(
     showPopup: Boolean,
     closePopup: () -> Unit,
     barcode: Long,
-    db: DatabaseViewModel,
     navController: NavController
 ) {
+    val context = LocalContext.current
+    val db = DatabaseViewModel(context)
     val viewModel = PopUpViewModel(db)
     viewModel.getBarcodeData(barcode)
     val item by viewModel.barcodeItem.collectAsState()

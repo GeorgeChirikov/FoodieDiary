@@ -46,7 +46,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun CameraView(
     modifier: Modifier = Modifier,
-    dbViewModel: DatabaseViewModel,
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
     val context = LocalContext.current
@@ -60,6 +59,8 @@ fun CameraView(
     var ean13Result by remember { mutableStateOf<String>("No EAN Code") }
     var isScanning by remember { mutableStateOf(false) }
     val scanningDelay = 10_000L // 10 seconds
+
+    val dbViewModel = DatabaseViewModel(context)
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -184,12 +185,11 @@ fun CameraView(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Prelude(dbViewModel: DatabaseViewModel, showPopup: (barcode: Long) -> Unit) {
+fun Prelude(showPopup: (barcode: Long) -> Unit) {
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     if (cameraPermission.status.isGranted) {
         CameraView(
             modifier = Modifier,
-            dbViewModel = dbViewModel,
             showPopup = showPopup,
         )
     } else LaunchedEffect(true) {
@@ -200,7 +200,5 @@ fun Prelude(dbViewModel: DatabaseViewModel, showPopup: (barcode: Long) -> Unit) 
 @Composable
 @Preview
 fun CameraViewPreview() {
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
-    Prelude(db, {})
+    Prelude {}
 }

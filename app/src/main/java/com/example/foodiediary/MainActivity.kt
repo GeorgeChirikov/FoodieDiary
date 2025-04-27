@@ -14,8 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import com.example.foodiediary.viewmodels.DatabaseViewModel
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
@@ -37,8 +35,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
     var showPopup by remember { mutableStateOf(false) }
     var eanToSearch by remember { mutableStateOf<Long?>(null) }
     val currentRoute = navController.currentBackStackEntryFlow
@@ -49,12 +45,12 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "homeView") {
         composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HomeView(db, navController)
+                HomeView(navController)
             }
         }
         composable("cameraView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Prelude(db, showPopup = { barcode ->
+                Prelude(showPopup = { barcode ->
                     showPopup = true
                     eanToSearch = barcode
                 })
@@ -80,7 +76,7 @@ fun AppNavigation() {
         PopUpView(
             showPopup = showPopup,
             closePopup = { showPopup = false },
-            barcode = 0, db = db,
+            barcode = 0,
             navController = navController)
     }
     if (showPopup && eanToSearch != null) {
@@ -89,7 +85,6 @@ fun AppNavigation() {
                 showPopup = showPopup,
                 closePopup = { showPopup = false },
                 barcode = it,
-                db = db,
                 navController = navController)
         }
     }
