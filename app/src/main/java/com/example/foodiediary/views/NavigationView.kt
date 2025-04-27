@@ -45,7 +45,7 @@ fun ScreenWithDrawer(
     val scope = rememberCoroutineScope()
 
     var showPopup by remember { mutableStateOf(false) }
-    PopUpView(showPopup, { showPopup = false })
+    //PopUpView(showPopup, "ean", { showPopup = false })
 
     ModalNavigationDrawer(
         modifier = Modifier
@@ -64,7 +64,7 @@ fun ScreenWithDrawer(
                     onMenuClick = { scope.launch { drawerState.open() } }
                 )
                 content() // Screen's content will be placed
-                PopUpView(showPopup = showPopup, closePopup = { showPopup = false })
+                //PopUpView(showPopup = showPopup, "ean", closePopup = { showPopup = false })
             }
         }
     )

@@ -55,7 +55,7 @@ fun AppNavigation() {
         }
         composable("favoritesView") {
             ScreenWithDrawer(navController, currentRoute) {
-                FavoritesView()
+                FavoritesView(navController)
             }
         }
         composable("historyView") {
@@ -63,8 +63,9 @@ fun AppNavigation() {
                 HistoryView(navController)
             }
         }
-        composable("popupView") {
-            PopUpView(true, closePopup = { navController.popBackStack() })
+        composable("popupView/{ean}") { backStackEntry ->
+            val ean = backStackEntry.arguments?.getString("ean")
+            PopUpView(true, ean, closePopup = { navController.popBackStack() })
         }
     }
 }

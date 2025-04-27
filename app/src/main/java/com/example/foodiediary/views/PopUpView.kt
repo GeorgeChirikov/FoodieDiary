@@ -29,7 +29,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
+fun PopUpView(showPopup: Boolean, ean: String?, closePopup: () -> Unit) {
     var isVisible by remember { mutableStateOf(showPopup) }
     val alpha: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
@@ -72,7 +72,7 @@ fun PopUpView(showPopup: Boolean, closePopup: () -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text("This is a centered popup!")
+                        Text("EAN Code: $ean")
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(onClick = {
                             isVisible = false
