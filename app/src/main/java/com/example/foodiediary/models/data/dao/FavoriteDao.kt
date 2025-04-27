@@ -14,8 +14,8 @@ interface FavoriteDao {
     fun getAllFavorites(): Flow<List<Favorite>>
 
     @Insert
-    suspend fun insertFavorite(favorite: Favorite)
+    suspend fun insert(favorite: Favorite)
 
     @Delete
-    suspend fun deleteFavorite(favorite: Favorite)
+    suspend fun delete(favorite: Favorite)
 }

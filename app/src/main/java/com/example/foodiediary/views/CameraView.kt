@@ -38,7 +38,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Item
-import com.example.foodiediary.viewmodels.DatabaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

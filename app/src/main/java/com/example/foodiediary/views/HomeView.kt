@@ -28,7 +28,6 @@ import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
-import com.example.foodiediary.viewmodels.DatabaseViewModel
 
 @Composable
 fun HomeView(

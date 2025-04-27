@@ -22,7 +22,6 @@ import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
-import com.example.foodiediary.viewmodels.DatabaseViewModel
 
 @Composable
 fun FavoritesView(navController: NavController) {

@@ -17,20 +17,20 @@ interface AddedDao {
     suspend fun getAddedByEan(ean: Long): Added?
 
     @Query("SELECT * FROM added_items ORDER BY timestamp ASC")
-    fun getItemsSortedByDay(): Flow<List<Added>>
+    fun getItemsSortedByTimeStamp(): Flow<List<Added>>
 
     @Query("SELECT * FROM added_items where ean = :ean ORDER BY timestamp ASC")
-    fun getItemsByEanSortedByDay(ean: Long): Flow<List<Added>>
+    fun getItemsByEanSortedByTimeStamp(ean: Long): Flow<List<Added>>
 
     @Query("SELECT * FROM added_items WHERE timeStamp = :timeStamp")
     suspend fun getAddedByTimeStamp(timeStamp: Long): Added?
 
     @Query("SELECT * FROM added_items WHERE timeStamp BETWEEN :startTime AND :endTime")
-    fun getItemsInTimestampRange(startTime: Long, endTime: Long): Flow<List<Added>>
+    fun getItemsInTimeStampRange(startTime: Long, endTime: Long): Flow<List<Added>>
 
     @Insert
-    suspend fun insertAdded(added: Added)
+    suspend fun insert(added: Added)
 
     @Delete
-    suspend fun deleteAdded(added: Added)
+    suspend fun delete(added: Added)
 }
