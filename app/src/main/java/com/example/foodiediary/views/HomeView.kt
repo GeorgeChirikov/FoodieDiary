@@ -93,11 +93,6 @@ fun HomeView(
                     Text("Scan Barcode (EAN)")
                 }
                 Spacer(modifier = Modifier.height(30.dp))
-                //Button for quick way of testing popup, will be removed in the future
-                Button(onClick = { navController.navigate("popupView") }) {
-                    Text("Show Popup")
-                }
-                Spacer(modifier = Modifier.height(30.dp))
                 Box(
                     modifier = Modifier
                         .background(PureWhite)

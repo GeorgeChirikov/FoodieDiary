@@ -10,6 +10,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
@@ -31,6 +35,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    var showPopup by remember { mutableStateOf(false) }
+    var eanToSearch by remember { mutableStateOf<Long?>(null) }
     val currentRoute = navController.currentBackStackEntryFlow
         .collectAsState(initial = navController.currentBackStackEntry)
         .value?.destination?.route
@@ -45,12 +51,15 @@ fun AppNavigation() {
         }
         composable("cameraView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Prelude()
+                Prelude(showPopup = { barcode ->
+                    showPopup = true
+                    eanToSearch = barcode
+                })
             }
         }
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SearchView( onSearch = { query -> navController.navigate("searchResultsView/$query") })
+                SearchView(onSearch = { query -> navController.navigate("searchResultsView/$query") })
             }
         }
         composable("favoritesView") {
