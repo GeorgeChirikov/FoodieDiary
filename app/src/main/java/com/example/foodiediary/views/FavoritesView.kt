@@ -1,6 +1,5 @@
 package com.example.foodiediary.views
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,19 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.foodiediary.models.data.entity.Favorite
-import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
-import com.example.foodiediary.viewmodels.DatabaseViewModel
+import com.example.foodiediary.utils.FavoritesViewModelFactory
+import com.example.foodiediary.utils.PopUpViewModelFactory
+import com.example.foodiediary.viewmodels.FavoritesViewModel
 
 @Composable
 fun FavoritesView(navController: NavController) {
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
-    val allFavorites = db.favorites.collectAsState(initial = listOf<Item>())
+    val viewModel: FavoritesViewModel = viewModel(
+        factory = FavoritesViewModelFactory(LocalContext.current)
+    )
+    var allFavorites = viewModel.allFavorites.collectAsState(initial = emptyList())
+    var allItems = viewModel.allItems.collectAsState(initial = emptyList())
 
     LazyColumn(
         modifier = Modifier
@@ -38,7 +40,7 @@ fun FavoritesView(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        items(allFavorites.value) { item ->
+        items(allItems.value) { item ->
             Text(
                 text = """
                     ${item.ean} 
@@ -50,7 +52,6 @@ fun FavoritesView(navController: NavController) {
                     """.trimIndent(),
                 modifier = Modifier.padding(4.dp)
                     .clickable{
-                        Toast.makeText(context, "Clicked on ${item.name}", Toast.LENGTH_SHORT).show()
                         navController.navigate("popupView/${item.ean}")
                     }
             )

@@ -1,6 +1,5 @@
 package com.example.foodiediary.views
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,21 +21,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.foodiediary.models.data.entity.Item
+import com.example.foodiediary.models.data.database.AppDatabase
+import com.example.foodiediary.models.data.repository.ItemRepository
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.ui.theme.PureWhite
-import com.example.foodiediary.viewmodels.DatabaseViewModel
+import com.example.foodiediary.utils.HomeViewModelFactory
+import com.example.foodiediary.viewmodels.HomeViewModel
 
 @Composable
 fun HomeView(
     navController: NavController
 ) {
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
-    val allItems = db.items.collectAsState(initial = listOf<Item>())
+    val viewModel: HomeViewModel = viewModel(
+        factory = HomeViewModelFactory(LocalContext.current)
+    )
+    val allItems = viewModel.allItems.collectAsState(initial = emptyList())
+
 
     LazyColumn(
         modifier = Modifier
@@ -120,7 +124,6 @@ fun HomeView(
                                 """.trimIndent(),
                                 modifier = Modifier.padding(4.dp)
                                     .clickable{
-                                        Toast.makeText(context, "Clicked on ${item.name}", Toast.LENGTH_SHORT).show()
                                         navController.navigate("popupView/${item.ean}")
                                     }
                             )

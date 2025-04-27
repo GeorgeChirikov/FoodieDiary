@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
@@ -37,8 +36,8 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.foodiediary.models.data.entity.Item
-import com.example.foodiediary.viewmodels.DatabaseViewModel
+import com.example.foodiediary.utils.CameraViewModelFactory
+import com.example.foodiediary.utils.PopUpViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -49,7 +48,9 @@ fun CameraView(
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
     val context = LocalContext.current
-    val viewmodel: CameraViewModel = viewModel()
+    val viewmodel: CameraViewModel = viewModel(
+        factory = CameraViewModelFactory(context = context)
+    )
 
     val cameraController = LifecycleCameraController(context)
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
@@ -60,47 +61,12 @@ fun CameraView(
     var isScanning by remember { mutableStateOf(false) }
     val scanningDelay = 10_000L // 10 seconds
 
-    val dbViewModel = DatabaseViewModel(context)
-
     val coroutineScope = rememberCoroutineScope()
 
-    val imageAnalyzer = ImageAnalysis.Analyzer { imageProxy ->
-        viewmodel.onScanEAN(
-            imageProxy = imageProxy,
-            onResult = { ean13Code ->
-                if (ean13Code != null) {
-                    Log.d("CameraView", "EAN 13 code returned: $ean13Code")
-                    cameraController.clearImageAnalysisAnalyzer()
-                    ean13Result = "EAN: $ean13Code inserted into the database"
-                    buttonText = "Scan EAN"
-                    isScanning = false
-                    viewmodel.isScanning = false
-                    viewmodel.reset()
-                    coroutineScope.launch {
-                        if (dbViewModel.getItemByEan(ean13Code.toLong()) == null) {
-                            dbViewModel.insertItem(
-                                Item(
-                                    ean = ean13Code.toLong(),
-                                    name = "Item Name",
-                                    energy = 100.0,
-                                    protein = 10.0,
-                                    fat = 5.0,
-                                    carbohydrates = 20.0,
-                                    sugar = 10.0,
-                                    fiber = 5.0,
-                                    salt = 0.5
-                                )
-                            )
-                            Log.d("CameraView", "Item with EAN $ean13Code inserted into the database")
-                        } else {
-                            Log.d("CameraView", "Item with EAN $ean13Code already exists in the database")
-                            ean13Result = "EAN: $ean13Code found in the database"
-                            showPopup(ean13Code.toLong())
-                        }
-                    }
-                }
-            }
-        )
+    val imageAnalyzer = viewmodel.getImageAnalyzer { ean13Code ->
+        if (ean13Code != null) {
+            viewmodel.handleScannedCode(ean13Code, showPopup)
+        }
     }
 
     Scaffold(modifier = modifier.fillMaxSize()) {

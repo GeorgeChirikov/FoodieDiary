@@ -18,11 +18,11 @@ interface ItemDao {
     suspend fun getItemByEan(ean: Long): Item?
 
     @Insert
-    suspend fun insertItem(item: Item)
+    suspend fun insert(item: Item)
 
     @Update
-    suspend fun updateItem(item: Item)
+    suspend fun update(item: Item)
 
     @Delete
-    suspend fun deleteItem(item: Item)
+    suspend fun delete(item: Item)
 }
