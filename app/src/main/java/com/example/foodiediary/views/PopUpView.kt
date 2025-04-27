@@ -30,7 +30,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Added
+import com.example.foodiediary.utils.PopUpViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,9 +46,9 @@ fun PopUpView(
     closePopup: () -> Unit,
 ) {
     val barcode = ean?.toLongOrNull() ?: 0L
-    val context = LocalContext.current
-    val db = DatabaseViewModel(context)
-    val viewModel = PopUpViewModel(db)
+    val viewModel: PopUpViewModel = viewModel(
+        factory = PopUpViewModelFactory(LocalContext.current)
+    )
     viewModel.getBarcodeData(barcode)
     val item by viewModel.barcodeItem.collectAsState()
     var isVisible by remember { mutableStateOf(showPopup) }
@@ -111,18 +113,10 @@ fun PopUpView(
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(onClick = {
-                            val timestamp = System.currentTimeMillis()
                             val eanLong = ean?.toLongOrNull()
-                            CoroutineScope(Dispatchers.IO).launch {
-                                if (db.getAddedByTimeStamp(timestamp) == null && eanLong != null) {
-                                    db.insertAdded(
-                                        Added(
-                                            ean = eanLong
-                                        )
-                                    )
-                                } else {
-                                    // Handle the case where the item is already in the diary
-                                    closePopup()
+                            if (eanLong != null) {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    viewModel.addItemToFavorites(Added(ean = eanLong))
                                 }
                             }
 
