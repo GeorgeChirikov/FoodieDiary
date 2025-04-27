@@ -15,9 +15,9 @@ import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
 import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
-import com.example.foodiediary.views.LoginView
-import com.example.foodiediary.views.SettingsView
-import com.example.foodiediary.views.SignupView
+import com.example.foodiediary.views.HistoryView
+import com.example.foodiediary.views.PopUpView
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +35,7 @@ fun AppNavigation() {
         .collectAsState(initial = navController.currentBackStackEntry)
         .value?.destination?.route
         ?: "homeView" // Default route if null
+
 
     NavHost(navController = navController, startDestination = "homeView") {
         composable("homeView") {
@@ -57,22 +58,14 @@ fun AppNavigation() {
                 FavoritesView()
             }
         }
-        composable("settingsView") {
+        composable("historyView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SettingsView()
+                HistoryView(navController)
             }
         }
-        composable("loginView") {
-            ScreenWithDrawer(navController, currentRoute) {
-                LoginView(navController)
-            }
+        composable("popupView") {
+            PopUpView(true, closePopup = { navController.popBackStack() })
         }
-        composable("signupView") {
-            ScreenWithDrawer(navController, currentRoute) {
-                SignupView(navController)
-            }
-        }
-        // ... other screens ...
     }
 }
 
