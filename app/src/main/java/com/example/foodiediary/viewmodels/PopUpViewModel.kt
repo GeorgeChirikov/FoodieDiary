@@ -27,7 +27,7 @@ class PopUpViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun addItemToFavorites(added: Added) {
+    fun addItemToDiary(added: Added) {
         viewModelScope.launch {
             addedRepository.insert(added)
         }

@@ -116,7 +116,7 @@ fun PopUpView(
                             val eanLong = ean?.toLongOrNull()
                             if (eanLong != null) {
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    viewModel.addItemToFavorites(Added(ean = eanLong))
+                                    viewModel.addItemToDiary(Added(ean = eanLong))
                                 }
                             }
 
