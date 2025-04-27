@@ -2,15 +2,11 @@ package com.example.foodiediary.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,19 +15,30 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.foodiediary.utils.SearchViewModelFactory
+import com.example.foodiediary.viewmodels.SearchViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(onSearch: (String) -> Unit) {
-    // TODO: fix search bar so user can actually write
-    val textFieldState = "Search"
+fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
+    var searchText by rememberSaveable { mutableStateOf("") }
+    var active by rememberSaveable { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-    //Results placeholder, TODO: replace with actual search results
-    val searchResults = listOf("Result 1", "Result 2", "Result 3")
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    val viewModel: SearchViewModel = viewModel(
+        factory = SearchViewModelFactory(LocalContext.current)
+    )
+    val searchResults by viewModel.searchResults.collectAsState()
 
     Box(
         modifier = Modifier
@@ -41,35 +48,34 @@ fun SearchView(onSearch: (String) -> Unit) {
         SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f },
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = textFieldState.toString(),
-                    onQueryChange = { },
-                    onSearch = {
-                        onSearch(textFieldState.toString())
-                        expanded = false
-                    },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
-                    placeholder = { Text("Search") }
-                )
+                .semantics { traversalIndex = 0f }
+                .fillMaxWidth(),
+            query = searchText,
+            onQueryChange = { newText ->
+                searchText = newText
+                viewModel.searchItems(newText)
             },
-            expanded = expanded,
-            onExpandedChange = { expanded = it },
+            onSearch = { query ->
+                onSearch(query)
+                active = false
+                keyboardController?.hide() // Hide the keyboard
+            },
+            active = active,
+            onActiveChange = { active = it },
+            placeholder = { Text("Search") },
+            leadingIcon = { } // Can add a search icon here if you like
         ) {
-            // Display search results in a scrollable column
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                searchResults.forEach { result ->
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(searchResults) { item ->
                     ListItem(
-                        headlineContent = { Text(result) },
-                        modifier = Modifier
-                            .clickable {
-
-                                //TODO: navigate to the item specific view
-                                expanded = false
-                            }
-                            .fillMaxWidth()
+                        headlineContent = { Text(item.name) },
+                        modifier = Modifier.clickable {
+                            navController.navigate("popupView/${item.ean}")
+                            active = false
+                            keyboardController?.hide()
+                        }
                     )
                 }
             }

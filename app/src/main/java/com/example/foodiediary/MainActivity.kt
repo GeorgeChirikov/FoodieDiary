@@ -63,7 +63,7 @@ fun AppNavigation() {
         }
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
-                SearchView(onSearch = { query -> navController.navigate("searchResultsView/$query") })
+                SearchView(onSearch = { query -> navController.navigate("searchResultsView/$query") }, navController)
             }
         }
         composable("favoritesView") {
