@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.ui.theme.AppleRed
@@ -24,7 +25,7 @@ import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.viewmodels.DatabaseViewModel
 
 @Composable
-fun FavoritesView() {
+fun FavoritesView(navController: NavController) {
     val context = LocalContext.current
     val db = DatabaseViewModel(context)
     val allFavorites = db.favorites.collectAsState(initial = listOf<Item>())
@@ -50,6 +51,7 @@ fun FavoritesView() {
                 modifier = Modifier.padding(4.dp)
                     .clickable{
                         Toast.makeText(context, "Clicked on ${item.name}", Toast.LENGTH_SHORT).show()
+                        navController.navigate("popupView/${item.ean}")
                     }
             )
         }

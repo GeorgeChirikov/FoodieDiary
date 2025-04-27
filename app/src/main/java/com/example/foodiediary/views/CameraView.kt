@@ -2,8 +2,6 @@ package com.example.foodiediary.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -46,7 +44,10 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CameraView(modifier: Modifier = Modifier) {
+fun CameraView(
+    modifier: Modifier = Modifier,
+    showPopup: (barcode: Long) -> Unit, // Function to show popup
+) {
     val context = LocalContext.current
     val viewmodel: CameraViewModel = viewModel()
 
@@ -60,7 +61,6 @@ fun CameraView(modifier: Modifier = Modifier) {
     val scanningDelay = 10_000L // 10 seconds
 
     val dbViewModel = DatabaseViewModel(context)
-    //var item: Item by remember { mutableStateOf(Item()) }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -74,6 +74,8 @@ fun CameraView(modifier: Modifier = Modifier) {
                     ean13Result = "EAN: $ean13Code inserted into the database"
                     buttonText = "Scan EAN"
                     isScanning = false
+                    viewmodel.isScanning = false
+                    viewmodel.reset()
                     coroutineScope.launch {
                         if (dbViewModel.getItemByEan(ean13Code.toLong()) == null) {
                             dbViewModel.insertItem(
@@ -93,6 +95,7 @@ fun CameraView(modifier: Modifier = Modifier) {
                         } else {
                             Log.d("CameraView", "Item with EAN $ean13Code already exists in the database")
                             ean13Result = "EAN: $ean13Code found in the database"
+                            showPopup(ean13Code.toLong())
                         }
                     }
                 }
@@ -140,6 +143,7 @@ fun CameraView(modifier: Modifier = Modifier) {
                             Log.d("CameraView", "Scan EAN button clicked")
                             buttonText = "Scanning..."
                             isScanning = true
+                            viewmodel.isScanning = true
                             cameraController.setImageAnalysisAnalyzer(
                                 context.mainExecutor,
                                 imageAnalyzer
@@ -158,6 +162,8 @@ fun CameraView(modifier: Modifier = Modifier) {
                                     cameraController.clearImageAnalysisAnalyzer()
                                     buttonText = "Scan EAN"
                                     isScanning = false
+                                    viewmodel.isScanning = false
+                                    viewmodel.reset()
                                     ean13Result = "No EAN Code"
                                     Log.d("CameraView", "Scanning timeout")
                                 }
@@ -169,7 +175,7 @@ fun CameraView(modifier: Modifier = Modifier) {
                         .padding(16.dp),
                     shape = RoundedCornerShape(8.dp),
 
-                ) {
+                    ) {
                     Text(text = buttonText)
                 }
             }
@@ -179,11 +185,12 @@ fun CameraView(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Prelude() {
+fun Prelude(showPopup: (barcode: Long) -> Unit) {
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     if (cameraPermission.status.isGranted) {
         CameraView(
-            modifier = Modifier
+            modifier = Modifier,
+            showPopup = showPopup,
         )
     } else LaunchedEffect(true) {
         cameraPermission.launchPermissionRequest()
@@ -193,5 +200,5 @@ fun Prelude() {
 @Composable
 @Preview
 fun CameraViewPreview() {
-    CameraView()
+    Prelude {}
 }
