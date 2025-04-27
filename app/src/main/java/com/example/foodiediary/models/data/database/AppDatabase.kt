@@ -8,19 +8,22 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.foodiediary.models.Converters
+import com.example.foodiediary.models.data.dao.AddedDao
 import com.example.foodiediary.models.data.dao.FavoriteDao
 import com.example.foodiediary.models.data.dao.ItemDao
+import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
 
 @Database(
-    entities = [Item::class, Favorite::class],
-    version = 3,
+    entities = [Item::class, Favorite::class, Added::class],
+    version = 4,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun favoriteDao(): FavoriteDao
+    abstract fun addedDao(): AddedDao
 
 
 
@@ -91,6 +94,44 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `added_items` (
+                        `timeStamp` INTEGER PRIMARY KEY NOT NULL,
+                        `ean` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `favorites_new` (
+                        `ean` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `name` TEXT NOT NULL, 
+                        `energy` REAL NOT NULL, 
+                        `fat` REAL NOT NULL, 
+                        `carbohydrates` REAL NOT NULL, 
+                        `sugar` REAL NOT NULL,
+                        `fiber` REAL NOT NULL,
+                        `protein` REAL NOT NULL,
+                        `salt` REAL NOT NULL
+                    )
+                """.trimIndent())
+
+                database.execSQL("""
+                    INSERT INTO `favorites_new` (`ean`, `name`, `energy`, `fat`, `carbohydrates`, `sugar`, `fiber`, `protein`, `salt`)
+                    SELECT `ean`, `name`, `energy`, `fat`, `carbohydrates`, `sugar`, `fiber`, `protein`, `salt`
+                    FROM `favorites`
+                """.trimIndent())
+
+                database.execSQL("DROP TABLE IF EXISTS `favorites`")
+
+                database.execSQL("ALTER TABLE `favorites_new` RENAME TO `favorites`")
+
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
@@ -102,6 +143,7 @@ abstract class AppDatabase : RoomDatabase() {
                     )
                         .addMigrations(MIGRATION_1_2)
                         .addMigrations(MIGRATION_2_3)
+                        .addMigrations(MIGRATION_3_4)
                         .build()
 
                     INSTANCE = instance

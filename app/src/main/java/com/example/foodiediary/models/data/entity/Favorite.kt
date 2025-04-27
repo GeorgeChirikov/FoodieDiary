@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "favorites",
+    /*
     foreignKeys = [
         ForeignKey(
             entity = Item::class,
@@ -14,6 +15,8 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ]
+
+     */
 )
 data class Favorite (
     @PrimaryKey
@@ -25,7 +28,5 @@ data class Favorite (
     val sugar: Double,
     val fiber: Double,
     val protein: Double,
-    val salt: Double,
-    val review: Double,
-    val itemEan: Long
+    val salt: Double
 )

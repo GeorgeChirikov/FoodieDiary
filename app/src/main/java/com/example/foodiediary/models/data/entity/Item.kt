@@ -14,5 +14,6 @@ data class Item(
     val sugar: Double,
     val fiber: Double,
     val protein: Double,
-    val salt: Double
+    val salt: Double,
+    //val isFavorite: Boolean = false,
 )
