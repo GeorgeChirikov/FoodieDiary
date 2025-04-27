@@ -24,12 +24,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.foodiediary.models.data.entity.Added
+import com.example.foodiediary.viewmodels.DatabaseViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun PopUpView(showPopup: Boolean, ean: String?, closePopup: () -> Unit) {
+    val context = LocalContext.current
+    val dbViewModel = DatabaseViewModel(context)
+
     var isVisible by remember { mutableStateOf(showPopup) }
     val alpha: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
@@ -42,6 +52,8 @@ fun PopUpView(showPopup: Boolean, ean: String?, closePopup: () -> Unit) {
         animationSpec = tween(durationMillis = 300),
         label = "scale"
     )
+
+
 
     if (showPopup) {
         if(alpha == 0f) {
@@ -74,6 +86,25 @@ fun PopUpView(showPopup: Boolean, ean: String?, closePopup: () -> Unit) {
                     ) {
                         Text("EAN Code: $ean")
                         Spacer(modifier = Modifier.height(16.dp))
+                        Button(onClick = {
+                            val timestamp = System.currentTimeMillis()
+                            val eanLong = ean?.toLongOrNull()
+                            CoroutineScope(Dispatchers.IO).launch {
+                                if (dbViewModel.getAddedByTimeStamp(timestamp) == null && eanLong != null) {
+                                    dbViewModel.insertAdded(
+                                        Added(
+                                            ean = eanLong
+                                        )
+                                    )
+                                } else {
+                                    // Handle the case where the item is already in the diary
+                                    closePopup()
+                                }
+                            }
+
+                        }) {
+                            Text("Add to Diary")
+                        }
                         Button(onClick = {
                             isVisible = false
                         }) {

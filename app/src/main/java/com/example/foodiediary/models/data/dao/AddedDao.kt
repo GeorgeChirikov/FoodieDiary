@@ -18,6 +18,12 @@ interface AddedDao {
     @Query("SELECT * FROM added_items ORDER BY timestamp ASC")
     fun getItemsSortedByDay(): List<Added>
 
+    @Query("SELECT * FROM added_items where ean = :ean ORDER BY timestamp ASC")
+    fun getItemsByEanSortedByDay(ean: Long): List<Added>
+
+    @Query("SELECT * FROM added_items WHERE timeStamp = :timeStamp")
+    suspend fun getAddedByTimeStamp(timeStamp: Long): Added?
+
     @Insert
     suspend fun insertAdded(added: Added)
 

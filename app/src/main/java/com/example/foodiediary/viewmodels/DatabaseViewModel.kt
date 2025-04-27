@@ -3,6 +3,7 @@ package com.example.foodiediary.viewmodels
 import android.content.Context
 import androidx.room.Room
 import com.example.foodiediary.models.data.database.AppDatabase
+import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ class DatabaseViewModel(context: Context) {
     val favoriteDao = db.favoriteDao()
     // väliaikaisesti itemDao.getAllItems() pitäs olla favoriteDao.getAllFavorites()
     val favorites: Flow<List<Item>> = itemDao.getAllItems()
+    val addedDao = db.addedDao()
 
     suspend fun getItemByEan(ean: Long): Item? {
         return itemDao.getItemByEan(ean)
@@ -27,6 +29,14 @@ class DatabaseViewModel(context: Context) {
 
     suspend fun deleteItem(item: Item) {
         itemDao.deleteItem(item)
+    }
+
+    suspend fun insertAdded(added: Added) {
+        addedDao.insertAdded(added)
+    }
+
+    suspend fun getAddedByTimeStamp(timeStamp: Long): Added? {
+        return addedDao.getAddedByTimeStamp(timeStamp)
     }
 
 
