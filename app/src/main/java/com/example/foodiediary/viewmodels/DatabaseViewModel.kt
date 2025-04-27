@@ -39,5 +39,9 @@ class DatabaseViewModel(context: Context) {
         return addedDao.getAddedByTimeStamp(timeStamp)
     }
 
+    fun getItemsInTimestampRange(startTime: Long, endTime: Long): Flow<List<Added>> {
+        return addedDao.getItemsInTimestampRange(startTime, endTime)
+    }
+
 
 }
