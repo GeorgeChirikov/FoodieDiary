@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.foodiediary.models.data.entity.Item
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +19,9 @@ interface ItemDao {
 
     @Insert
     suspend fun insertItem(item: Item)
+
+    @Update
+    suspend fun updateItem(item: Item)
 
     @Delete
     suspend fun deleteItem(item: Item)

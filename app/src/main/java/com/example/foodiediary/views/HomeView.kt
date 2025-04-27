@@ -1,6 +1,8 @@
 package com.example.foodiediary.views
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -91,11 +93,6 @@ fun HomeView(
                     Text("Scan Barcode (EAN)")
                 }
                 Spacer(modifier = Modifier.height(30.dp))
-                //Button for quick way of testing popup, will be removed in the future
-                Button(onClick = { navController.navigate("popupView") }) {
-                    Text("Show Popup")
-                }
-                Spacer(modifier = Modifier.height(30.dp))
                 Box(
                     modifier = Modifier
                         .background(PureWhite)
@@ -122,6 +119,10 @@ fun HomeView(
                                 - ${item.energy}kcal
                                 """.trimIndent(),
                                 modifier = Modifier.padding(4.dp)
+                                    .clickable{
+                                        Toast.makeText(context, "Clicked on ${item.name}", Toast.LENGTH_SHORT).show()
+                                        navController.navigate("popupView/${item.ean}")
+                                    }
                             )
                         }
                     }
