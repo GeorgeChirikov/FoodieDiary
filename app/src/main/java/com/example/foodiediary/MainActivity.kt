@@ -74,7 +74,7 @@ fun AppNavigation() {
         }
         composable("popupView/{ean}") { backStackEntry ->
             val ean = backStackEntry.arguments?.getString("ean")
-            PopUpView(true, ean, closePopup = { navController.popBackStack() })
+            PopUpView(ean, true, closePopup = { navController.popBackStack() }, navController)
         }
     }
 }

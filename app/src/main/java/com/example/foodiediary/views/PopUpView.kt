@@ -34,21 +34,19 @@ import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.viewmodels.DatabaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import androidx.navigation.NavController
-import com.example.foodiediary.viewmodels.DatabaseViewModel
 import com.example.foodiediary.viewmodels.PopUpViewModel
-import androidx.compose.ui.platform.LocalContext
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
 fun PopUpView(
+    ean: String?,
     showPopup: Boolean,
     closePopup: () -> Unit,
-    barcode: Long,
     navController: NavController
 ) {
+    val barcode = ean?.toLongOrNull() ?: 0L
     val context = LocalContext.current
     val db = DatabaseViewModel(context)
     val viewModel = PopUpViewModel(db)
@@ -119,8 +117,8 @@ fun PopUpView(
                             val timestamp = System.currentTimeMillis()
                             val eanLong = ean?.toLongOrNull()
                             CoroutineScope(Dispatchers.IO).launch {
-                                if (dbViewModel.getAddedByTimeStamp(timestamp) == null && eanLong != null) {
-                                    dbViewModel.insertAdded(
+                                if (db.getAddedByTimeStamp(timestamp) == null && eanLong != null) {
+                                    db.insertAdded(
                                         Added(
                                             ean = eanLong
                                         )
