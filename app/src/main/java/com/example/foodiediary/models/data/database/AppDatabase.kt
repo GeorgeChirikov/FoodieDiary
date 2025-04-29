@@ -17,7 +17,7 @@ import com.example.foodiediary.models.data.entity.Item
 
 @Database(
     entities = [Item::class, Favorite::class, Added::class],
-    version = 4,
+    version = 5,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -133,6 +133,29 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Step 1: Create a new table with only the `ean` column
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `favorites_new` (
+                        `ean` INTEGER PRIMARY KEY NOT NULL
+                    )
+                """.trimIndent())
+
+                // Step 2: Copy the `ean` data from the old table to the new table
+                database.execSQL("""
+                    INSERT INTO `favorites_new` (`ean`)
+                    SELECT `ean` FROM `favorites`
+                """.trimIndent())
+
+                // Step 3: Drop the old `favorites` table
+                database.execSQL("DROP TABLE IF EXISTS `favorites`")
+
+                // Step 4: Rename the new table to `favorites`
+                database.execSQL("ALTER TABLE `favorites_new` RENAME TO `favorites`")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
@@ -145,6 +168,7 @@ abstract class AppDatabase : RoomDatabase() {
                         .addMigrations(MIGRATION_1_2)
                         .addMigrations(MIGRATION_2_3)
                         .addMigrations(MIGRATION_3_4)
+                        .addMigrations(MIGRATION_4_5)
                         .build()
 
                     INSTANCE = instance

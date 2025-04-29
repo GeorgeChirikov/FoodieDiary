@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,11 +28,13 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Added
+import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.utils.PopUpViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -88,7 +91,7 @@ fun PopUpView(
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(250.dp)
+                            .size(width = 250.dp, height = 450.dp)
                             .scale(scale)
                             .alpha(alpha)
                             .background(Color.White)
@@ -101,10 +104,13 @@ fun PopUpView(
                                 text = """
                                     ${item.ean} 
                                     - ${item.name} 
-                                    - ${item.protein}g 
-                                    - ${item.fat}g 
-                                    - ${item.carbohydrates}g 
-                                    - ${item.energy}kcal
+                                    - ${item.energy} kcal 
+                                    - ${item.fat} g 
+                                    - ${item.carbohydrates} g 
+                                    - ${item.sugar} g 
+                                    - ${item.fiber} g
+                                    - ${item.protein} g 
+                                    - ${item.salt} g
                                     """.trimIndent(),
                                 modifier = Modifier.padding(4.dp)
                             )
@@ -124,6 +130,28 @@ fun PopUpView(
                             Text("Add to Diary")
                         }
                         Button(onClick = {
+                            val eanLong = ean?.toLongOrNull()
+                            if (eanLong != null) {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                }
+                            }
+
+                        }) {
+                            Text("Add to favorites")
+                        }
+                        Button(onClick = {
+                            val eanLong = ean?.toLongOrNull()
+                            if (eanLong != null) {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    viewModel.deleteItemFromFavorites(viewModel.favoriteRepository.getFavoriteByEan(eanLong))
+                                }
+                            }
+
+                        }) {
+                            Text("Delete from favorites")
+                        }
+                        Button(onClick = {
                             isVisible = false
                         }) {
                             Text("Close")
@@ -133,4 +161,14 @@ fun PopUpView(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PopUpViewPreview() {
+    PopUpView(
+        ean = "1234567890123",
+        showPopup = true,
+        closePopup = {}
+    )
 }
