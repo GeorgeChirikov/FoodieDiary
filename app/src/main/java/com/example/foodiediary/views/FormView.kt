@@ -122,7 +122,7 @@ fun FormView(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Button(
+                    Button( // Add item -button
                         onClick = {
                             /*val newItem = Item(
                                 ean = ,
@@ -138,7 +138,7 @@ fun FormView(
                              */
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF7AC74F),
+                            containerColor = MaterialTheme.colorScheme.primary, // Color(0xFF7AC74F),
                             contentColor = MaterialTheme.colorScheme.onTertiary
                         ),
                         modifier = Modifier
@@ -146,7 +146,7 @@ fun FormView(
                             .padding(16.dp)
                     ) {
                         Text(
-                            text = "Add"
+                            text = "Add item"
                         )
                     }
                     Button(

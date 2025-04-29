@@ -39,7 +39,7 @@ class CameraViewModel(context:Context) : ViewModel() {
                 itemRepository.insert(
                     Item(
                         ean = eanLong,
-                        name = "Item Name",
+                        name = "Item Name",  // tähän lomake :)
                         energy = 100.0,
                         protein = 10.0,
                         fat = 5.0,

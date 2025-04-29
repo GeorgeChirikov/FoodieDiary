@@ -15,10 +15,15 @@ val Pink40 = Color(0xFF7D5260)
 val PureBlack = Color(0xFF000000)
 val PureWhite = Color(0xFFFFFFFF)
 
+
 // Our own theme
+val DarkGreen = Color(0xFF0c5900)
 val GrassGreen = Color(0xFF7AC74F)
 val LightGreen = Color(0xFFA1CF6B)
 val ShyGreen = Color(0xFFC5E1A3)
+
+val IndigoPurple = Color(0xFF8538b0)
+val LightPurple = Color(0xFFbc6fe7)
 
 val RoseRed = Color(0xFFBC4749)
 val AppleRed = Color(0xFFE87461)
