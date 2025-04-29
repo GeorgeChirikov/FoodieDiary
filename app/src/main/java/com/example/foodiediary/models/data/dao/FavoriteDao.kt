@@ -13,6 +13,9 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorites")
     fun getAllFavorites(): Flow<List<Favorite>>
 
+    @Query("SELECT * FROM favorites WHERE ean = :ean LIMIT 1")
+    suspend fun getFavoriteByEan(ean: Long): Favorite?
+
     @Insert
     suspend fun insert(favorite: Favorite)
 

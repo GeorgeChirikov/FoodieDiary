@@ -31,6 +31,7 @@ fun FavoritesView(navController: NavController) {
     )
     var allFavorites = viewModel.allFavorites.collectAsState(initial = emptyList())
     var allItems = viewModel.allItems.collectAsState(initial = emptyList())
+    var allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
     LazyColumn(
         modifier = Modifier
@@ -40,7 +41,7 @@ fun FavoritesView(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        items(allItems.value) { item ->
+        items(allFavoriteItems.value) { item ->
             Text(
                 text = """
                     ${item.ean} 
