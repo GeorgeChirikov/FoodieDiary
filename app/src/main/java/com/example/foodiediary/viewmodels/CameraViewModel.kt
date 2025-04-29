@@ -41,7 +41,7 @@ class CameraViewModel(context:Context) : ViewModel() {
                         ean = eanLong,
                         name = "Item Name",
                         energy = 100.0,
-                        protein = 10.0,
+                        protein = 10.0,         // Tänne Maisa tulee se FormsView navigaatio
                         fat = 5.0,
                         carbohydrates = 20.0,
                         sugar = 10.0,
