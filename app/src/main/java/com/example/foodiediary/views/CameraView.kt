@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,26 +49,24 @@ fun CameraView(
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
     val context = LocalContext.current
-    val viewmodel: CameraViewModel = viewModel(
-        factory = CameraViewModelFactory(context = context)
-    )
+
 
     val cameraController = LifecycleCameraController(context)
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
     cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-    var buttonText by remember { mutableStateOf("Scan EAN") }
-    var ean13Result by remember { mutableStateOf<String>("No EAN Code") }
-    var isScanning by remember { mutableStateOf(false) }
-    val scanningDelay = 10_000L // 10 seconds
+    val viewmodel: CameraViewModel = viewModel(
+        factory = CameraViewModelFactory(
+            context = context,
+            cameraController = cameraController,
+            showPopup = showPopup
+        )
+    )
 
-    val coroutineScope = rememberCoroutineScope()
+    val buttonText by viewmodel.buttonText.collectAsState()
+    val ean13Result by viewmodel.ean13Result.collectAsState()
 
-    val imageAnalyzer = viewmodel.getImageAnalyzer { ean13Code ->
-        if (ean13Code != null) {
-            viewmodel.handleScannedCode(ean13Code, showPopup)
-        }
-    }
+
 
     Scaffold(modifier = modifier.fillMaxSize()) {
         Box(
@@ -105,36 +104,7 @@ fun CameraView(
                 )
                 Button(
                     onClick = {
-                        if (!isScanning) {
-                            Log.d("CameraView", "Scan EAN button clicked")
-                            buttonText = "Scanning..."
-                            isScanning = true
-                            viewmodel.isScanning = true
-                            cameraController.setImageAnalysisAnalyzer(
-                                context.mainExecutor,
-                                imageAnalyzer
-                            )
-
-                            // Stop scanning after 10 seconds
-                            coroutineScope.launch {
-                                for (i in 1..(scanningDelay/1000).toInt()) {
-                                    delay(1000)
-                                    if (isScanning) {
-                                        buttonText = "Scanning" + ".".repeat(i % 4)
-                                        Log.d("CameraView", "$buttonText $i seconds passed")
-                                    }
-                                }
-                                if (isScanning) {
-                                    cameraController.clearImageAnalysisAnalyzer()
-                                    buttonText = "Scan EAN"
-                                    isScanning = false
-                                    viewmodel.isScanning = false
-                                    viewmodel.reset()
-                                    ean13Result = "No EAN Code"
-                                    Log.d("CameraView", "Scanning timeout")
-                                }
-                            }
-                        }
+                        viewmodel.onScanEanButtonClick()
 
                     },
                     modifier = Modifier
