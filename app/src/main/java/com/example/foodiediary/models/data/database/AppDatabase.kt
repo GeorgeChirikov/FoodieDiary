@@ -11,19 +11,22 @@ import com.example.foodiediary.models.Converters
 import com.example.foodiediary.models.data.dao.AddedDao
 import com.example.foodiediary.models.data.dao.FavoriteDao
 import com.example.foodiediary.models.data.dao.ItemDao
+import com.example.foodiediary.models.data.dao.WaterDao
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
+import com.example.foodiediary.models.data.entity.Water
 
 @Database(
-    entities = [Item::class, Favorite::class, Added::class],
-    version = 5,
+    entities = [Item::class, Favorite::class, Added::class, Water::class],
+    version = 6,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun favoriteDao(): FavoriteDao
     abstract fun addedDao(): AddedDao
+    abstract fun waterDao(): WaterDao
 
 
 
@@ -156,6 +159,19 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Step 1: Create a new table with the new columns
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `water` (
+                        `timeStamp` INTEGER PRIMARY KEY NOT NULL,
+                        `amount` REAL NOT NULL
+                    )
+                """.trimIndent())
+
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
@@ -169,6 +185,7 @@ abstract class AppDatabase : RoomDatabase() {
                         .addMigrations(MIGRATION_2_3)
                         .addMigrations(MIGRATION_3_4)
                         .addMigrations(MIGRATION_4_5)
+                        .addMigrations(MIGRATION_5_6)
                         .build()
 
                     INSTANCE = instance
