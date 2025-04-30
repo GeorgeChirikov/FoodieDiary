@@ -9,6 +9,7 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.foodiediary.models.data.database.AppDatabase
 import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.models.data.repository.ItemRepository
@@ -27,8 +28,10 @@ import kotlin.text.toLong
 
 class CameraViewModel(
     private val context:Context,
+    private val navController: NavController,
     private val cameraController: LifecycleCameraController,
-    showPopup: (barcode: Long) -> Unit) : ViewModel() {
+    showPopup: (barcode: Long) -> Unit
+) : ViewModel() {
 
     private val scannerOptions = BarcodeScannerOptions.Builder()
         .setBarcodeFormats(Barcode.FORMAT_EAN_13)
@@ -92,19 +95,9 @@ class CameraViewModel(
                 val eanLong = ean13Code.toLong()
                 val existingItem = itemRepository.getItemByEan(eanLong)
                 if (existingItem == null) {
-                    itemRepository.insert(
-                        Item(
-                            ean = eanLong,
-                            name = "Item Name",
-                            energy = 100.0,
-                            protein = 10.0,             // Tänne Maisa tulee se FormsView navigaatio :)
-                            fat = 5.0,
-                            carbohydrates = 20.0,
-                            sugar = 10.0,
-                            fiber = 5.0,
-                            salt = 0.5
-                        )
-                    )
+
+                    navController.navigate("formView/$ean13Code")
+
                     Log.d("CameraViewModel", "Item with EAN $ean13Code inserted into the database")
                 } else {
                     Log.d(

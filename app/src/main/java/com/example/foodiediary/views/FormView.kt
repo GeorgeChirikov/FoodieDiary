@@ -42,10 +42,11 @@ import com.example.foodiediary.models.data.entity.Item
 
 @Composable
 fun FormView(
-    navContoller: NavController
+    ean: String,
+    navController: NavController
 ){
     var item by remember {mutableStateOf("")}
-    var ean by remember { mutableStateOf("978655") }
+    //var ean by remember { mutableStateOf("978655") }
     var protein by remember {mutableStateOf("")}
     var carbohydrates by remember {mutableStateOf("")}
     var fat by remember {mutableStateOf("")}
@@ -150,7 +151,7 @@ fun FormView(
                         )
                     }
                     Button(
-                        onClick = { navContoller.popBackStack() },
+                        onClick = { navController.popBackStack() },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.error,
                             contentColor = MaterialTheme.colorScheme.onError
@@ -173,7 +174,10 @@ fun FormView(
 @Composable
 fun PreviewForm () {
     val navController = rememberNavController()
-    FormView(navController)
+    FormView(
+        ean = "64787687",
+        navController = navController
+    )
 }
 
 // Tiedontäyttö näkymä

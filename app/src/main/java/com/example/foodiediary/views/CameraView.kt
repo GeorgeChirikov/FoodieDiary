@@ -37,6 +37,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.foodiediary.utils.CameraViewModelFactory
 import com.example.foodiediary.utils.PopUpViewModelFactory
 import kotlinx.coroutines.delay
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CameraView(
+    navController: NavController,
     modifier: Modifier = Modifier,
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
@@ -58,6 +60,7 @@ fun CameraView(
     val viewmodel: CameraViewModel = viewModel(
         factory = CameraViewModelFactory(
             context = context,
+            navController = navController,
             cameraController = cameraController,
             showPopup = showPopup
         )
@@ -121,10 +124,11 @@ fun CameraView(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Prelude(showPopup: (barcode: Long) -> Unit) {
+fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     if (cameraPermission.status.isGranted) {
         CameraView(
+            navController = navController,
             modifier = Modifier,
             showPopup = showPopup,
         )
@@ -136,5 +140,5 @@ fun Prelude(showPopup: (barcode: Long) -> Unit) {
 @Composable
 @Preview
 fun CameraViewPreview() {
-    Prelude {}
+    //Prelude {}
 }

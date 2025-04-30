@@ -21,6 +21,7 @@ import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
 import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
+import com.example.foodiediary.views.FormView
 import com.example.foodiediary.views.HistoryView
 import com.example.foodiediary.views.PopUpView
 
@@ -55,10 +56,13 @@ fun AppNavigation() {
         }
         composable("cameraView") {
             ScreenWithDrawer(navController, currentRoute) {
-                Prelude(showPopup = { barcode ->
+                Prelude(
+                    navController = navController,
+                    showPopup = { barcode ->
                     showPopup = true
                     eanToSearch = barcode
-                })
+                }
+                )
             }
         }
         composable("searchView") {
@@ -75,6 +79,16 @@ fun AppNavigation() {
             ScreenWithDrawer(navController, currentRoute) {
                 HistoryView(navController)
             }
+        }
+        composable("formView/{ean}") { backStackEntry ->
+            val ean = backStackEntry.arguments?.getString("ean")
+            if (ean != null) {
+                FormView(
+                    ean = ean,
+                    navController = navController,
+                )
+            }
+
         }
         composable("popupView/{ean}") { backStackEntry ->
             val ean = backStackEntry.arguments?.getString("ean")
