@@ -53,6 +53,7 @@ fun PopUpView(
         factory = PopUpViewModelFactory(LocalContext.current)
     )
     viewModel.getBarcodeData(barcode)
+    viewModel.updateFavoriteButtonText(barcode)
     val item by viewModel.barcodeItem.collectAsState()
     var isVisible by remember { mutableStateOf(showPopup) }
     val alpha: Float by animateFloatAsState(
@@ -60,6 +61,8 @@ fun PopUpView(
         animationSpec = tween(durationMillis = 300),
         label = "alpha"
     )
+
+    val favoriteButtonText by viewModel.favoriteButtonText.collectAsState()
 
     val scale: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0.8f,
@@ -133,23 +136,17 @@ fun PopUpView(
                             val eanLong = ean?.toLongOrNull()
                             if (eanLong != null) {
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                    if (favoriteButtonText == "Add to favorites") {
+                                        viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                    } else {
+                                        viewModel.deleteItemFromFavorites(viewModel.favoriteRepository.getFavoriteByEan(eanLong))
+                                    }
+
                                 }
                             }
 
                         }) {
-                            Text("Add to favorites")
-                        }
-                        Button(onClick = {
-                            val eanLong = ean?.toLongOrNull()
-                            if (eanLong != null) {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    viewModel.deleteItemFromFavorites(viewModel.favoriteRepository.getFavoriteByEan(eanLong))
-                                }
-                            }
-
-                        }) {
-                            Text("Delete from favorites")
+                            Text(favoriteButtonText)
                         }
                         Button(onClick = {
                             isVisible = false
