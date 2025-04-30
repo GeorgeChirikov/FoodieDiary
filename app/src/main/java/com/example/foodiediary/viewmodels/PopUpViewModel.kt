@@ -23,6 +23,15 @@ class PopUpViewModel(context: Context) : ViewModel() {
     private val _barcodeItem = MutableStateFlow(Item(0,"",0.0,0.0,0.0,0.0,0.0,0.0,0.0))
     val barcodeItem = _barcodeItem.asStateFlow()
 
+    val favoriteButtonText = MutableStateFlow("Add to favorites")
+
+    fun updateFavoriteButtonText(ean: Long) {
+        viewModelScope.launch {
+            val favorite = favoriteRepository.getFavoriteByEan(ean)
+            favoriteButtonText.value = if (favorite != null) "Remove from favorites" else "Add to favorites"
+        }
+    }
+
     fun getBarcodeData(barcode: Long) {
         viewModelScope.launch {
             val item = itemRepository.getItemByEan(barcode)
@@ -40,6 +49,7 @@ class PopUpViewModel(context: Context) : ViewModel() {
         viewModelScope.launch {
             favoriteRepository.insert(favorite)
         }
+        favoriteButtonText.value = "Remove from favorites"
     }
 
     fun deleteItemFromFavorites(favorite: Favorite?) {
@@ -47,6 +57,7 @@ class PopUpViewModel(context: Context) : ViewModel() {
             viewModelScope.launch {
                 favoriteRepository.delete(favorite)
             }
+            favoriteButtonText.value = "Add to favorites"
         }
     }
 

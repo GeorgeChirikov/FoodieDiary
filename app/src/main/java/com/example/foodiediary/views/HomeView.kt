@@ -40,6 +40,7 @@ fun HomeView(
         factory = HomeViewModelFactory(LocalContext.current)
     )
     val allItems = viewModel.allItems.collectAsState(initial = emptyList())
+    val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
 
     LazyColumn(
@@ -102,7 +103,7 @@ fun HomeView(
                         .background(PureWhite)
                         .padding(20.dp)
                         .width(250.dp)
-                        .height(300.dp)
+                        .height(400.dp)
                 ) {
 
                     LazyColumn(
@@ -112,6 +113,9 @@ fun HomeView(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        item {
+                            Text("All Items")
+                        }
                         items(allItems.value) { item ->
                             Text(
                                 text = """
@@ -136,9 +140,35 @@ fun HomeView(
                         .background(PureWhite)
                         .padding(20.dp)
                         .width(250.dp)
-                        .height(30.dp)
+                        .height(400.dp)
                 ) {
-                    Text("Favorites")
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        item {
+                            Text("Favorite Items")
+                        }
+                        items(allFavoriteItems.value) { item ->
+                            Text(
+                                text = """
+                                ${item.ean} 
+                                - ${item.name} 
+                                - ${item.protein}g 
+                                - ${item.fat}g 
+                                - ${item.carbohydrates}g 
+                                - ${item.energy}kcal
+                                """.trimIndent(),
+                                modifier = Modifier.padding(4.dp)
+                                    .clickable{
+                                        navController.navigate("popupView/${item.ean}")
+                                    }
+                            )
+                        }
+                    }
                 }
             }
         }
