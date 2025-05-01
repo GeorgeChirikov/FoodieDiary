@@ -1,9 +1,12 @@
 package com.example.foodiediary.views
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.SearchBar
@@ -15,7 +18,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -24,9 +30,6 @@ import androidx.navigation.NavController
 import com.example.foodiediary.utils.SearchViewModelFactory
 import com.example.foodiediary.viewmodels.SearchViewModel
 import androidx.compose.runtime.collectAsState
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +37,7 @@ fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
     var searchText by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     val viewModel: SearchViewModel = viewModel(
         factory = SearchViewModelFactory(LocalContext.current)
@@ -44,6 +48,13 @@ fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .semantics { isTraversalGroup = true }
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    keyboardController?.hide()
+                    focusManager.clearFocus()
+                    active = false
+                })
+            }
     ) {
         SearchBar(
             modifier = Modifier
@@ -58,15 +69,27 @@ fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
             onSearch = { query ->
                 onSearch(query)
                 active = false
-                keyboardController?.hide() // Hide the keyboard
+                keyboardController?.hide()
+                focusManager.clearFocus()
             },
             active = active,
-            onActiveChange = { active = it },
+            onActiveChange = {
+                active = it
+                if(!active){
+                    keyboardController?.hide()
+                    focusManager.clearFocus()
+                }
+            },
             placeholder = { Text("Search") },
             leadingIcon = { } // Can add a search icon here if you like
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
             ) {
                 items(searchResults) { item ->
                     ListItem(
@@ -75,6 +98,7 @@ fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
                             navController.navigate("popupView/${item.ean}")
                             active = false
                             keyboardController?.hide()
+                            focusManager.clearFocus()
                         }
                     )
                 }
