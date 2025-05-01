@@ -14,18 +14,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +36,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -41,10 +45,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.utils.PopUpViewModelFactory
+import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.example.foodiediary.viewmodels.PopUpViewModel
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
@@ -68,6 +72,11 @@ fun PopUpView(
     )
 
     val favoriteButtonText by viewModel.favoriteButtonText.collectAsState()
+
+    //Add to diary msg state
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    var showMessage by remember { mutableStateOf(false) }
 
     val scale: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0.8f,
@@ -119,20 +128,24 @@ fun PopUpView(
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         if (item.ean != 0L) {
-                            Text(
-                                text = """
-                                    ${item.ean} 
-                                    - ${item.name} 
-                                    - ${item.energy} kcal 
-                                    - ${item.fat} g 
-                                    - ${item.carbohydrates} g 
-                                    - ${item.sugar} g 
-                                    - ${item.fiber} g
-                                    - ${item.protein} g 
-                                    - ${item.salt} g
-                                    """.trimIndent(),
+                            Column(
                                 modifier = Modifier.padding(4.dp)
-                            )
+                            ) {
+                                Text(text = item.ean.toString())
+                                Text(text = item.name)
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                NutrientRow(label = "Energy", value = "${item.energy} kcal")
+                                NutrientRow(label = "Fat", value = "${item.fat} g")
+                                NutrientRow(
+                                    label = "Carbohydrates",
+                                    value = "${item.carbohydrates} g"
+                                )
+                                NutrientRow(label = "Sugar", value = "${item.sugar} g")
+                                NutrientRow(label = "Fiber", value = "${item.fiber} g")
+                                NutrientRow(label = "Protein", value = "${item.protein} g")
+                                NutrientRow(label = "Salt", value = "${item.salt} g")
+                            }
                         } else {
                             Text("No item found")
                         }
@@ -142,6 +155,7 @@ fun PopUpView(
                             if (eanLong != null) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     viewModel.addItemToDiary(Added(ean = eanLong))
+                                    showMessage = true
                                 }
                             }
 
@@ -155,7 +169,11 @@ fun PopUpView(
                                     if (favoriteButtonText == "Add to favorites") {
                                         viewModel.addItemToFavorites(Favorite(ean = eanLong))
                                     } else {
-                                        viewModel.deleteItemFromFavorites(viewModel.favoriteRepository.getFavoriteByEan(eanLong))
+                                        viewModel.deleteItemFromFavorites(
+                                            viewModel.favoriteRepository.getFavoriteByEan(
+                                                eanLong
+                                            )
+                                        )
                                     }
 
                                 }
@@ -164,10 +182,32 @@ fun PopUpView(
                         }) {
                             Text(favoriteButtonText)
                         }
+                        SnackbarHost(hostState = snackbarHostState)
+                    }
+                }
+            }
+            // Trigger add to diary msg
+            if (showMessage) {
+                LaunchedEffect(Unit) {
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Item added to diary!")
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun NutrientRow(label: String, value: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 5.dp, end = 5.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, fontWeight = FontWeight.Bold)
+        Text(text = value)
     }
 }
 
