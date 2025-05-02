@@ -30,8 +30,8 @@ import androidx.navigation.NavController
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
-import com.example.foodiediary.utils.HistoryViewModelFactory
-import com.example.foodiediary.viewmodels.HistoryViewModel
+import com.example.foodiediary.utils.DiaryViewModelFactory
+import com.example.foodiediary.viewmodels.DiaryViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -42,8 +42,8 @@ import java.time.format.DateTimeFormatter
 @SuppressLint("ViewModelConstructorInComposable")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryView(navController: NavController) {
-    val viewModel: HistoryViewModel = viewModel( factory = HistoryViewModelFactory(LocalContext.current))
+fun DiaryView(navController: NavController) {
+    val viewModel: DiaryViewModel = viewModel( factory = DiaryViewModelFactory(LocalContext.current))
     val selectedDate by viewModel.selectedDate.collectAsState()
     val filteredData by viewModel.filteredData.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }

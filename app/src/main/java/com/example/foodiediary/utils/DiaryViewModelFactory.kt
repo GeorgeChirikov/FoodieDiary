@@ -5,15 +5,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.foodiediary.viewmodels.HistoryViewModel
+import com.example.foodiediary.viewmodels.DiaryViewModel
 
-class HistoryViewModelFactory(
+class DiaryViewModelFactory(
     private val context: Context
 ) : ViewModelProvider.Factory {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HistoryViewModel::class.java)) {
-            return HistoryViewModel(context) as T
+        if (modelClass.isAssignableFrom(DiaryViewModel::class.java)) {
+            return DiaryViewModel(context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

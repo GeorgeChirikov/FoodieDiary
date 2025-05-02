@@ -19,7 +19,7 @@ import java.time.ZoneId
 import java.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-class HistoryViewModel(context: Context) : ViewModel() {
+class DiaryViewModel(context: Context) : ViewModel() {
     private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
 
     // Selected date state

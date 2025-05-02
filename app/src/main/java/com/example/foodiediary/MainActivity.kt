@@ -16,13 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.foodiediary.views.DiaryView
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
 import com.example.foodiediary.views.HomeView
 import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
 import com.example.foodiediary.views.FormView
-import com.example.foodiediary.views.HistoryView
 import com.example.foodiediary.views.PopUpView
 
 
@@ -75,9 +75,9 @@ fun AppNavigation() {
                 FavoritesView(navController)
             }
         }
-        composable("historyView") {
+        composable("diaryView") {
             ScreenWithDrawer(navController, currentRoute) {
-                HistoryView(navController)
+                DiaryView(navController)
             }
         }
         composable("formView/{ean}") { backStackEntry ->
