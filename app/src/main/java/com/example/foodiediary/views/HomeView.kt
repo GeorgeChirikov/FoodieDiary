@@ -111,13 +111,12 @@ fun HomeView(
                     Text("Scan Barcode (EAN)")
                 }
                 Spacer(modifier = spacerModifier)
-                CustomCard() {
+                Card(modifier = Modifier) {
                     Text(
                         text = "lorem ipsum",
                         modifier = Modifier
                             .padding(16.dp)
                     )
-                } {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
