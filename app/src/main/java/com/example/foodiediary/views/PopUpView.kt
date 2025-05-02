@@ -122,6 +122,7 @@ fun PopUpView(
                         ) {
                             IconButton(onClick = {
                                 isVisible = false
+                                showMessage = false
                             }) {
                                 Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
                             }
