@@ -1,6 +1,5 @@
 package com.example.foodiediary.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -10,7 +9,6 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 // primary: main color; used for the app bar, buttons, etc.; visually distinct
@@ -19,6 +17,24 @@ import androidx.compose.ui.platform.LocalContext
 
 private val LightColorScheme = lightColorScheme(
 
+    primary = GrassGreen,
+    onPrimary = PureWhite,
+
+    secondary = IndigoPurple,
+    onSecondary = PureWhite,
+
+    tertiary = AppleRed,
+    onTertiary = PureBlack,
+
+    surface = ShyGreen,
+    onSurface = PureBlack,
+
+    error = RoseRed,
+    onError = PureWhite
+)
+
+// TO DO: add colors for dark theme
+private val DarkColorScheme = darkColorScheme(
 
     primary = GrassGreen,
     onPrimary = NatureWhite,
@@ -35,9 +51,6 @@ private val LightColorScheme = lightColorScheme(
     error = RoseRed,
     onError = PureWhite
 )
-
-// TO DO: add colors for dark theme
-private val DarkColorScheme = darkColorScheme()
 
 
 val GradientBackground = Brush.verticalGradient(

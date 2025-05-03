@@ -19,7 +19,8 @@ val ShyGreen = Color(0xFFC5E1A3)
 
 // purples
 val IndigoPurple = Color(0xFF8538b0)
-val LightPurple = Color(0xFFbc6fe7)
+val BrightPurple = Color(0xFFbc6fe7)
+val LightPurple = Color(0xFFB087CC)
 
 // reds
 val RoseRed = Color(0xFFBC4749)
