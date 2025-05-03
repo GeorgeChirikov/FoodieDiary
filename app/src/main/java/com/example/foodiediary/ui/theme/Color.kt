@@ -24,4 +24,5 @@ val RoseRed = Color(0xFFBC4749)
 val AppleRed = Color(0xFFE87461)
 
 val YellowStone = Color(0xFFE0C879)
+val LightYellow = Color(0xFFFFFFCE)
 val NatureWhite = Color(0xFFFEFAE0)
