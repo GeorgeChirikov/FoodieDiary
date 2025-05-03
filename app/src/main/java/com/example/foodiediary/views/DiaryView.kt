@@ -19,6 +19,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -88,20 +89,18 @@ fun DiaryView(navController: NavController) {
         ) {
             Text(text = "Pick Date")
         }
+
         // Card to display selected date
-        Card(
+        Text(
+            text = "Selected Date: ${selectedDate.format(DateTimeFormatter.ISO_DATE)}",
+            modifier = Modifier.padding(start = 24.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
+        )
+        HorizontalDivider(
+            thickness = 1.dp,
             modifier = Modifier
-                .padding(24.dp)
-                .fillMaxWidth()
-                .shadow(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.tertiary),
-            shape = MaterialTheme.shapes.medium
-        ) {
-            Text(
-                text = "Selected Date: ${selectedDate.format(DateTimeFormatter.ISO_DATE)}",
-                modifier = Modifier.padding(16.dp)
-            )}
+                .padding(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 16.dp),
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
         if (showDatePicker) {
             DatePickerDialog(

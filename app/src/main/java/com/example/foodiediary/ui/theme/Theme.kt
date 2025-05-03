@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 // tertiary: optional, used for accents and emphasis or to add depth
 
 private val LightColorScheme = lightColorScheme(
+
+
     primary = GrassGreen,
     onPrimary = NatureWhite,
 
@@ -27,37 +29,15 @@ private val LightColorScheme = lightColorScheme(
     tertiary = AppleRed,
     onTertiary = PureBlack,
 
-    surface = NatureWhite,
+    surface = ShyGreen,
     onSurface = PureBlack,
-
 
     error = RoseRed,
     onError = PureWhite
 )
 
-// TO DO: change the colors to match dark theme
-private val DarkColorScheme = darkColorScheme(
-    /*primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-    */
-)
-
-/*private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-
-) */
+// TO DO: add colors for dark theme
+private val DarkColorScheme = darkColorScheme()
 
 
 val GradientBackground = Brush.verticalGradient(
@@ -92,3 +72,20 @@ fun FoodieDiaryTheme(
         content = content
     )
 }
+
+
+/*private val LightColorScheme = lightColorScheme(
+    primary = Purple40,
+    secondary = PurpleGrey40,
+    tertiary = Pink40
+
+    Other default colors to override
+    background = Color(0xFFFFFBFE),
+    surface = Color(0xFFFFFBFE),
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onTertiary = Color.White,
+    onBackground = Color(0xFF1C1B1F),
+    onSurface = Color(0xFF1C1B1F),
+
+) */
