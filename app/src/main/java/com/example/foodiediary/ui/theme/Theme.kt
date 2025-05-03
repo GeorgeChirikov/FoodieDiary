@@ -12,18 +12,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
+// primary: main color; used for the app bar, buttons, etc.; visually distinct
+// secondary: complements primary; used for actions buttons, selections and highlights
+// tertiary: optional, used for accents and emphasis or to add depth
+
+private val LightColorScheme = lightColorScheme(
+    primary = GrassGreen,
+    onPrimary = NatureWhite,
+
+    secondary = IndigoPurple,
+    onSecondary = PureWhite,
+
+    surface = NatureWhite,
+    onSurface = PureBlack,
+
+    error = RoseRed,
+    onError = PureWhite
+)
+
+// TO DO: change the colors to match dark theme
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80
 )
 
-private val LightColorScheme = lightColorScheme(
+/*private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
 
-    /* Other default colors to override
+    Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -31,8 +50,8 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
-)
+
+) */
 
 @Composable
 fun FoodieDiaryTheme(
@@ -52,7 +71,7 @@ fun FoodieDiaryTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = LightColorScheme, // colorscheme hardcoded, doesn't work otherwise. change to "colorScheme" to use dynamic colors
         typography = Typography,
         content = content
     )

@@ -67,7 +67,8 @@ fun DiaryView(navController: NavController) {
         .fillMaxSize()) {
 
         // Button to pick a date
-        Button(onClick = { showDatePicker = true }) {
+        Button(onClick = { showDatePicker = true },
+            modifier = Modifier.padding(16.dp)) {
             Text(text = "Pick Date")
         }
         Text(
