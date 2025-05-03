@@ -23,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,10 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.utils.HomeViewModelFactory
 import com.example.foodiediary.viewmodels.HomeViewModel
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
-import com.example.foodiediary.ui.theme.AppleRed
-import com.example.foodiediary.ui.theme.GrassGreen
-import com.example.foodiediary.ui.theme.IndigoPurple
-import com.example.foodiediary.ui.theme.LightGreen
+import com.example.foodiediary.ui.theme.GradientBackground
 
 @Composable
 fun HomeView(
@@ -53,15 +49,7 @@ fun HomeView(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        AppleRed,
-                        LightGreen,
-                        GrassGreen
-                    )
-                )
-            )
+            .background(GradientBackground)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -69,7 +57,7 @@ fun HomeView(
         // Header
         item {
             Text(
-                text = "Home Screen Content",
+                text = "Home",
                 fontSize = 20.sp,
                 modifier = Modifier
                     .padding(top = 20.dp)
@@ -105,19 +93,13 @@ fun HomeView(
                     )
                 }
 
-                // Button to scan barcode
+                // Button to scan a barcode
                 Button(
                     onClick = { navController.navigate("cameraView") },
                     modifier = Modifier
-                        .padding(16.dp) /*
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onPress = {
-                                    // Change color on hover
-                                    // Handle hover logic here
-                                })}*/ ,
+                        .padding(16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = IndigoPurple,
+                        containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary)
                 ){
                     Text("Scan Barcode (EAN)")

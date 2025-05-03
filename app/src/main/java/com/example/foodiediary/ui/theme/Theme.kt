@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
@@ -23,8 +24,12 @@ private val LightColorScheme = lightColorScheme(
     secondary = IndigoPurple,
     onSecondary = PureWhite,
 
+    tertiary = AppleRed,
+    onTertiary = PureBlack,
+
     surface = NatureWhite,
     onSurface = PureBlack,
+
 
     error = RoseRed,
     onError = PureWhite
@@ -32,9 +37,10 @@ private val LightColorScheme = lightColorScheme(
 
 // TO DO: change the colors to match dark theme
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    /*primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80
+    */
 )
 
 /*private val LightColorScheme = lightColorScheme(
@@ -52,6 +58,16 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = Color(0xFF1C1B1F),
 
 ) */
+
+
+val GradientBackground = Brush.verticalGradient(
+    colors = listOf(
+        AppleRed,
+        LightGreen,
+        GrassGreen
+    )
+)
+
 
 @Composable
 fun FoodieDiaryTheme(

@@ -30,9 +30,6 @@ val YellowStone = Color(0xFFE0C879)
 val LightYellow = Color(0xFFFFFFCE)
 val NatureWhite = Color(0xFFFAF9F6)
 
-// this will be replaced
-// val surface = Color(0xFFFAF9F6)
-
 
 
 // other colors
