@@ -26,3 +26,5 @@ val AppleRed = Color(0xFFE87461)
 val YellowStone = Color(0xFFE0C879)
 val LightYellow = Color(0xFFFFFFCE)
 val NatureWhite = Color(0xFFFEFAE0)
+
+val surface = Color(0xFFFAF9F6)

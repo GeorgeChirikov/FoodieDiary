@@ -2,7 +2,6 @@ package com.example.foodiediary.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
@@ -20,10 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,10 +33,10 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.utils.CameraViewModelFactory
-import com.example.foodiediary.utils.PopUpViewModelFactory
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -137,8 +132,15 @@ fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
     }
 }
 
+
+@Preview(showBackground = true)
 @Composable
-@Preview
 fun CameraViewPreview() {
-    //Prelude {}
+    val navController = rememberNavController()
+    FoodieDiaryTheme {
+        CameraView(
+            navController = navController,
+            showPopup = { /* No-op for preview */ }
+        )
+    }
 }

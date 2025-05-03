@@ -35,13 +35,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.models.data.database.AppDatabase
 import com.example.foodiediary.models.data.repository.ItemRepository
-import com.example.foodiediary.ui.theme.AppleRed
-import com.example.foodiediary.ui.theme.FoodieDiaryTheme
-import com.example.foodiediary.ui.theme.GrassGreen
-import com.example.foodiediary.ui.theme.LightGreen
-import com.example.foodiediary.ui.theme.PureWhite
 import com.example.foodiediary.utils.HomeViewModelFactory
 import com.example.foodiediary.viewmodels.HomeViewModel
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
+import com.example.foodiediary.ui.theme.AppleRed
+import com.example.foodiediary.ui.theme.GrassGreen
+import com.example.foodiediary.ui.theme.LightGreen
+import com.example.foodiediary.ui.theme.surface
 
 @Composable
 fun HomeView(
@@ -108,8 +108,9 @@ fun HomeView(
                             .padding(16.dp)
                     )
                 }
-                Spacer(modifier = Modifier.height(24.dp))
+
                 // Button to scan barcode
+                Spacer(modifier = Modifier.height(24.dp))
                 Button(onClick = { navController.navigate("cameraView") }) {
                     Text("Scan Barcode (EAN)")
                 }
@@ -122,7 +123,7 @@ fun HomeView(
                         .height(400.dp)
                         .shadow(8.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = PureWhite),
+                        containerColor = surface),
                     shape = MaterialTheme.shapes.medium
                 ) {
                     LazyColumn(
@@ -161,7 +162,7 @@ fun HomeView(
                         .height(400.dp)
                         .shadow(8.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = PureWhite,
+                        containerColor = surface,
                         contentColor = MaterialTheme.colorScheme.onSurface),
                     shape = MaterialTheme.shapes.medium
                 ) {
@@ -202,7 +203,7 @@ fun HomeView(
 fun CustomCard(
     modifier: Modifier = Modifier,
     colors: CardColors = CardDefaults.cardColors(
-        containerColor = PureWhite),
+        containerColor = surface),
     content: @Composable () -> Unit
 ) {
     Card(

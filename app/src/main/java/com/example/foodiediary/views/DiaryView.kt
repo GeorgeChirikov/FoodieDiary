@@ -24,10 +24,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.AppleRed
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GrassGreen
 import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.utils.DiaryViewModelFactory
@@ -62,6 +65,8 @@ fun DiaryView(navController: NavController) {
             )
         )
         .fillMaxSize()) {
+
+        // Button to pick a date
         Button(onClick = { showDatePicker = true }) {
             Text(text = "Pick Date")
         }
@@ -108,5 +113,14 @@ fun DiaryView(navController: NavController) {
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DiaryViewPreview() {
+    val navController = rememberNavController()
+    FoodieDiaryTheme {
+        DiaryView(navController = navController)
     }
 }
