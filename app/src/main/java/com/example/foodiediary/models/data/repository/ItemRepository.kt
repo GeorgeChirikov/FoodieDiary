@@ -12,7 +12,11 @@ class ItemRepository(private val itemDao: ItemDao) {
     }
 
     suspend fun insert(item: Item) {
-        itemDao.insert(item)
+        if (getItemByEan(item.ean) == null) {
+            itemDao.insert(item)
+        } else {
+            itemDao.update(item)
+        }
     }
 
     suspend fun update(item: Item) {

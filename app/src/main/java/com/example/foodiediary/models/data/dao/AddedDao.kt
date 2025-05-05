@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.foodiediary.models.data.entity.Added
 import kotlinx.coroutines.flow.Flow
 
@@ -30,6 +31,9 @@ interface AddedDao {
 
     @Insert
     suspend fun insert(added: Added)
+
+    @Update
+    suspend fun update(added: Added)
 
     @Delete
     suspend fun delete(added: Added)

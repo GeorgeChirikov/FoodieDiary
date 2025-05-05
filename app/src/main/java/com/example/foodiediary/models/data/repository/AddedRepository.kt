@@ -18,7 +18,13 @@ class AddedRepository(private val addedDao: AddedDao) {
     // Get added item by time stamp
     suspend fun getAddedByTimeStamp(timeStamp: Long) = addedDao.getAddedByTimeStamp(timeStamp)
 
-    suspend fun insert(added: Added) = addedDao.insert(added)
+    suspend fun insert(added: Added) {
+        if (getAddedByEan(added.ean) == null) {
+            addedDao.insert(added)
+        } else {
+            addedDao.update(added)
+        }
+    }
 
     suspend fun delete(added: Added) = addedDao.delete(added)
 
