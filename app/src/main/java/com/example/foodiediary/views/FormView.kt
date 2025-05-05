@@ -42,7 +42,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
-import com.example.foodiediary.ui.theme.IndigoPurple
 import com.example.foodiediary.utils.FormViewModelFactory
 import com.example.foodiediary.viewmodels.FormViewModel
 
