@@ -108,7 +108,7 @@ fun PopUpView(
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(width = 250.dp, height = 450.dp)
+                            .size(width = 250.dp, height = 490.dp)
                             .scale(scale)
                             .alpha(alpha)
                             .background(Color.White),
