@@ -13,7 +13,15 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     }
 
     suspend fun insert(favorite: Favorite) {
-        favoriteDao.insert(favorite)
+        if (getFavoriteByEan(favorite.ean) == null) {
+            favoriteDao.insert(favorite)
+        } else {
+            favoriteDao.update(favorite)
+        }
+    }
+
+    suspend fun update(favorite: Favorite) {
+        favoriteDao.update(favorite)
     }
 
     suspend fun delete(favorite: Favorite) {

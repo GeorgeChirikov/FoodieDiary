@@ -1,5 +1,6 @@
 package com.example.foodiediary
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,6 +17,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.lifecycleScope
+import com.example.foodiediary.utils.DataInjectionUtilClass
 import com.example.foodiediary.views.DiaryView
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
@@ -24,13 +27,20 @@ import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
 import com.example.foodiediary.views.FormView
 import com.example.foodiediary.views.PopUpView
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("CoroutineCreationDuringComposition")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val dataInjection = DataInjectionUtilClass(this)
+            lifecycleScope.launch {
+                dataInjection.injectData()
+            }
+
             FoodieDiaryTheme {
                 AppNavigation()
             }
