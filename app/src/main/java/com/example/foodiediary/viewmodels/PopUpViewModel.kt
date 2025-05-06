@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class PopUpViewModel(context: Context) : ViewModel() {
 
-    private val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
+    internal val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
     private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
     internal val favoriteRepository = FavoriteRepository(AppDatabase.getInstance(context).favoriteDao())
 
@@ -58,6 +58,14 @@ class PopUpViewModel(context: Context) : ViewModel() {
                 favoriteRepository.delete(favorite)
             }
             favoriteButtonText.value = "Add to favorites"
+        }
+    }
+
+    fun deleteItem(item: Item?) {
+        if (item != null) {
+            viewModelScope.launch {
+                itemRepository.delete(item)
+            }
         }
     }
 
