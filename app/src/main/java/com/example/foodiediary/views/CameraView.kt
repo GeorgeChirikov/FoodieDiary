@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -74,7 +75,7 @@ fun CameraView(
     )
 
     val buttonText by viewmodel.buttonText.collectAsState()
-    val ean13Result by viewmodel.ean13Result.collectAsState()
+    //val ean13Result by viewmodel.ean13Result.collectAsState()
 
 
 
@@ -102,16 +103,6 @@ fun CameraView(
                 verticalArrangement = Arrangement.Bottom
 
             ) {
-                Text(
-                    text = ean13Result,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .background(
-                            color = Color(0xBFFFFFFF),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(16.dp)
-                )
                 Button(
                     onClick = {
                         viewmodel.onScanEanButtonClick()

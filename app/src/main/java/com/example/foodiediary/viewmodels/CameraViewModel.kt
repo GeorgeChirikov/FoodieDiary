@@ -6,12 +6,10 @@ import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.LifecycleCameraController
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.foodiediary.models.data.database.AppDatabase
-import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.models.data.repository.ItemRepository
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -20,7 +18,6 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -40,7 +37,7 @@ class CameraViewModel(
     var isScanning = false
     private val itemRepository: ItemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
 
-    val ean13Result = MutableStateFlow<String>("No EAN Code")
+    //val ean13Result = MutableStateFlow<String>("No EAN Code")
 
     val scanningDelay = 10_000L // 10 seconds
     private val coroutineScope = viewModelScope
@@ -51,9 +48,8 @@ class CameraViewModel(
     private val databaseMutex = Mutex()
 
     fun onScanEanButtonClick() {
-        if (!isScanning) {
+        if (!isScanning){
             Log.d("CameraView", "Scan EAN button clicked")
-            buttonText.value = "Scanning..."
             isScanning = true
             cameraController.setImageAnalysisAnalyzer(
                 context.mainExecutor,
@@ -62,7 +58,7 @@ class CameraViewModel(
 
             // Stop scanning after 10 seconds
             coroutineScope.launch {
-                for (i in 1..(scanningDelay/1000).toInt()) {
+                for (i in 1..(scanningDelay / 1000).toInt()) {
                     delay(1000)
                     if (isScanning) {
                         buttonText.value = "Scanning" + ".".repeat(i % 4)
@@ -70,21 +66,25 @@ class CameraViewModel(
                     }
                 }
                 if (isScanning) {
-                    cameraController.clearImageAnalysisAnalyzer()
-                    buttonText.value = "Scan EAN"
-                    isScanning = false
-                    reset()
-                    ean13Result.value = "No EAN Code"
+                    stopScanning()
                     Log.d("CameraView", "Scanning timeout")
                 }
             }
         }
+
     }
 
-    val imageAnalyzer = getImageAnalyzer { ean13Code ->
-        if (ean13Code != null && isScanning) {
-            isScanning = false
-            handleScannedCode(ean13Code, showPopup)
+    private val imageAnalyzer = ImageAnalysis.Analyzer { imageProxy ->
+        //Log.d("CameraView", "Image analysis started")
+        scanEan(imageProxy) { ean13Code ->
+            Log.d("CameraView", "inside scanEan(imageProxy)")
+            if (ean13Code != null) {
+                Log.d("CameraView", "Yes EAN code detected")
+                //ean13Result.value = ean13Code
+                handleScannedCode(ean13Code, showPopup)
+            } else {
+                Log.d("CameraView", "No EAN code detected")
+            }
         }
     }
 
@@ -95,38 +95,17 @@ class CameraViewModel(
                 val eanLong = ean13Code.toLong()
                 val existingItem = itemRepository.getItemByEan(eanLong)
                 if (existingItem == null) {
-
                     navController.navigate("formView/$ean13Code")
-
-                    Log.d("CameraViewModel", "Item with EAN $ean13Code inserted into the database")
+                    Log.d("CameraViewModel", "FormView opened with EAN $ean13Code")
                 } else {
-                    Log.d(
-                        "CameraViewModel",
-                        "Item with EAN $ean13Code already exists in the database"
-                    )
                     showPopup(eanLong)
+                    Log.d("CameraViewModel", "Item with EAN $ean13Code already exists in the database")
                 }
             }
-            isScanning = false
-            buttonText.value = "Scan EAN"
-            cameraController.clearImageAnalysisAnalyzer()
-        }
-    }
-
-    fun getImageAnalyzer(
-        onResult: (ean13Code: String?) -> Unit
-    ): ImageAnalysis.Analyzer {
-        return ImageAnalysis.Analyzer { imageProxy ->
-            scanEan(
-                imageProxy = imageProxy,
-                onResult = { ean13Code ->
-                    if (ean13Code != null) {
-                        Log.d("CameraViewModel", "EAN 13 code returned: $ean13Code")
-                        ean13Result.value = "EAN: $ean13Code"
-                        onResult(ean13Code)
-                    }
-                }
-            )
+            // Stop scanning after handling the scanned code
+            stopScanning()
+            // Reset the scanner to allow for new scans
+            resetScanner()
         }
     }
 
@@ -159,9 +138,25 @@ class CameraViewModel(
         }
     }
 
-    fun reset(){
+    fun stopScanning() {
+        cameraController.clearImageAnalysisAnalyzer()
+
+        isScanning = false
+        buttonText.value = "Scan EAN"
+        //ean13Result.value = "No EAN Code"
+        Log.d("CameraViewModel", "Scanning stopped")
+    }
+
+    fun resetScanner() {
+        isScanning = false
+        buttonText.value = "Scan EAN"
+        //ean13Result.value = "No EAN Code"
+
         scanner.close()
         scanner = BarcodeScanning.getClient(scannerOptions)
-        isScanning = false
+
+        cameraController.clearImageAnalysisAnalyzer()
+        cameraController.setImageAnalysisAnalyzer(context.mainExecutor, imageAnalyzer)
+        Log.d("CameraViewModel", "Scanner reset")
     }
 }
