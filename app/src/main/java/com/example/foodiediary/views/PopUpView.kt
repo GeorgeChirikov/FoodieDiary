@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -76,7 +77,8 @@ fun PopUpView(
     //Add to diary msg state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    var showMessage by remember { mutableStateOf(false) }
+    // Add to diary msg key, used to trigger the snackbar
+    var snackbarKey by remember { mutableIntStateOf(0) }
 
     val scale: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0.8f,
@@ -108,7 +110,7 @@ fun PopUpView(
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(width = 250.dp, height = 490.dp)
+                            .size(width = 250.dp, height = 420.dp)
                             .scale(scale)
                             .alpha(alpha)
                             .background(Color.White),
@@ -122,7 +124,7 @@ fun PopUpView(
                         ) {
                             IconButton(onClick = {
                                 isVisible = false
-                                showMessage = false
+                                snackbarKey = 0
                             }) {
                                 Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
                             }
@@ -156,7 +158,7 @@ fun PopUpView(
                             if (eanLong != null) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     viewModel.addItemToDiary(Added(ean = eanLong))
-                                    showMessage = true
+                                snackbarKey++
                                 }
                             }
 
@@ -183,13 +185,14 @@ fun PopUpView(
                         }) {
                             Text(favoriteButtonText)
                         }
-                        SnackbarHost(hostState = snackbarHostState)
                     }
+                    // Shows msg when item is added to diary
+                    SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(8.dp))
                 }
             }
-            // Trigger add to diary msg
-            if (showMessage) {
-                LaunchedEffect(Unit) {
+            // Trigger add to diary msg if key is bigger than 0
+            if (snackbarKey>0) {
+                LaunchedEffect(snackbarKey) {
                     scope.launch {
                         snackbarHostState.showSnackbar("Item added to diary!")
                     }
