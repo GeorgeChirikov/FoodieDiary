@@ -190,7 +190,7 @@ fun FormView(
                         // Cancel button
                         Button(
                             onClick = {
-                                navController.popBackStack()
+                                navController.navigate("homeView")
                                 snackbarKey = 0
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -232,7 +232,7 @@ fun FormView(
                                         protein = protein.toDouble(),
                                         salt = salt.toDouble()
                                     )
-                                    navController.popBackStack()
+                                    navController.navigate("homeView")
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(
