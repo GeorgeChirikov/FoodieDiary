@@ -201,6 +201,7 @@ fun FormView(
                         Button(
                             onClick = {
                                 if (isError(
+                                        item,
                                         protein,
                                         fat,
                                         carbohydrates,
@@ -257,6 +258,7 @@ fun FormView(
 
 // A fucntion for checking if any given fields are empty or not a number
 fun isError(
+    itemName: String,
     protein: String,
     fat: String,
     carbohydrates: String,
@@ -277,6 +279,10 @@ fun isError(
             // If any field cannot be parsed as a Double, return true
             return true
         }
+    }
+
+    if (itemName.isBlank()) {
+        return true
     }
 
     // If all fields are non-blank and can be parsed as Doubles, return false
