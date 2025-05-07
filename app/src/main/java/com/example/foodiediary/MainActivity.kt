@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val dataInjection = DataInjectionUtilClass(this)
             lifecycleScope.launch {
-                dataInjection.injectData()
+                //dataInjection.injectData()                // Test data, delete on release!!!
             }
 
             FoodieDiaryTheme {
