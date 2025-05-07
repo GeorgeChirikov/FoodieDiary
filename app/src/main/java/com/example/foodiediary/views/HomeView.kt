@@ -168,9 +168,9 @@ fun HomeView(navController: NavController) {
                                     }
                             )
                             HorizontalDivider(
-                                thickness = 2.dp,
+                                thickness = 1.dp,
                                 modifier = Modifier
-                                    .padding(start = 32.dp, end = 32.dp, top = 12.dp, bottom = 16.dp),
+                                    .padding(start = 36.dp, end = 36.dp, top = 12.dp, bottom = 16.dp),
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         }
@@ -208,18 +208,23 @@ fun HomeView(navController: NavController) {
                         items(allFavoriteItems.value) { item ->
                             Text(
                                 text = """
-                                ${item.ean} 
-                                - ${item.name} 
-                                - ${item.protein}g 
-                                - ${item.fat}g 
-                                - ${item.carbohydrates}g 
-                                - ${item.energy}kcal
+                                ${item.name} 
+                                - protein: ${item.protein}g 
+                                - fat: ${item.fat}g 
+                                - carbs: ${item.carbohydrates}g 
+                                - energy: ${item.energy}kcal
                                 """.trimIndent(),
                                 modifier = Modifier
                                     .padding(4.dp)
                                     .clickable {
                                         navController.navigate("popupView/${item.ean}")
                                     }
+                            )
+                            HorizontalDivider(
+                                thickness = 1.dp,
+                                modifier = Modifier
+                                    .padding(start = 36.dp, end = 36.dp, top = 12.dp, bottom = 16.dp),
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }

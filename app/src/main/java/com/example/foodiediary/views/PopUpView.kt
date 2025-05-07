@@ -42,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -111,14 +112,6 @@ fun PopUpView(
                     dismissOnClickOutside = true
                 )
             ) {
-                /*
-                // Box was replaced with Card
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
-                */
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -133,9 +126,8 @@ fun PopUpView(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            // .size(width = 250.dp, height = 420.dp)
+                            // .size(width = 250.dp, height = 470.dp)
                             .padding(24.dp)
-                            .size(width = 250.dp, height = 470.dp)
                             .scale(scale)
                             .alpha(alpha),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -143,7 +135,7 @@ fun PopUpView(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            //.padding(8.dp),
+                                //.padding(8.dp),
                             horizontalArrangement = Arrangement.End
                         ) {
                             IconButton(onClick = {
@@ -160,28 +152,10 @@ fun PopUpView(
                             Column(
                                 modifier = Modifier.padding(4.dp)
                             ) {
-
-// >>>>>>> 1fff2103ad853d2a6317168ec98aa4b284db8ca6
-                                /*
-                                IconButton(onClick = {
-                                    isVisible = false
-                                    showMessage = false
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Close,
-                                        contentDescription = "Close"
-                                    )
-                                }
-                            }
-                            // Spacer(modifier = Modifier.height(16.dp))
-                            if (item.ean != 0L) {
-                                Column(
-                                    modifier = Modifier.padding(4.dp)
-                                ) {
-
-                                 */
-                                Text(text = item.ean.toString())
                                 Text(text = item.name)
+                                Text(
+                                    text = item.ean.toString(),
+                                    fontSize = 12.sp)
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 NutrientRow(
@@ -276,7 +250,10 @@ fun PopUpView(
                                     }
                                 }
                                 isVisible = false
-                            }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
                         ) {
                             Text("Delete Item")
                         }
