@@ -14,11 +14,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBarDefaults.colors
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -35,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +52,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.utils.PopUpViewModelFactory
 import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -74,7 +82,7 @@ fun PopUpView(
 
     val favoriteButtonText by viewModel.favoriteButtonText.collectAsState()
 
-    //Add to diary msg state
+    // Add to diary msg state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     // Add to diary msg key, used to trigger the snackbar
@@ -102,24 +110,38 @@ fun PopUpView(
                     dismissOnClickOutside = true
                 )
             ) {
+                /*
+                // Box was replaced with Card
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Black.copy(alpha = 0.5f)),
                     contentAlignment = Alignment.Center
+                */
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(24.dp)
+                        .shadow(8.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(width = 250.dp, height = 420.dp)
+                            .fillMaxWidth()
+                            // .size(width = 250.dp, height = 420.dp)
+                            .padding(24.dp)
                             .scale(scale)
-                            .alpha(alpha)
-                            .background(Color.White),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                            .alpha(alpha),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(end = 8.dp),
+                                .fillMaxWidth(),
+                            //.padding(8.dp),
                             horizontalArrangement = Arrangement.End
                         ) {
                             IconButton(onClick = {
@@ -129,11 +151,32 @@ fun PopUpView(
                                 Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
                             }
                         }
+
                         Spacer(modifier = Modifier.height(16.dp))
                         if (item.ean != 0L) {
                             Column(
                                 modifier = Modifier.padding(4.dp)
                             ) {
+
+// >>>>>>> 1fff2103ad853d2a6317168ec98aa4b284db8ca6
+                                /*
+                                IconButton(onClick = {
+                                    isVisible = false
+                                    showMessage = false
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Close,
+                                        contentDescription = "Close"
+                                    )
+                                }
+                            }
+                            // Spacer(modifier = Modifier.height(16.dp))
+                            if (item.ean != 0L) {
+                                Column(
+                                    modifier = Modifier.padding(4.dp)
+                                ) {
+
+                                 */
                                 Text(text = item.ean.toString())
                                 Text(text = item.name)
                                 Spacer(modifier = Modifier.height(8.dp))
@@ -150,48 +193,68 @@ fun PopUpView(
                                 NutrientRow(label = "Salt", value = "${item.salt} g")
                             }
                         } else {
-                            Text("No item found")
+                            Text(
+                                text = "No item found"
+                            )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
-                        Button(onClick = {
-                            val eanLong = ean?.toLongOrNull()
-                            if (eanLong != null) {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    viewModel.addItemToDiary(Added(ean = eanLong))
-                                snackbarKey++
+                        Button(
+                            onClick = {
+                                val eanLong = ean?.toLongOrNull()
+                                if (eanLong != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        if (favoriteButtonText == "Add to favorites") {
+                                            viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                        } else {
+                                            viewModel.deleteItemFromFavorites(
+                                                viewModel.favoriteRepository.getFavoriteByEan(
+                                                    eanLong
+                                                )
+                                            )
+                                        }
+                                    }
                                 }
-                            }
-
-                        }) {
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary
+                            ),
+                            modifier = Modifier.padding(top = 24.dp)
+                        ) {
                             Text("Add to Diary")
                         }
-                        Button(onClick = {
-                            val eanLong = ean?.toLongOrNull()
-                            if (eanLong != null) {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    if (favoriteButtonText == "Add to favorites") {
-                                        viewModel.addItemToFavorites(Favorite(ean = eanLong))
-                                    } else {
-                                        viewModel.deleteItemFromFavorites(
-                                            viewModel.favoriteRepository.getFavoriteByEan(
-                                                eanLong
+
+                        Button(
+                            onClick = {
+                                val eanLong = ean?.toLongOrNull()
+                                if (eanLong != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        if (favoriteButtonText == "Add to favorites") {
+                                            viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                        } else {
+                                            viewModel.deleteItemFromFavorites(
+                                                viewModel.favoriteRepository.getFavoriteByEan(
+                                                    eanLong
+                                                )
                                             )
-                                        )
+                                        }
                                     }
-
                                 }
-                            }
-
-                        }) {
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary
+                            ),
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             Text(favoriteButtonText)
                         }
                     }
+
                     // Shows msg when item is added to diary
                     SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(8.dp))
                 }
             }
             // Trigger add to diary msg if key is bigger than 0
-            if (snackbarKey>0) {
+            if (snackbarKey > 0) {
                 LaunchedEffect(snackbarKey) {
                     scope.launch {
                         snackbarHostState.showSnackbar("Item added to diary!")
@@ -201,6 +264,7 @@ fun PopUpView(
         }
     }
 }
+
 
 @Composable
 fun NutrientRow(label: String, value: String) {
@@ -218,9 +282,11 @@ fun NutrientRow(label: String, value: String) {
 @Preview
 @Composable
 fun PopUpViewPreview() {
-    PopUpView(
-        ean = "1234567890123",
-        showPopup = true,
-        closePopup = {}
-    )
+    FoodieDiaryTheme {
+        PopUpView(
+            ean = "1234567890123",
+            showPopup = true,
+            closePopup = {}
+        )
+    }
 }
