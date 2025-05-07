@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
@@ -24,9 +25,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.AppleRed
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.ShyGreen
 import kotlinx.coroutines.launch
 
@@ -89,8 +93,8 @@ fun DrawerContent(
     Column(
         modifier = Modifier
             .requiredWidth(150.dp)
-            .background(ShyGreen)
-            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(top = 24.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
             .clip(RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp))
             .fillMaxHeight()
     ) {
@@ -125,3 +129,17 @@ fun DrawerItem(
     )
 }
 
+
+@Preview(showBackground = true)
+@Composable
+fun ScreenWithDrawerPreview() {
+    val navController = rememberNavController()
+    FoodieDiaryTheme {
+        ScreenWithDrawer(
+            navController = navController,
+            currentRoute = "homeView"
+        ) {
+            Text("Preview Content")
+        }
+    }
+}

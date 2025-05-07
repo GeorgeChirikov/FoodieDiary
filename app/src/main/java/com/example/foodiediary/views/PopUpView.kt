@@ -3,23 +3,24 @@ package com.example.foodiediary.views
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -36,16 +37,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.utils.PopUpViewModelFactory
 import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -87,7 +90,7 @@ fun PopUpView(
 
     val favoriteButtonText by viewModel.favoriteButtonText.collectAsState()
 
-    //Add to diary msg state
+    // Add to diary msg state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -110,24 +113,30 @@ fun PopUpView(
                     dismissOnClickOutside = true
                 )
             ) {
-                Box(
+                Card(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(24.dp)
+                        .shadow(8.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(width = 250.dp, height = 470.dp)
+                            .fillMaxWidth()
+                            // .size(width = 250.dp, height = 470.dp)
+                            .padding(24.dp)
                             .scale(scale)
-                            .alpha(alpha)
-                            .background(Color.White),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                            .alpha(alpha),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(end = 8.dp),
+                                .fillMaxWidth(),
+                                //.padding(8.dp),
                             horizontalArrangement = Arrangement.End
                         ) {
                             IconButton(onClick = {
@@ -144,8 +153,10 @@ fun PopUpView(
                             Column(
                                 modifier = Modifier.padding(4.dp)
                             ) {
-                                Text(text = item.ean.toString())
                                 Text(text = item.name)
+                                Text(
+                                    text = item.ean.toString(),
+                                    fontSize = 12.sp)
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 NutrientRow(
@@ -178,20 +189,29 @@ fun PopUpView(
                                 )
                             }
                         } else {
-                            Text("No item found")
+                            Text(
+                                text = "No item found"
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        Button(onClick = {
-                            val eanLong = ean?.toLongOrNull()
-                            if (eanLong != null) {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    viewModel.addItemToDiary(Added(ean = eanLong))
-                                snackbarKey++
+                        Button(
+                            onClick = {
+                                val eanLong = ean?.toLongOrNull()
+                                if (eanLong != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        viewModel.addItemToDiary(Added(ean = eanLong))
+                                        snackbarKey++
+                                    }
                                 }
-                            }
-                        }) {
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary
+                            ),
+                            modifier = Modifier.padding(top = 24.dp)
+
+                        ) {
                             Text("Add to Diary")
                         }
 
@@ -211,7 +231,11 @@ fun PopUpView(
 
                                 }
                             }
-                        }) {
+                        },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary
+                            ),
+                            modifier = Modifier.padding(16.dp)) {
                             Text(favoriteButtonText)
                         }
                         Button(
@@ -227,7 +251,7 @@ fun PopUpView(
                                 isVisible = false
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = RoseRed
+                                containerColor = MaterialTheme.colorScheme.error
                             )
                         ) {
                             Text("Delete Item")
@@ -254,7 +278,6 @@ fun PopUpView(
 @Composable
 fun NutrientRow(label: String, value: String) {
 
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -269,9 +292,11 @@ fun NutrientRow(label: String, value: String) {
 @Preview
 @Composable
 fun PopUpViewPreview() {
-    PopUpView(
-        ean = "1234567890123",
-        showPopup = true,
-        closePopup = {}
-    )
+    FoodieDiaryTheme {
+        PopUpView(
+            ean = "1234567890123",
+            showPopup = true,
+            closePopup = {}
+        )
+    }
 }
