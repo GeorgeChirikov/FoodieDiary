@@ -60,5 +60,4 @@ class PopUpViewModel(context: Context) : ViewModel() {
             favoriteButtonText.value = "Add to favorites"
         }
     }
-
 }

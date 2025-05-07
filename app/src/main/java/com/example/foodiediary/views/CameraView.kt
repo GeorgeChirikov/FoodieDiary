@@ -45,8 +45,8 @@ fun CameraView(
     modifier: Modifier = Modifier,
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
-    val context = LocalContext.current
 
+    val context = LocalContext.current
 
     val cameraController = LifecycleCameraController(context)
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
@@ -64,8 +64,6 @@ fun CameraView(
     val buttonText by viewmodel.buttonText.collectAsState()
     val ean13Result by viewmodel.ean13Result.collectAsState()
 
-
-
     Scaffold(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -82,6 +80,7 @@ fun CameraView(
                     preview
                 }
             )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -100,6 +99,7 @@ fun CameraView(
                         )
                         .padding(16.dp)
                 )
+
                 Button(
                     onClick = {
                         viewmodel.onScanEanButtonClick()
@@ -119,8 +119,12 @@ fun CameraView(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
+fun Prelude(
+    navController: NavController,
+    showPopup: (barcode: Long) -> Unit
+) {
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
+
     if (cameraPermission.status.isGranted) {
         CameraView(
             navController = navController,
@@ -131,7 +135,6 @@ fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
         cameraPermission.launchPermissionRequest()
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WaterDao {
+
     @Query("SELECT * FROM water")
     fun getAllWater(): Flow<List<Water>>
 

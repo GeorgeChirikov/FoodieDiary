@@ -36,15 +36,14 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
 
 @Composable
-fun HomeView(
-    navController: NavController
-) {
+fun HomeView(navController: NavController) {
+
     val viewModel: HomeViewModel = viewModel(
         factory = HomeViewModelFactory(LocalContext.current)
     )
+
     val allItems = viewModel.allItems.collectAsState(initial = emptyList())
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
-
 
     LazyColumn(
         modifier = Modifier
@@ -54,6 +53,7 @@ fun HomeView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         // Header
         item {
             Text(
@@ -64,6 +64,7 @@ fun HomeView(
                     .padding(bottom = 16.dp)
             )
         }
+
         // Column for cards
         item {
             Column(
@@ -72,6 +73,7 @@ fun HomeView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+
                 // Card for macronutrients
                 CustomCard(
                     modifier = Modifier.height(150.dp)
@@ -82,6 +84,7 @@ fun HomeView(
                             .padding(16.dp)
                     )
                 }
+
                 // Card for water intake
                 CustomCard(
                     modifier = Modifier.height(150.dp)
@@ -195,6 +198,7 @@ fun CustomCard(
         containerColor = MaterialTheme.colorScheme.surface),
     content: @Composable () -> Unit
 ) {
+
     Card(
         modifier = modifier
             .fillMaxWidth()

@@ -9,15 +9,6 @@ class AddedRepository(private val addedDao: AddedDao) {
     // Get added item by EAN
     suspend fun getAddedByEan(ean: Long) = addedDao.getAddedByEan(ean)
 
-    // Get items sorted by day
-    val itemsSortedByTimeStamp = addedDao.getItemsSortedByTimeStamp()
-
-    // Get items by EAN sorted by
-    fun getItemsByEanSortedByTimeStamp(ean: Long) = addedDao.getItemsByEanSortedByTimeStamp(ean)
-
-    // Get added item by time stamp
-    suspend fun getAddedByTimeStamp(timeStamp: Long) = addedDao.getAddedByTimeStamp(timeStamp)
-
     suspend fun insert(added: Added) {
         if (getAddedByEan(added.ean) == null) {
             addedDao.insert(added)

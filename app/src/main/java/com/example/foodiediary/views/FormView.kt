@@ -56,6 +56,7 @@ fun FormView(
     ean: String,
     navController: NavController
 ) {
+
     var item by remember { mutableStateOf("") }
     var protein by remember { mutableStateOf("") }
     var carbohydrates by remember { mutableStateOf("") }
@@ -68,11 +69,13 @@ fun FormView(
     val viewModel: FormViewModel = viewModel(
         factory = FormViewModelFactory(LocalContext.current)
     )
+
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     // Error msg state
     val snackbarHostState = remember { SnackbarHostState() }
+
     // Error msg key, used to trigger the snackbar
     var snackbarKey by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
@@ -130,20 +133,22 @@ fun FormView(
                         text = "Fill out information",
                         fontSize = 22.sp,
                     )
+
                     HorizontalDivider(
                         thickness = 2.dp,
                         modifier = Modifier
                             .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 24.dp),
                         color = MaterialTheme.colorScheme.onPrimary
                     )
+
                     Text(
                         text = "EAN: ${ean}",
                         fontSize = 18.sp,
                     )
+
                     Spacer(modifier = Modifier.height(16.dp))
 
-
-                    fields.forEach { (label, value) ->
+                    fields.forEach { (label, _) ->
                         TextField(
                             value = when (label) {
                                 "item" -> item
@@ -170,6 +175,7 @@ fun FormView(
                             },
                             label = { Text(label) }
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
@@ -197,6 +203,7 @@ fun FormView(
                                 text = "Cancel"
                             )
                         }
+
                         // Add button
                         Button(
                             onClick = {
@@ -224,6 +231,7 @@ fun FormView(
                                         protein = protein.toDouble(),
                                         salt = salt.toDouble()
                                     )
+
                                     navController.popBackStack()
                                 }
                             },
@@ -241,10 +249,12 @@ fun FormView(
                     }
                 }
             }
+
             // Shows error msg
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier.align(Alignment.BottomCenter).padding(8.dp))
         }
     }
+
     //Triggers msg if key is more than 0
     if (snackbarKey>0) {
         LaunchedEffect(snackbarKey) {
@@ -267,8 +277,17 @@ fun isError(
     fiber: String,
     salt: String
 ): Boolean {
+
     // List of fields to check
-    val fieldsToCheck = listOf(protein, fat, carbohydrates, energy, sugar, fiber, salt)
+    val fieldsToCheck = listOf(
+        protein,
+        fat,
+        carbohydrates,
+        energy,
+        sugar,
+        fiber,
+        salt
+    )
 
     for (field in fieldsToCheck) {
         if (field.isBlank()) {
@@ -295,7 +314,7 @@ fun PreviewForm () {
     val navController = rememberNavController()
     FoodieDiaryTheme {
         FormView(
-            ean = "64787680",
+            ean = "64707688",
             navController = navController
         )
     }

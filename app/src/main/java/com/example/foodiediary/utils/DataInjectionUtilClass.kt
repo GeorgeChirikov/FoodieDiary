@@ -14,9 +14,9 @@ import kotlinx.coroutines.launch
 
 // CLEANUP: This class AND IN MAIN ACTIVITY
 
-
 // This class is only for ui mocking
 class DataInjectionUtilClass(context: Context) {
+
     val itemDao = AppDatabase.getInstance(context).itemDao()
     val itemRepository = ItemRepository(itemDao)
     val addedDao = AppDatabase.getInstance(context).addedDao()
@@ -54,9 +54,5 @@ class DataInjectionUtilClass(context: Context) {
                 }
             }
         }
-
-
-
-
     }
 }

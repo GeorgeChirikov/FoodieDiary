@@ -6,12 +6,10 @@ import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.LifecycleCameraController
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.foodiediary.models.data.database.AppDatabase
-import com.example.foodiediary.models.data.entity.Item
 import com.example.foodiediary.models.data.repository.ItemRepository
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -20,7 +18,6 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -38,14 +35,14 @@ class CameraViewModel(
         .build()
     private var scanner: BarcodeScanner = BarcodeScanning.getClient(scannerOptions)
     var isScanning = false
+    val scanningDelay = 10_000L // 10 seconds
+
     private val itemRepository: ItemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
 
-    val ean13Result = MutableStateFlow<String>("No EAN Code")
-
-    val scanningDelay = 10_000L // 10 seconds
     private val coroutineScope = viewModelScope
 
     val buttonText = MutableStateFlow("Scan EAN")
+    val ean13Result = MutableStateFlow<String>("No EAN Code")
 
     // ensure that the database operations are thread-safe
     private val databaseMutex = Mutex()
@@ -88,8 +85,10 @@ class CameraViewModel(
         }
     }
 
-    fun handleScannedCode(ean13Code: String, showPopup: (barcode: Long) -> Unit) {
-        viewModelScope.launch {
+    fun handleScannedCode(
+        ean13Code: String,
+        showPopup: (barcode: Long) -> Unit
+    ) { viewModelScope.launch {
             // Perform database operations in a thread-safe manner
             databaseMutex.withLock {
                 val eanLong = ean13Code.toLong()
@@ -131,8 +130,10 @@ class CameraViewModel(
     }
 
     @androidx.annotation.OptIn(ExperimentalGetImage::class)
-    fun scanEan(imageProxy: ImageProxy, onResult: (String?) -> Unit) {
-        if (!isScanning) {
+    fun scanEan(
+        imageProxy: ImageProxy,
+        onResult: (String?) -> Unit
+    ) { if (!isScanning) {
             imageProxy.close()
             return
         }
@@ -159,7 +160,7 @@ class CameraViewModel(
         }
     }
 
-    fun reset(){
+    fun reset() {
         scanner.close()
         scanner = BarcodeScanning.getClient(scannerOptions)
         isScanning = false

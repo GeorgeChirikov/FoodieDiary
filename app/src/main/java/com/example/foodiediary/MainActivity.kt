@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
+
     @SuppressLint("CoroutineCreationDuringComposition")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,21 +52,25 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun AppNavigation() {
+
     val navController = rememberNavController()
+
     var showPopup by remember { mutableStateOf(false) }
     var eanToSearch by remember { mutableStateOf<Long?>(null) }
+
     val currentRoute = navController.currentBackStackEntryFlow
         .collectAsState(initial = navController.currentBackStackEntry)
         .value?.destination?.route
         ?: "homeView" // Default route if null
 
-
     NavHost(navController = navController, startDestination = "homeView") {
+
         composable("homeView") {
             ScreenWithDrawer(navController, currentRoute) {
                 HomeView(navController)
             }
         }
+
         composable("cameraView") {
             ScreenWithDrawer(navController, currentRoute) {
                 Prelude(
@@ -77,6 +82,7 @@ fun AppNavigation() {
                 )
             }
         }
+
         composable("searchView") {
             ScreenWithDrawer(navController, currentRoute) {
                 SearchView(onSearch = { query -> navController.navigate("searchResultsView/$query") }, navController)
@@ -87,11 +93,13 @@ fun AppNavigation() {
                 FavoritesView(navController)
             }
         }
+
         composable("diaryView") {
             ScreenWithDrawer(navController, currentRoute) {
                 DiaryView(navController)
             }
         }
+
         composable("formView/{ean}") { backStackEntry ->
             val ean = backStackEntry.arguments?.getString("ean")
             if (ean != null) {
@@ -100,20 +108,22 @@ fun AppNavigation() {
                     navController = navController,
                 )
             }
-
         }
+
         composable("popupView/{ean}") { backStackEntry ->
             val ean = backStackEntry.arguments?.getString("ean")
             PopUpView(ean, true, closePopup = { navController.popBackStack() })
         }
-
     }
+
+    // Checks if popup is shown and if it should be closed
     if (showPopup && eanToSearch == null) {
         PopUpView(
             ean = null,
             showPopup = showPopup,
             closePopup = { showPopup = false })
     }
+    
     if (showPopup && eanToSearch != null) {
         eanToSearch?.let {
             PopUpView(

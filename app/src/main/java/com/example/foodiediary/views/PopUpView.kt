@@ -58,18 +58,29 @@ fun PopUpView(
     showPopup: Boolean,
     closePopup: () -> Unit,
 ) {
+
     val barcode = ean?.toLongOrNull() ?: 0L
+
     val viewModel: PopUpViewModel = viewModel(
         factory = PopUpViewModelFactory(LocalContext.current)
     )
     viewModel.getBarcodeData(barcode)
     viewModel.updateFavoriteButtonText(barcode)
+
     val item by viewModel.barcodeItem.collectAsState()
+
     var isVisible by remember { mutableStateOf(showPopup) }
+
     val alpha: Float by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
         animationSpec = tween(durationMillis = 300),
         label = "alpha"
+    )
+
+    val scale: Float by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0.8f,
+        animationSpec = tween(durationMillis = 300),
+        label = "scale"
     )
 
     val favoriteButtonText by viewModel.favoriteButtonText.collectAsState()
@@ -77,14 +88,9 @@ fun PopUpView(
     //Add to diary msg state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
     // Add to diary msg key, used to trigger the snackbar
     var snackbarKey by remember { mutableIntStateOf(0) }
-
-    val scale: Float by animateFloatAsState(
-        targetValue = if (isVisible) 1f else 0.8f,
-        animationSpec = tween(durationMillis = 300),
-        label = "scale"
-    )
 
     if (showPopup) {
         if (alpha == 0f) {
@@ -129,7 +135,9 @@ fun PopUpView(
                                 Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
                             }
                         }
+
                         Spacer(modifier = Modifier.height(16.dp))
+
                         if (item.ean != 0L) {
                             Column(
                                 modifier = Modifier.padding(4.dp)
@@ -144,6 +152,7 @@ fun PopUpView(
                                     label = "Carbohydrates",
                                     value = "${item.carbohydrates} g"
                                 )
+
                                 NutrientRow(label = "Sugar", value = "${item.sugar} g")
                                 NutrientRow(label = "Fiber", value = "${item.fiber} g")
                                 NutrientRow(label = "Protein", value = "${item.protein} g")
@@ -152,7 +161,9 @@ fun PopUpView(
                         } else {
                             Text("No item found")
                         }
+
                         Spacer(modifier = Modifier.height(16.dp))
+
                         Button(onClick = {
                             val eanLong = ean?.toLongOrNull()
                             if (eanLong != null) {
@@ -161,10 +172,10 @@ fun PopUpView(
                                 snackbarKey++
                                 }
                             }
-
                         }) {
                             Text("Add to Diary")
                         }
+
                         Button(onClick = {
                             val eanLong = ean?.toLongOrNull()
                             if (eanLong != null) {
@@ -181,15 +192,16 @@ fun PopUpView(
 
                                 }
                             }
-
                         }) {
                             Text(favoriteButtonText)
                         }
                     }
+
                     // Shows msg when item is added to diary
                     SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(8.dp))
                 }
             }
+
             // Trigger add to diary msg if key is bigger than 0
             if (snackbarKey>0) {
                 LaunchedEffect(snackbarKey) {
@@ -204,6 +216,7 @@ fun PopUpView(
 
 @Composable
 fun NutrientRow(label: String, value: String) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

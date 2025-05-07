@@ -20,6 +20,7 @@ import java.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class DiaryViewModel(context: Context) : ViewModel() {
+
     private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
 
     // Selected date state
@@ -28,7 +29,6 @@ class DiaryViewModel(context: Context) : ViewModel() {
 
     // All data state
     private val _allData = MutableStateFlow<List<Added>>(emptyList())
-    val allData: StateFlow<List<Added>> = _allData.asStateFlow()
 
     // Filtered data state
     private val _filteredData = MutableStateFlow<List<Added>>(emptyList())

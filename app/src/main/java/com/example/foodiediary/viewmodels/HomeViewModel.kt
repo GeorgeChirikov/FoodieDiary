@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class HomeViewModel(context: Context) : ViewModel() {
+
     val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
     val allItems = itemRepository.getAllItems()
     val favoriteRepository = FavoriteRepository(AppDatabase.getInstance(context).favoriteDao())

@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlin.text.contains
 
 class SearchViewModel(context: Context) : ViewModel() {
+
     private val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
 
     private val _searchResults = MutableStateFlow<List<Item>>(emptyList())
