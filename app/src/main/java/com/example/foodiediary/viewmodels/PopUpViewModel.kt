@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class PopUpViewModel(context: Context) : ViewModel() {
 
-    private val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
+    internal val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
     private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
     internal val favoriteRepository = FavoriteRepository(AppDatabase.getInstance(context).favoriteDao())
 

@@ -116,7 +116,7 @@ fun PopUpView(
                 ) {
                     Column(
                         modifier = Modifier
-                            .size(width = 250.dp, height = 420.dp)
+                            .size(width = 250.dp, height = 470.dp)
                             .scale(scale)
                             .alpha(alpha)
                             .background(Color.White),
@@ -194,6 +194,23 @@ fun PopUpView(
                             }
                         }) {
                             Text(favoriteButtonText)
+                        }
+                        Button(
+                            onClick = {
+                                val eanLong = ean?.toLongOrNull()
+                                if (eanLong != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        viewModel.deleteItem(
+                                            viewModel.itemRepository.getItemByEan(
+                                                eanLong
+                                            )
+                                        )
+                                    }
+                                }
+                                isVisible = false
+                            }
+                        ) {
+                            Text("Delete Item")
                         }
                     }
 

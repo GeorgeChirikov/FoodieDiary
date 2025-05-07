@@ -38,6 +38,18 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.utils.CameraViewModelFactory
 
 
+/**
+ * This function displays the camera view using CameraX and allows the user to scan EAN-13 barcodes.
+ * It uses a ViewModel to manage the camera state and handle barcode scanning.
+ *
+ * @param navController The NavController used for navigation.
+ * @param modifier The modifier to be applied to the camera view.
+ * @param showPopup A lambda function to show a popup with the scanned barcode.
+ *
+ * This function uses the CameraX library to display the camera view and scan EAN-13 barcodes.
+ * It binds the camera lifecycle to the current lifecycle owner and sets up a preview view.
+ * The button text is dynamically updated based on the scanning state and shows user if camera is scanning or not.
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CameraView(
@@ -117,6 +129,12 @@ fun CameraView(
     }
 }
 
+/**
+ * This function is used to request camera permission and show the camera view.
+ * It checks if the camera permission is granted, and if so, it displays the camera view.
+ * @param navController The NavController used for navigation.
+ * @param showPopup A lambda function to show a popup with the scanned barcode.
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun Prelude(
