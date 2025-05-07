@@ -54,7 +54,6 @@ import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.example.foodiediary.ui.theme.RoseRed
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
@@ -243,8 +242,10 @@ fun PopUpView(
                                 val eanLong = ean?.toLongOrNull()
                                 if (eanLong != null) {
                                     CoroutineScope(Dispatchers.IO).launch {
-                                        viewModel.deleteFromEverywhere(
-                                            viewModel.itemRepository.getItemByEan(eanLong)
+                                        viewModel.deleteItem(
+                                            viewModel.itemRepository.getItemByEan(
+                                                eanLong
+                                            )
                                         )
                                     }
                                 }

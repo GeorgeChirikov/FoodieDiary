@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -93,7 +94,7 @@ fun HomeView(navController: NavController) {
                             text = "Daily Totals:")
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        NutrientRow(label = "kcal", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
+                        NutrientRow(label = "Energy", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
                         NutrientRow(label = "Fat", value = "${String.format("%.1f", nutrientTotals["fat"] ?: 0.0)} g")
                         NutrientRow(label = "Carbohydrates", value = "${String.format("%.1f", nutrientTotals["carbohydrates"] ?: 0.0)} g")
                         NutrientRow(label = "Sugar", value = "${String.format("%.1f", nutrientTotals["sugar"] ?: 0.0)} g")
