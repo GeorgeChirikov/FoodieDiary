@@ -46,7 +46,7 @@ class DataInjectionUtilClass(context: Context) {
                     val added = Added(
                         ean = item.ean
                     )
-                    addedRepository.insert(added)
+                    //addedRepository.insert(added)
                     val favorite = Favorite(
                         ean = item.ean
                     )
