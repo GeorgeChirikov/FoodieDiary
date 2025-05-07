@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +43,6 @@ fun FavoritesView(navController: NavController) {
 
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,6 +59,7 @@ fun FavoritesView(navController: NavController) {
             modifier = Modifier
                 .padding(top = 36.dp)
                 .padding(bottom = 16.dp)
+            // .align(Alignment.CenterHorizontally)
         )
 
         Card(
