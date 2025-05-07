@@ -193,7 +193,7 @@ fun FormView(
                         // Cancel button
                         Button(
                             onClick = {
-                                navController.navigate("homeView")
+                                navController.navigate("cameraView")
                                 snackbarKey = 0
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -237,7 +237,7 @@ fun FormView(
                                         salt = salt.toDouble()
                                     )
 
-                                    navController.navigate("homeView")
+                                    navController.navigate("cameraView")
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(
