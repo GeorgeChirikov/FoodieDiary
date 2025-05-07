@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
 import com.example.foodiediary.utils.FavoritesViewModelFactory
 import com.example.foodiediary.viewmodels.FavoritesViewModel
@@ -97,6 +98,8 @@ fun FavoritesView(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun FavoritesViewPreview() {
-    val navController = rememberNavController()
-    FavoritesView(navController = navController)
+    FoodieDiaryTheme {
+        val navController = rememberNavController()
+        FavoritesView(navController = navController)
+    }
 }

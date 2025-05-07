@@ -38,6 +38,7 @@ import com.example.foodiediary.utils.HomeViewModelFactory
 import com.example.foodiediary.viewmodels.HomeViewModel
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
+import kotlin.math.roundToLong
 
 @Composable
 fun HomeView(navController: NavController) {
@@ -90,13 +91,13 @@ fun HomeView(navController: NavController) {
                             text = "Daily Totals:")
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        NutrientRow(label = "kcal", value = "${nutrientTotals["energy"] ?: 0.0} kcal")
-                        NutrientRow(label = "Fat", value = "${nutrientTotals["fat"] ?: 0.0} g")
-                        NutrientRow(label = "Carbohydrates", value = "${nutrientTotals["carbohydrates"] ?: 0.0} g")
-                        NutrientRow(label = "Sugar", value = "${nutrientTotals["sugar"] ?: 0.0} g")
-                        NutrientRow(label = "Fiber", value = "${nutrientTotals["fiber"] ?: 0.0} g")
-                        NutrientRow(label = "Protein", value = "${nutrientTotals["protein"] ?: 0.0} g")
-                        NutrientRow(label = "Salt", value = "${nutrientTotals["salt"] ?: 0.0} g")
+                        NutrientRow(label = "Energy", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
+                        NutrientRow(label = "Fat", value = "${String.format("%.1f", nutrientTotals["fat"] ?: 0.0)} g")
+                        NutrientRow(label = "Carbohydrates", value = "${String.format("%.1f", nutrientTotals["carbohydrates"] ?: 0.0)} g")
+                        NutrientRow(label = "Sugar", value = "${String.format("%.1f", nutrientTotals["sugar"] ?: 0.0)} g")
+                        NutrientRow(label = "Fiber", value = "${String.format("%.1f", nutrientTotals["fiber"] ?: 0.0)} g")
+                        NutrientRow(label = "Protein", value = "${String.format("%.1f", nutrientTotals["protein"] ?: 0.0)} g")
+                        NutrientRow(label = "Salt", value = "${String.format("%.1f", nutrientTotals["salt"] ?: 0.0)} g")
                     }
                 }
 
