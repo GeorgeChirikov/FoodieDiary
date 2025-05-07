@@ -60,4 +60,12 @@ class PopUpViewModel(context: Context) : ViewModel() {
             favoriteButtonText.value = "Add to favorites"
         }
     }
+
+    fun deleteItem(itemByEan: Item?) {
+        if (itemByEan != null) {
+            viewModelScope.launch {
+                itemRepository.delete(itemByEan)
+            }
+        }
+    }
 }
