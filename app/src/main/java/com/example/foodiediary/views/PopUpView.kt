@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
@@ -50,6 +51,7 @@ import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.foodiediary.ui.theme.RoseRed
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
@@ -217,15 +219,16 @@ fun PopUpView(
                                 val eanLong = ean?.toLongOrNull()
                                 if (eanLong != null) {
                                     CoroutineScope(Dispatchers.IO).launch {
-                                        viewModel.deleteItem(
-                                            viewModel.itemRepository.getItemByEan(
-                                                eanLong
-                                            )
+                                        viewModel.deleteFromEverywhere(
+                                            viewModel.itemRepository.getItemByEan(eanLong)
                                         )
                                     }
                                 }
                                 isVisible = false
-                            }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = RoseRed
+                            )
                         ) {
                             Text("Delete Item")
                         }
@@ -250,6 +253,7 @@ fun PopUpView(
 
 @Composable
 fun NutrientRow(label: String, value: String) {
+
 
     Row(
         modifier = Modifier

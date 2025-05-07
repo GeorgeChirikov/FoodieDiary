@@ -16,9 +16,11 @@ import kotlinx.coroutines.launch
 
 class PopUpViewModel(context: Context) : ViewModel() {
 
-    internal val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
-    private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
-    internal val favoriteRepository = FavoriteRepository(AppDatabase.getInstance(context).favoriteDao())
+    val appDB = AppDatabase.getInstance(context)
+
+    internal val itemRepository = ItemRepository(appDB.itemDao())
+    internal val addedRepository = AddedRepository(appDB.addedDao())
+    internal val favoriteRepository = FavoriteRepository(appDB.favoriteDao())
 
     private val _barcodeItem = MutableStateFlow(Item(0,"",0.0,0.0,0.0,0.0,0.0,0.0,0.0))
     val barcodeItem = _barcodeItem.asStateFlow()
@@ -61,11 +63,41 @@ class PopUpViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun deleteItemFromDiary(added: Added?) {
+        if (added != null) {
+            viewModelScope.launch {
+                addedRepository.delete(added)
+            }
+        }
+    }
+
     fun deleteItem(itemByEan: Item?) {
         if (itemByEan != null) {
             viewModelScope.launch {
                 itemRepository.delete(itemByEan)
             }
+        }
+    }
+
+    fun deleteFromEverywhere(item: Item?) {
+        if (item != null) {
+            viewModelScope.launch {
+                val added = addedRepository.getAddedByEan(item.ean)
+                val favorite = favoriteRepository.getFavoriteByEan(item.ean)
+                if (added != null) {
+                    addedRepository.deleteByEan(item.ean)
+                }
+                if (favorite != null) {
+                    favoriteRepository.delete(favorite)
+                }
+                itemRepository.delete(item)
+            }
+        }
+    }
+
+    fun deleteByTimeStamp(timeStamp: Long) {
+        viewModelScope.launch {
+            addedRepository.deleteByTimeStamp(timeStamp)
         }
     }
 }
