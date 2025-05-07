@@ -45,6 +45,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.lazy.items
 
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -139,14 +140,14 @@ fun DiaryView(navController: NavController) {
                 Text("No items available", modifier = Modifier.padding(16.dp))
             } else {
                 LazyColumn {
-                    items(filteredData.size) { index ->
-                        val key = filteredData[index].timeStamp
+                    items(filteredData) { item ->
+                        val key = item.timeStamp
                         val date = Instant.ofEpochMilli(key)
 
                         Text(
                             text = "$key - $date",
                             modifier = Modifier.padding(16.dp).clickable {
-                                navController.navigate("popupView/${filteredData[index].ean}")
+                                navController.navigate("popupView/${item.ean}")
                             }
                         )
                     }

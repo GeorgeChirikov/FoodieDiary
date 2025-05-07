@@ -57,8 +57,18 @@ class DiaryViewModel(context: Context) : ViewModel() {
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate()
 
-                dateItem == date
+                dateItem == date && _allData.value.contains(added)
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
