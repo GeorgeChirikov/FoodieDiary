@@ -46,10 +46,14 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.font.FontWeight
+import com.example.foodiediary.models.data.entity.Item
+import kotlinx.coroutines.launch
 
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-@SuppressLint("ViewModelConstructorInComposable")
+@SuppressLint("ViewModelConstructorInComposable", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryView(navController: NavController) {
@@ -58,6 +62,7 @@ fun DiaryView(navController: NavController) {
         factory = DiaryViewModelFactory(LocalContext.current)
     )
 
+    val coroutineScope = rememberCoroutineScope()
     val selectedDate by viewModel.selectedDate.collectAsState()
     val filteredData by viewModel.filteredData.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }
@@ -140,15 +145,49 @@ fun DiaryView(navController: NavController) {
                 Text("No items available", modifier = Modifier.padding(16.dp))
             } else {
                 LazyColumn {
-                    items(filteredData) { item ->
-                        val key = item.timeStamp
+                    items(filteredData) { added ->
+                        val key = added.timeStamp
                         val date = Instant.ofEpochMilli(key)
+                        var item by remember { mutableStateOf<Item?>(null) }
+
+                        coroutineScope.launch {
+                            item = viewModel.itemRepository.getItemByEan(added.ean)
+                        }
 
                         Text(
-                            text = "$key - $date",
-                            modifier = Modifier.padding(16.dp).clickable {
-                                navController.navigate("popupView/${item.ean}")
+                            text = """
+                                ${item?.name}
+                            """.trimIndent(),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                        )
+
+                        Text(
+                            text = """
+                                - ${item?.energy} kcal
+                                - ${item?.fat} g 
+                                - ${item?.carbohydrates} g 
+                                - ${item?.sugar} g
+                                - ${item?.fiber} g
+                                - ${item?.protein} g 
+                                - ${item?.salt} g
+                                - Ean: ${item?.ean}
+                                - ${date.atZone(ZoneId.systemDefault()).toLocalDate()}
+                            """.trimIndent(),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                                .clickable {
+                                navController.navigate("popupView/${item?.ean}")
                             }
+                        )
+                        HorizontalDivider(
+                            thickness = 1.dp,
+                            modifier = Modifier
+                                .padding(start = 36.dp, end = 36.dp, top = 12.dp, bottom = 16.dp),
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }

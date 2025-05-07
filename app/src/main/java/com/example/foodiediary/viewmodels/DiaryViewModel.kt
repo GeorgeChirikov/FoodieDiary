@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodiediary.models.data.database.AppDatabase
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.repository.AddedRepository
+import com.example.foodiediary.models.data.repository.ItemRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.LocalDate
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +23,7 @@ import java.time.Instant
 class DiaryViewModel(context: Context) : ViewModel() {
 
     private val addedRepository = AddedRepository(AppDatabase.getInstance(context).addedDao())
+    internal val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
 
     // Selected date state
     private val _selectedDate = MutableStateFlow(LocalDate.now())
