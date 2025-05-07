@@ -3,6 +3,7 @@ package com.example.foodiediary.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -39,56 +41,40 @@ fun FavoritesView(navController: NavController) {
 
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
-    Card(
+    Column(
         modifier = Modifier
-            .padding(24.dp)
-            .fillMaxWidth()
-            .shadow(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface),
-        shape = MaterialTheme.shapes.medium
+            .fillMaxSize()
+            .background(GradientBackground)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        LazyColumn(
+
+        // Header
+        Text(
+            text = "Favorites",
+            fontSize = 20.sp,
             modifier = Modifier
-                .fillMaxSize()
-                .background(GradientBackground)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+                .padding(top = 36.dp)
+                .padding(bottom = 16.dp)
+            // .align(Alignment.CenterHorizontally)
+        )
+
+        LazyColumn(modifier = Modifier) {
             items(allFavoriteItems.value) { item ->
                 Text(
                     text = """
-                    ${item?.name}
-                    """.trimIndent(),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = """
-                    - ${item.energy}kcal
-                    - ${item.fat}g 
-                    - ${item.carbohydrates}g 
-                    - ${item.sugar}g
-                    - ${item.fiber}g
-                    - ${item.protein}g 
-                    - ${item.salt}g
-                    - Ean: ${item.ean}
-                    """.trimIndent(),
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth()
+                        ${item.ean} 
+                        ${item.name} 
+                        - protein: ${item.protein}g 
+                        - fat: ${item.fat}g 
+                        - carbs: ${item.carbohydrates}g 
+                        - energy: ${item.energy}kcal
+                        """.trimIndent(),
+                    modifier = Modifier.padding(4.dp)
                         .clickable {
                             navController.navigate("popupView/${item.ean}")
                         }
-                )
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    modifier = Modifier
-                        .padding(start = 36.dp, end = 36.dp, top = 12.dp, bottom = 16.dp),
-                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -98,8 +84,8 @@ fun FavoritesView(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun FavoritesViewPreview() {
+    val navController = rememberNavController()
     FoodieDiaryTheme {
-        val navController = rememberNavController()
         FavoritesView(navController = navController)
     }
 }
