@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -44,6 +46,7 @@ fun HomeView(navController: NavController) {
 
     val allItems = viewModel.allItems.collectAsState(initial = emptyList())
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
+    val nutrientTotals: Map<String, Double> by viewModel.getDailyNutrientTotals().collectAsState(initial = emptyMap())
 
     LazyColumn(
         modifier = Modifier
@@ -76,13 +79,18 @@ fun HomeView(navController: NavController) {
 
                 // Card for macronutrients
                 CustomCard(
-                    modifier = Modifier.height(150.dp)
+                    modifier = Modifier.height(250.dp)
                 ) {
-                    Text(
-                        text = "Proteins, Fats, Carbs, Calories",
-                        modifier = Modifier
-                            .padding(16.dp)
-                    )
+                    Text(text = "Daily Totals:")
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    NutrientRow(label = "Energy", value = "${nutrientTotals["energy"] ?: 0.0} kcal")
+                    NutrientRow(label = "Fat", value = "${nutrientTotals["fat"] ?: 0.0} g")
+                    NutrientRow(label = "Carbohydrates", value = "${nutrientTotals["carbohydrates"] ?: 0.0} g")
+                    NutrientRow(label = "Sugar", value = "${nutrientTotals["sugar"] ?: 0.0} g")
+                    NutrientRow(label = "Fiber", value = "${nutrientTotals["fiber"] ?: 0.0} g")
+                    NutrientRow(label = "Protein", value = "${nutrientTotals["protein"] ?: 0.0} g")
+                    NutrientRow(label = "Salt", value = "${nutrientTotals["salt"] ?: 0.0} g")
                 }
 
                 // Card for water intake
@@ -138,8 +146,9 @@ fun HomeView(navController: NavController) {
                                 - ${item.carbohydrates}g 
                                 - ${item.energy}kcal
                                 """.trimIndent(),
-                                modifier = Modifier.padding(4.dp)
-                                    .clickable{
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .clickable {
                                         navController.navigate("popupView/${item.ean}")
                                     }
                             )
@@ -178,8 +187,9 @@ fun HomeView(navController: NavController) {
                                 - ${item.carbohydrates}g 
                                 - ${item.energy}kcal
                                 """.trimIndent(),
-                                modifier = Modifier.padding(4.dp)
-                                    .clickable{
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .clickable {
                                         navController.navigate("popupView/${item.ean}")
                                     }
                             )

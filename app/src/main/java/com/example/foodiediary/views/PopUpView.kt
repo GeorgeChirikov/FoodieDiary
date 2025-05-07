@@ -146,17 +146,34 @@ fun PopUpView(
                                 Text(text = item.name)
                                 Spacer(modifier = Modifier.height(8.dp))
 
-                                NutrientRow(label = "Energy", value = "${item.energy} kcal")
-                                NutrientRow(label = "Fat", value = "${item.fat} g")
+                                NutrientRow(
+                                    label = "Energy",
+                                    value = "${item.energy} kcal"
+                                )
+                                NutrientRow(
+                                    label = "Fat",
+                                    value = "${item.fat} g"
+                                )
                                 NutrientRow(
                                     label = "Carbohydrates",
                                     value = "${item.carbohydrates} g"
                                 )
-
-                                NutrientRow(label = "Sugar", value = "${item.sugar} g")
-                                NutrientRow(label = "Fiber", value = "${item.fiber} g")
-                                NutrientRow(label = "Protein", value = "${item.protein} g")
-                                NutrientRow(label = "Salt", value = "${item.salt} g")
+                                NutrientRow(
+                                    label = "Sugar",
+                                    value = "${item.sugar} g"
+                                )
+                                NutrientRow(
+                                    label = "Fiber",
+                                    value = "${item.fiber} g"
+                                )
+                                NutrientRow(
+                                    label = "Protein",
+                                    value = "${item.protein} g"
+                                )
+                                NutrientRow(
+                                    label = "Salt",
+                                    value = "${item.salt} g"
+                                )
                             }
                         } else {
                             Text("No item found")

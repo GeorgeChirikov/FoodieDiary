@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class AddedRepository(private val addedDao: AddedDao) {
 
     // Get added item by EAN
-    suspend fun getAddedByEan(ean: Long) = addedDao.getAddedByEan(ean)
+    private suspend fun getAddedByEan(ean: Long) = addedDao.getAddedByEan(ean)
 
     suspend fun insert(added: Added) {
         if (getAddedByEan(added.ean) == null) {
@@ -21,5 +21,9 @@ class AddedRepository(private val addedDao: AddedDao) {
 
     fun getAllAdded(): Flow<List<Added>> {
         return addedDao.getAllAdded()
+    }
+
+    fun getItemsInTimeStampRange(startTime: Long, endTime: Long): Flow<List<Added>> {
+        return addedDao.getItemsInTimeStampRange(startTime, endTime)
     }
 }
