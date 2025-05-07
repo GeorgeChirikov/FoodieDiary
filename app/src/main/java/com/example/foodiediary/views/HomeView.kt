@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -17,6 +18,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,25 +75,30 @@ fun HomeView(navController: NavController) {
         item {
             Column(
                 modifier = Modifier
-                    .width(500.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
 
                 // Card for macronutrients
                 CustomCard(
-                    modifier = Modifier.height(250.dp)
-                ) {
-                    Text(text = "Daily Totals:")
-                    Spacer(modifier = Modifier.height(8.dp))
+                    modifier = Modifier
+                        .wrapContentHeight()
+                    ) {
 
-                    NutrientRow(label = "Energy", value = "${nutrientTotals["energy"] ?: 0.0} kcal")
-                    NutrientRow(label = "Fat", value = "${nutrientTotals["fat"] ?: 0.0} g")
-                    NutrientRow(label = "Carbohydrates", value = "${nutrientTotals["carbohydrates"] ?: 0.0} g")
-                    NutrientRow(label = "Sugar", value = "${nutrientTotals["sugar"] ?: 0.0} g")
-                    NutrientRow(label = "Fiber", value = "${nutrientTotals["fiber"] ?: 0.0} g")
-                    NutrientRow(label = "Protein", value = "${nutrientTotals["protein"] ?: 0.0} g")
-                    NutrientRow(label = "Salt", value = "${nutrientTotals["salt"] ?: 0.0} g")
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "Daily Totals:")
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        NutrientRow(label = "Energy", value = "${nutrientTotals["energy"] ?: 0.0} kcal")
+                        NutrientRow(label = "Fat", value = "${nutrientTotals["fat"] ?: 0.0} g")
+                        NutrientRow(label = "Carbohydrates", value = "${nutrientTotals["carbohydrates"] ?: 0.0} g")
+                        NutrientRow(label = "Sugar", value = "${nutrientTotals["sugar"] ?: 0.0} g")
+                        NutrientRow(label = "Fiber", value = "${nutrientTotals["fiber"] ?: 0.0} g")
+                        NutrientRow(label = "Protein", value = "${nutrientTotals["protein"] ?: 0.0} g")
+                        NutrientRow(label = "Salt", value = "${nutrientTotals["salt"] ?: 0.0} g")
+                    }
                 }
 
                 // Card for water intake
@@ -126,6 +134,16 @@ fun HomeView(navController: NavController) {
                         containerColor = MaterialTheme.colorScheme.surface),
                     shape = MaterialTheme.shapes.medium
                 ) {
+
+                    Text(
+                        text = "All Items",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp)
+                            .padding(top = 16.dp),
+                        textAlign = TextAlign.Center,
+                        )
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -133,24 +151,27 @@ fun HomeView(navController: NavController) {
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item {
-                            Text("All Items")
-                        }
+
                         items(allItems.value) { item ->
                             Text(
                                 text = """
-                                ${item.ean} 
-                                - ${item.name} 
-                                - ${item.protein}g 
-                                - ${item.fat}g 
-                                - ${item.carbohydrates}g 
-                                - ${item.energy}kcal
+                                ${item.name} 
+                                - protein: ${item.protein}g 
+                                - fat: ${item.fat}g 
+                                - carbs: ${item.carbohydrates}g 
+                                - energy: ${item.energy}kcal
                                 """.trimIndent(),
                                 modifier = Modifier
                                     .padding(4.dp)
                                     .clickable {
                                         navController.navigate("popupView/${item.ean}")
                                     }
+                            )
+                            HorizontalDivider(
+                                thickness = 2.dp,
+                                modifier = Modifier
+                                    .padding(start = 32.dp, end = 32.dp, top = 12.dp, bottom = 16.dp),
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -167,6 +188,16 @@ fun HomeView(navController: NavController) {
                         contentColor = MaterialTheme.colorScheme.onSurface),
                     shape = MaterialTheme.shapes.medium
                 ) {
+
+                    Text(
+                        text = "Favorite Items",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp)
+                            .padding(top = 16.dp),
+                        textAlign = TextAlign.Center,
+                    )
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -174,9 +205,6 @@ fun HomeView(navController: NavController) {
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item {
-                            Text("Favorite Items")
-                        }
                         items(allFavoriteItems.value) { item ->
                             Text(
                                 text = """
