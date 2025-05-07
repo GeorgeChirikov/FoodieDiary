@@ -42,6 +42,7 @@ fun FavoritesView(navController: NavController) {
 
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +59,6 @@ fun FavoritesView(navController: NavController) {
             modifier = Modifier
                 .padding(top = 36.dp)
                 .padding(bottom = 16.dp)
-            // .align(Alignment.CenterHorizontally)
         )
 
         Card(
