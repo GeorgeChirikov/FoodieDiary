@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodiediary.viewmodels.DiaryViewModel
 
-class DiaryViewModelFactory(
+class DiaryViewModelFactory (
     private val context: Context
 ) : ViewModelProvider.Factory {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

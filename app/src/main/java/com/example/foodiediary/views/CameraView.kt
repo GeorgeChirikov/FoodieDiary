@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import androidx.camera.core.CameraSelector
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +35,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.utils.CameraViewModelFactory
 
-
+/**
+ * This function displays the camera view using CameraX and allows the user to scan EAN-13 barcodes.
+ * It uses a ViewModel to manage the camera state and handle barcode scanning.
+ *
+ * @param navController The NavController used for navigation.
+ * @param modifier The modifier to be applied to the camera view.
+ * @param showPopup A lambda function to show a popup with the scanned barcode.
+ *
+ * This function uses the CameraX library to display the camera view and scan EAN-13 barcodes.
+ * It binds the camera lifecycle to the current lifecycle owner and sets up a preview view.
+ * The button text is dynamically updated based on the scanning state and shows user if camera is scanning or not.
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CameraView(
@@ -45,8 +54,8 @@ fun CameraView(
     modifier: Modifier = Modifier,
     showPopup: (barcode: Long) -> Unit, // Function to show popup
 ) {
-    val context = LocalContext.current
 
+    val context = LocalContext.current
 
     val cameraController = LifecycleCameraController(context)
     cameraController.bindToLifecycle(LocalLifecycleOwner.current)
@@ -62,9 +71,7 @@ fun CameraView(
     )
 
     val buttonText by viewmodel.buttonText.collectAsState()
-    val ean13Result by viewmodel.ean13Result.collectAsState()
-
-
+    //val ean13Result by viewmodel.ean13Result.collectAsState()
 
     Scaffold(modifier = modifier.fillMaxSize()) {
         Box(
@@ -90,16 +97,6 @@ fun CameraView(
                 verticalArrangement = Arrangement.Bottom
 
             ) {
-                Text(
-                    text = ean13Result,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .background(
-                            color = Color(0xBFFFFFFF),
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(16.dp)
-                )
                 Button(
                     onClick = {
                         viewmodel.onScanEanButtonClick()
@@ -108,7 +105,6 @@ fun CameraView(
                     modifier = Modifier
                         .padding(16.dp),
                     shape = RoundedCornerShape(8.dp),
-
                     ) {
                     Text(text = buttonText)
                 }
@@ -117,9 +113,18 @@ fun CameraView(
     }
 }
 
+/**
+ * This function is used to request camera permission and show the camera view.
+ * It checks if the camera permission is granted, and if so, it displays the camera view.
+ * @param navController The NavController used for navigation.
+ * @param showPopup A lambda function to show a popup with the scanned barcode.
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
+fun Prelude(navController: NavController,
+            showPopup: (barcode: Long) -> Unit
+) {
+
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     if (cameraPermission.status.isGranted) {
         CameraView(
@@ -131,7 +136,6 @@ fun Prelude(navController: NavController ,showPopup: (barcode: Long) -> Unit) {
         cameraPermission.launchPermissionRequest()
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

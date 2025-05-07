@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.foodiediary.viewmodels.CameraViewModel
 
-class CameraViewModelFactory(
+class CameraViewModelFactory (
     private val context: Context,
     private val navController: NavController,
     private val cameraController: LifecycleCameraController,
     private val showPopup: (barcode: Long) -> Unit
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CameraViewModel::class.java)) {
             return CameraViewModel(

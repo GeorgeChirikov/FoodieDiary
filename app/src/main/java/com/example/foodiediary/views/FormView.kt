@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -56,6 +58,7 @@ fun FormView(
     ean: String,
     navController: NavController
 ) {
+
     var item by remember { mutableStateOf("") }
     var protein by remember { mutableStateOf("") }
     var carbohydrates by remember { mutableStateOf("") }
@@ -64,28 +67,31 @@ fun FormView(
     var sugar by remember { mutableStateOf("") }
     var fiber by remember { mutableStateOf("") }
     var salt by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
 
     val viewModel: FormViewModel = viewModel(
         factory = FormViewModelFactory(LocalContext.current)
     )
+
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     // Error msg state
     val snackbarHostState = remember { SnackbarHostState() }
+
     // Error msg key, used to trigger the snackbar
     var snackbarKey by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
 
     val fields = listOf(
-        "item" to item,
-        "protein" to protein,
-        "fat(g)" to fat,
-        "carbohydrates" to carbohydrates,
-        "energy(kcal)" to energy,
-        "sugar" to sugar,
-        "fiber" to fiber,
-        "salt" to salt
+        "Item name" to item,
+        "Energy(kcal)" to energy,
+        "Fat(g)" to fat,
+        "Carbohydrates" to carbohydrates,
+        "Sugar" to sugar,
+        "Fiber" to fiber,
+        "Protein" to protein,
+        "Salt" to salt
     )
 
     Column(
@@ -105,6 +111,8 @@ fun FormView(
         ) {
         Box(
             modifier = Modifier
+                .imePadding()
+                //.verticalScroll(scrollState)
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
 
@@ -128,48 +136,51 @@ fun FormView(
                 ) {
                     Text(
                         text = "Fill out information",
-                        fontSize = 22.sp,
+                        fontSize = 20.sp,
                     )
+
                     HorizontalDivider(
                         thickness = 2.dp,
                         modifier = Modifier
-                            .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 24.dp),
+                            .padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 16.dp),
                         color = MaterialTheme.colorScheme.onPrimary
                     )
+
                     Text(
-                        text = "EAN: ${ean}",
-                        fontSize = 18.sp,
+                        text = "EAN: $ean",
+                        fontSize = 16.sp,
                     )
+
                     Spacer(modifier = Modifier.height(16.dp))
 
-
-                    fields.forEach { (label, value) ->
+                    fields.forEach { (label, _) ->
                         TextField(
                             value = when (label) {
-                                "item" -> item
-                                "protein" -> protein
-                                "fat(g)" -> fat
-                                "carbohydrates" -> carbohydrates
-                                "energy(kcal)" -> energy
-                                "sugar" -> sugar
-                                "fiber" -> fiber
-                                "salt" -> salt
+                                "Item name" -> item
+                                "Energy(kcal)" -> energy
+                                "Fat(g)" -> fat
+                                "Carbohydrates" -> carbohydrates
+                                "Sugar" -> sugar
+                                "Fiber" -> fiber
+                                "Protein" -> protein
+                                "Salt" -> salt
                                 else -> ""
                             },
                             onValueChange = { newValue ->
                                 when (label) {
-                                    "item" -> item = newValue
-                                    "protein" -> protein = newValue
-                                    "fat(g)" -> fat = newValue
-                                    "carbohydrates" -> carbohydrates = newValue
-                                    "energy(kcal)" -> energy = newValue
-                                    "sugar" -> sugar = newValue
-                                    "fiber" -> fiber = newValue
-                                    "salt" -> salt = newValue
+                                    "Item name" -> item = newValue
+                                    "Energy(kcal)" -> energy = newValue
+                                    "Fat(g)" -> fat = newValue
+                                    "Carbohydrates" -> carbohydrates = newValue
+                                    "Sugar" -> sugar = newValue
+                                    "Fiber" -> fiber = newValue
+                                    "Protein" -> protein = newValue
+                                    "Salt" -> salt = newValue
                                 }
                             },
-                            label = { Text(label) }
+                            label = { Text(label) },
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
@@ -182,7 +193,7 @@ fun FormView(
                         // Cancel button
                         Button(
                             onClick = {
-                                navController.popBackStack()
+                                navController.navigate("homeView")
                                 snackbarKey = 0
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -191,12 +202,13 @@ fun FormView(
                             ),
                             modifier = Modifier
                                 .width(140.dp)
-                                .padding(16.dp)
+                                .padding(12.dp)
                         ) {
                             Text(
                                 text = "Cancel"
                             )
                         }
+
                         // Add button
                         Button(
                             onClick = {
@@ -224,7 +236,8 @@ fun FormView(
                                         protein = protein.toDouble(),
                                         salt = salt.toDouble()
                                     )
-                                    navController.popBackStack()
+
+                                    navController.navigate("homeView")
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -232,19 +245,21 @@ fun FormView(
                             ),
                             modifier = Modifier
                                 .width(140.dp)
-                                .padding(16.dp)
+                                .padding(12.dp)
                         ) {
                             Text(
-                                text = "Add item"
+                                text = "Save"
                             )
                         }
                     }
                 }
             }
+
             // Shows error msg
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier.align(Alignment.BottomCenter).padding(8.dp))
         }
     }
+
     //Triggers msg if key is more than 0
     if (snackbarKey>0) {
         LaunchedEffect(snackbarKey) {
@@ -267,8 +282,17 @@ fun isError(
     fiber: String,
     salt: String
 ): Boolean {
+
     // List of fields to check
-    val fieldsToCheck = listOf(protein, fat, carbohydrates, energy, sugar, fiber, salt)
+    val fieldsToCheck = listOf(
+        protein,
+        fat,
+        carbohydrates,
+        energy,
+        sugar,
+        fiber,
+        salt
+    )
 
     for (field in fieldsToCheck) {
         if (field.isBlank()) {
@@ -295,7 +319,7 @@ fun PreviewForm () {
     val navController = rememberNavController()
     FoodieDiaryTheme {
         FormView(
-            ean = "64787680",
+            ean = "64707688",
             navController = navController
         )
     }

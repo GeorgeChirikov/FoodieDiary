@@ -5,11 +5,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -32,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,11 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
-import com.example.foodiediary.ui.theme.GrassGreen
-import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.utils.DiaryViewModelFactory
 import com.example.foodiediary.viewmodels.DiaryViewModel
 import java.time.Instant
@@ -58,7 +52,11 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryView(navController: NavController) {
-    val viewModel: DiaryViewModel = viewModel( factory = DiaryViewModelFactory(LocalContext.current))
+
+    val viewModel: DiaryViewModel = viewModel(
+        factory = DiaryViewModelFactory(LocalContext.current)
+    )
+
     val selectedDate by viewModel.selectedDate.collectAsState()
     val filteredData by viewModel.filteredData.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }
@@ -95,6 +93,7 @@ fun DiaryView(navController: NavController) {
             text = "Selected Date: ${selectedDate.format(DateTimeFormatter.ISO_DATE)}",
             modifier = Modifier.padding(start = 24.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
         )
+
         HorizontalDivider(
             thickness = 1.dp,
             modifier = Modifier
@@ -124,6 +123,7 @@ fun DiaryView(navController: NavController) {
                 )
             }
         }
+
         // Card to display filtered data
         Card(
             modifier = Modifier

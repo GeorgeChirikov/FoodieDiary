@@ -19,22 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.GradientBackground
-import com.example.foodiediary.ui.theme.GrassGreen
-import com.example.foodiediary.ui.theme.LightGreen
 import com.example.foodiediary.utils.FavoritesViewModelFactory
-import com.example.foodiediary.utils.PopUpViewModelFactory
 import com.example.foodiediary.viewmodels.FavoritesViewModel
 
 @Composable
 fun FavoritesView(navController: NavController) {
+
     val viewModel: FavoritesViewModel = viewModel(
         factory = FavoritesViewModelFactory(LocalContext.current)
     )
-    var allFavorites = viewModel.allFavorites.collectAsState(initial = emptyList())
-    var allItems = viewModel.allItems.collectAsState(initial = emptyList())
-    var allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
+
+    val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
     LazyColumn(
         modifier = Modifier

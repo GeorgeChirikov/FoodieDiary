@@ -33,15 +33,21 @@ import androidx.compose.runtime.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(onSearch: (String) -> Unit, navController: NavController) {
+fun SearchView(
+    onSearch: (String) -> Unit,
+    navController: NavController)
+{
+
     var searchText by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
+
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     val viewModel: SearchViewModel = viewModel(
         factory = SearchViewModelFactory(LocalContext.current)
     )
+
     val searchResults by viewModel.searchResults.collectAsState()
 
     Box(

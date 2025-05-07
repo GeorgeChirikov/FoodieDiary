@@ -37,6 +37,7 @@ fun ScreenWithDrawer(
     currentRoute: String,
     content: @Composable () -> Unit,
 ) {
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -84,14 +85,16 @@ fun DrawerContent(
     currentRoute: String,
     onCloseDrawer: () -> Unit
 ) {
+
     Column(
         modifier = Modifier
-            .requiredWidth(140.dp)
+            .requiredWidth(150.dp)
             .background(ShyGreen)
             .padding(16.dp)
             .clip(RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp))
             .fillMaxHeight()
     ) {
+
         // Navigation items
         DrawerItem("Home", "homeView", currentRoute, navController, onCloseDrawer)
         DrawerItem("Scan EAN", "cameraView", currentRoute, navController, onCloseDrawer)
@@ -109,6 +112,7 @@ fun DrawerItem(
     navController: NavController,
     onCloseDrawer: () -> Unit
 ) {
+
     NavigationDrawerItem(
         label = { Text(label) },
         selected = currentRoute == route,

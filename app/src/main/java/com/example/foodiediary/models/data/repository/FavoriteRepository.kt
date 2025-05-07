@@ -1,6 +1,5 @@
 package com.example.foodiediary.models.data.repository
 
-import androidx.room.Query
 import com.example.foodiediary.models.data.dao.FavoriteDao
 import com.example.foodiediary.models.data.entity.Favorite
 
@@ -18,10 +17,6 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
         } else {
             favoriteDao.update(favorite)
         }
-    }
-
-    suspend fun update(favorite: Favorite) {
-        favoriteDao.update(favorite)
     }
 
     suspend fun delete(favorite: Favorite) {

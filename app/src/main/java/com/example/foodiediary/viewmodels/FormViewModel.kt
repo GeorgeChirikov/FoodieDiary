@@ -9,11 +9,32 @@ import com.example.foodiediary.models.data.repository.ItemRepository
 import kotlinx.coroutines.launch
 
 class FormViewModel(context : Context): ViewModel() {
+
     private val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())
 
-    fun addItem(ean : Long, name : String, energy : Double, fat : Double, carbohydrates : Double, sugar : Double, fiber : Double, protein : Double, salt : Double) {
+    fun addItem(
+        ean : Long,
+        name : String,
+        energy : Double,
+        fat : Double,
+        carbohydrates : Double,
+        sugar : Double,
+        fiber : Double,
+        protein : Double,
+        salt : Double)
+    {
         viewModelScope.launch {
-            val newItem = Item(ean, name, energy, fat, carbohydrates, sugar, fiber, protein, salt)
+            val newItem = Item(
+                ean,
+                name,
+                energy,
+                fat,
+                carbohydrates,
+                sugar,
+                fiber,
+                protein,
+                salt
+            )
             itemRepository.insert(newItem)
         }
     }
