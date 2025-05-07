@@ -61,22 +61,49 @@ fun FavoritesView(navController: NavController) {
             // .align(Alignment.CenterHorizontally)
         )
 
-        LazyColumn(modifier = Modifier) {
-            items(allFavoriteItems.value) { item ->
-                Text(
-                    text = """
-                        ${item.ean} 
-                        ${item.name} 
-                        - protein: ${item.protein}g 
-                        - fat: ${item.fat}g 
-                        - carbs: ${item.carbohydrates}g 
-                        - energy: ${item.energy}kcal
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                items(allFavoriteItems.value) { item ->
+                    Text(
+                        text = """
+                    ${item.name}
+                    - ${item.energy}kcal
+                    - ${item.fat}g 
+                    - ${item.carbohydrates}g 
+                    - ${item.sugar}g
+                    - ${item.fiber}g
+                    - ${item.protein}g 
+                    - ${item.salt}g
+                    - Ean: ${item.ean}
                         """.trimIndent(),
-                    modifier = Modifier.padding(4.dp)
-                        .clickable {
-                            navController.navigate("popupView/${item.ean}")
-                        }
-                )
+
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate("popupView/${item.ean}")
+                            }
+                    )
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                        modifier = Modifier
+                            .padding(start = 36.dp, end = 36.dp, top = 12.dp, bottom = 16.dp),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }
