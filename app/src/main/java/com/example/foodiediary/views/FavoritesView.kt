@@ -3,6 +3,7 @@ package com.example.foodiediary.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -33,7 +35,7 @@ fun FavoritesView(navController: NavController) {
 
     val allFavoriteItems = viewModel.allFavoriteItems.collectAsState(initial = emptyList())
 
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(GradientBackground)
@@ -41,21 +43,34 @@ fun FavoritesView(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        items(allFavoriteItems.value) { item ->
-            Text(
-                text = """
-                    ${item.ean} 
-                    - ${item.name} 
-                    - ${item.protein}g 
-                    - ${item.fat}g 
-                    - ${item.carbohydrates}g 
-                    - ${item.energy}kcal
-                    """.trimIndent(),
-                modifier = Modifier.padding(4.dp)
-                    .clickable{
-                        navController.navigate("popupView/${item.ean}")
-                    }
-            )
+
+        // Header
+        Text(
+            text = "Favorites",
+            fontSize = 20.sp,
+            modifier = Modifier
+                .padding(top = 36.dp)
+                .padding(bottom = 16.dp)
+            // .align(Alignment.CenterHorizontally)
+        )
+
+        LazyColumn(modifier = Modifier) {
+            items(allFavoriteItems.value) { item ->
+                Text(
+                    text = """
+                        ${item.ean} 
+                        ${item.name} 
+                        - protein: ${item.protein}g 
+                        - fat: ${item.fat}g 
+                        - carbs: ${item.carbohydrates}g 
+                        - energy: ${item.energy}kcal
+                        """.trimIndent(),
+                    modifier = Modifier.padding(4.dp)
+                        .clickable {
+                            navController.navigate("popupView/${item.ean}")
+                        }
+                )
+            }
         }
     }
 }
@@ -63,8 +78,8 @@ fun FavoritesView(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun FavoritesViewPreview() {
+    val navController = rememberNavController()
     FoodieDiaryTheme {
-        val navController = rememberNavController()
         FavoritesView(navController = navController)
     }
 }
