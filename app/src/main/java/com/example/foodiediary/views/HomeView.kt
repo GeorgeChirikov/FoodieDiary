@@ -91,7 +91,7 @@ fun HomeView(navController: NavController) {
                             text = "Daily Totals:")
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        NutrientRow(label = "Energy", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
+                        NutrientRow(label = "kcal", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
                         NutrientRow(label = "Fat", value = "${String.format("%.1f", nutrientTotals["fat"] ?: 0.0)} g")
                         NutrientRow(label = "Carbohydrates", value = "${String.format("%.1f", nutrientTotals["carbohydrates"] ?: 0.0)} g")
                         NutrientRow(label = "Sugar", value = "${String.format("%.1f", nutrientTotals["sugar"] ?: 0.0)} g")
