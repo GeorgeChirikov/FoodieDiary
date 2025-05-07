@@ -37,4 +37,10 @@ interface AddedDao {
 
     @Delete
     suspend fun delete(added: Added)
+
+    @Query("DELETE FROM added_items where ean = :ean")
+    suspend fun deleteByEan(ean: Long)
+
+    @Query("DELETE FROM added_items where timeStamp = :timeStamp")
+    suspend fun deleteByTimeStamp(timeStamp: Long)
 }
