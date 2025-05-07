@@ -1,5 +1,6 @@
 package com.example.foodiediary.views
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,7 @@ import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
 import kotlin.math.roundToLong
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun HomeView(navController: NavController) {
 
