@@ -4,25 +4,42 @@
 
 ## Sprint 1
 - [x] Github Repository
-- [ ] Figma prototype
-- [ ] Database planning
-- [ ] Database connection
+- [x] Figma prototype
+- [x] Database planning
 - [x] Documentation files
 
 ## Sprint 2
-- to be added later
+- [x] Camera functionality
+- [x] Camera UI
+- [x] Backlog reformat
+- [ ] Database connection
 
 ## Sprint 3
-- to be added later
+- [x] Database connection
+- [x] EAN code scanning
+- [x] Navigation bar
+- [x] Home page
 
 ## Sprint 4
-- to be added later
+- [x] App logo
+- [x] Diary page
+- [x] Storing data to Room
+- [x] Room migration
+- [x] Favorites page
 
 ## Sprint 5
-- to be added later
+- [x] Room architechture reformat
+- [x] Add timestamp in database
+- [x] Popup window
+- [x] Form to add item data (UI)
+- [x] Search functionality
+- [x] UI improvements
 
 ## Sprint 6
-- to be added later
+- [x] Project presentation
+- [x] Form to add item data (logic)
+- [x] Daily totals
+- [x] Code cleaning
+- [x] UI improvements
+- [x] Bug fixes
 
-## Sprint 7
-- to be added later
