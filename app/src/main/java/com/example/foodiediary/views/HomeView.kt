@@ -39,7 +39,6 @@ import com.example.foodiediary.utils.HomeViewModelFactory
 import com.example.foodiediary.viewmodels.HomeViewModel
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
-import kotlin.math.roundToLong
 
 @SuppressLint("DefaultLocale")
 @Composable
@@ -89,8 +88,10 @@ fun HomeView(navController: NavController) {
                     ) {
 
                     Column(modifier = Modifier.padding(16.dp)) {
+
                         Text(
                             text = "Daily Totals:")
+
                         Spacer(modifier = Modifier.height(8.dp))
 
                         NutrientRow(label = "kcal", value = "${String.format("%.1f", nutrientTotals["energy"] ?: 0.0)} kcal")
@@ -107,6 +108,7 @@ fun HomeView(navController: NavController) {
                 CustomCard(
                     modifier = Modifier.height(150.dp)
                 )  {
+
                     Text(
                         text = "Water intake",
                         modifier = Modifier
@@ -123,6 +125,7 @@ fun HomeView(navController: NavController) {
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary)
                 ){
+
                     Text("Scan Barcode (EAN)")
                 }
 
@@ -169,6 +172,7 @@ fun HomeView(navController: NavController) {
                                         navController.navigate("popupView/${item.ean}")
                                     }
                             )
+
                             HorizontalDivider(
                                 thickness = 1.dp,
                                 modifier = Modifier
@@ -236,6 +240,7 @@ fun HomeView(navController: NavController) {
     }
 }
 
+// Customized card component to reduce code duplication
 @Composable
 fun CustomCard(
     modifier: Modifier = Modifier,
@@ -255,6 +260,7 @@ fun CustomCard(
         content()
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

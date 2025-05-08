@@ -91,6 +91,7 @@ fun DiaryView(navController: NavController) {
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary)
         ) {
+
             Text(text = "Pick Date")
         }
 
@@ -108,9 +109,11 @@ fun DiaryView(navController: NavController) {
         )
 
         if (showDatePicker) {
+
             DatePickerDialog(
                 onDismissRequest = { showDatePicker = false },
                 confirmButton = {
+
                     Button(onClick = {
                         datePickerState.selectedDateMillis?.let {
                             val newDate = Instant.ofEpochMilli(it)
@@ -120,10 +123,12 @@ fun DiaryView(navController: NavController) {
                         }
                         showDatePicker = false
                     }) {
+
                         Text(text = "Confirm")
                     }
                 }
             ) {
+
                 DatePicker(
                     state = datePickerState,
                 )
@@ -142,8 +147,12 @@ fun DiaryView(navController: NavController) {
         ) {
             // Card's content
             if (filteredData.isEmpty()) {
-                Text("No items available", modifier = Modifier.padding(16.dp))
+
+                Text(
+                    text= "No items available",
+                    modifier = Modifier.padding(16.dp))
             } else {
+
                 LazyColumn {
                     items(filteredData) { added ->
                         val key = added.timeStamp
