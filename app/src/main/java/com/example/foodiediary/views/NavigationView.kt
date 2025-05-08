@@ -31,7 +31,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
-import com.example.foodiediary.ui.theme.ShyGreen
 import kotlinx.coroutines.launch
 
 //Drawer composable
@@ -57,7 +56,9 @@ fun ScreenWithDrawer(
             )
         },
         content = {
+
             Column {
+
                 TopAppBar(
                     onMenuClick = { scope.launch { drawerState.open() } }
                 )
@@ -69,15 +70,18 @@ fun ScreenWithDrawer(
 
 @Composable
 fun TopAppBar(onMenuClick: () -> Unit) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+
         IconButton(onClick = onMenuClick) {
             Icon(Icons.Filled.Menu, contentDescription = "Menu")
         }
+
         Spacer(modifier = Modifier.width(20.dp))
         // Other elements can be added
     }

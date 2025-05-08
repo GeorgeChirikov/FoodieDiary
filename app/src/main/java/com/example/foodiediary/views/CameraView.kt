@@ -80,6 +80,7 @@ fun CameraView(
                 .padding(it),
             contentAlignment = Alignment.BottomCenter
         ) {
+
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
                 factory = { context ->
@@ -89,6 +90,7 @@ fun CameraView(
                     preview
                 }
             )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -97,6 +99,7 @@ fun CameraView(
                 verticalArrangement = Arrangement.Bottom
 
             ) {
+
                 Button(
                     onClick = {
                         viewmodel.onScanEanButtonClick()

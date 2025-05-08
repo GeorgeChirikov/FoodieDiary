@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -102,6 +101,7 @@ fun PopUpView(
                 closePopup()
             }
         } else {
+
             Dialog(
                 onDismissRequest = {
                     isVisible = false
@@ -112,6 +112,7 @@ fun PopUpView(
                     dismissOnClickOutside = true
                 )
             ) {
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -123,6 +124,7 @@ fun PopUpView(
                         containerColor = MaterialTheme.colorScheme.surface
                     )
                 ) {
+
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -132,16 +134,19 @@ fun PopUpView(
                             .alpha(alpha),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
                                 //.padding(8.dp),
                             horizontalArrangement = Arrangement.End
                         ) {
+
                             IconButton(onClick = {
                                 isVisible = false
                                 snackbarKey = 0
                             }) {
+
                                 Icon(imageVector = Icons.Filled.Close, contentDescription = "Close")
                             }
                         }
@@ -149,13 +154,17 @@ fun PopUpView(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         if (item.ean != 0L) {
+
                             Column(
                                 modifier = Modifier.padding(4.dp)
                             ) {
+
                                 Text(text = item.name)
+
                                 Text(
                                     text = item.ean.toString(),
                                     fontSize = 12.sp)
+
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 NutrientRow(
@@ -188,6 +197,7 @@ fun PopUpView(
                                 )
                             }
                         } else {
+
                             Text(
                                 text = "No item found"
                             )
@@ -214,29 +224,31 @@ fun PopUpView(
                             Text("Add to Diary")
                         }
 
-                        Button(onClick = {
-                            val eanLong = ean?.toLongOrNull()
-                            if (eanLong != null) {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    if (favoriteButtonText == "Add to favorites") {
-                                        viewModel.addItemToFavorites(Favorite(ean = eanLong))
-                                    } else {
-                                        viewModel.deleteItemFromFavorites(
-                                            viewModel.favoriteRepository.getFavoriteByEan(
-                                                eanLong
+                        Button(
+                            onClick = {
+                                val eanLong = ean?.toLongOrNull()
+                                if (eanLong != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        if (favoriteButtonText == "Add to favorites") {
+                                            viewModel.addItemToFavorites(Favorite(ean = eanLong))
+                                        } else {
+                                            viewModel.deleteItemFromFavorites(
+                                                viewModel.favoriteRepository.getFavoriteByEan(
+                                                    eanLong
+                                                )
                                             )
-                                        )
+                                        }
                                     }
-
                                 }
-                            }
-                        },
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.secondary
                             ),
-                            modifier = Modifier.padding(16.dp)) {
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             Text(favoriteButtonText)
                         }
+
                         Button(
                             onClick = {
                                 val eanLong = ean?.toLongOrNull()
@@ -266,6 +278,7 @@ fun PopUpView(
 
             // Trigger add to diary msg if key is bigger than 0
             if (snackbarKey>0) {
+
                 LaunchedEffect(snackbarKey) {
                     scope.launch {
                         snackbarHostState.showSnackbar("Item added to diary!")
@@ -275,6 +288,7 @@ fun PopUpView(
         }
     }
 }
+
 
 @Composable
 fun NutrientRow(label: String, value: String) {
@@ -289,6 +303,7 @@ fun NutrientRow(label: String, value: String) {
         Text(text = value)
     }
 }
+
 
 @Preview
 @Composable
