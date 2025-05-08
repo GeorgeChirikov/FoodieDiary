@@ -16,13 +16,16 @@ yourself.
 
 ****
 
-- to be written later
+This app was developed using Kotlin in Android Studio, and it follows the Model-View-ViewModel (MVVM) architectural pattern. The user interface is built with Jetpack Compose.
+
+The application uses the device's camera together with Google's ML Kit to scan and recognize barcodes (EAN codes). Data is stored locally using Room database.
 
 ****
 
 <h3>Documents</h3>
 
 ****
+TO DO:
 
 - **User manual** is located in the directory `docs/UserManual.md`
 - **Sprint documentation** is located in the directory `docs/SprintProcess.md`
