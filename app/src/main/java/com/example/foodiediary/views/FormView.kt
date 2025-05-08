@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -67,7 +66,6 @@ fun FormView(
     var sugar by remember { mutableStateOf("") }
     var fiber by remember { mutableStateOf("") }
     var salt by remember { mutableStateOf("") }
-    val scrollState = rememberScrollState()
 
     val viewModel: FormViewModel = viewModel(
         factory = FormViewModelFactory(LocalContext.current)
@@ -109,6 +107,7 @@ fun FormView(
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
+
         Box(
             modifier = Modifier
                 .imePadding()
@@ -117,6 +116,7 @@ fun FormView(
             contentAlignment = Alignment.Center
 
         ) {
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -128,12 +128,14 @@ fun FormView(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),
             ) {
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 24.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
                     Text(
                         text = "Fill out information",
                         fontSize = 20.sp,
@@ -204,6 +206,7 @@ fun FormView(
                                 .width(140.dp)
                                 .padding(12.dp)
                         ) {
+
                             Text(
                                 text = "Cancel"
                             )
