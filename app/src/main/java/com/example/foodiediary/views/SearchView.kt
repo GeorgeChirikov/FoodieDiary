@@ -1,14 +1,19 @@
 package com.example.foodiediary.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +35,11 @@ import androidx.navigation.NavController
 import com.example.foodiediary.utils.SearchViewModelFactory
 import com.example.foodiediary.viewmodels.SearchViewModel
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.example.foodiediary.ui.theme.FoodieDiaryTheme
+import com.example.foodiediary.ui.theme.GradientBackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,65 +60,95 @@ fun SearchView(
 
     val searchResults by viewModel.searchResults.collectAsState()
 
-    Box(
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .semantics { isTraversalGroup = true }
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                    active = false
-                })
-            }
+            .background(GradientBackground)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        SearchBar(
+
+        Box(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f }
-                .fillMaxWidth(),
-            query = searchText,
-            onQueryChange = { newText ->
-                searchText = newText
-                viewModel.searchItems(newText)
-            },
-            onSearch = { query ->
-                onSearch(query)
-                active = false
-                keyboardController?.hide()
-                focusManager.clearFocus()
-            },
-            active = active,
-            onActiveChange = {
-                active = it
-                if(!active){
+                .fillMaxSize()
+                .semantics { isTraversalGroup = true }
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                        active = false
+                    })
+                }
+        ) {
+
+            SearchBar(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .semantics { traversalIndex = 0f }
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                query = searchText,
+                onQueryChange = { newText ->
+                    searchText = newText
+                    viewModel.searchItems(newText)
+                },
+                onSearch = { query ->
+                    onSearch(query)
+                    active = false
                     keyboardController?.hide()
                     focusManager.clearFocus()
-                }
-            },
-            placeholder = { Text("Search") },
-            leadingIcon = { } // Can add a search icon here if you like
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
+                },
+                active = active,
+                onActiveChange = {
+                    active = it
+                    if (!active) {
                         keyboardController?.hide()
                         focusManager.clearFocus()
                     }
+                },
+                placeholder = { Text("Search") },
+                leadingIcon = { } // Can add a search icon here if you like
             ) {
-                items(searchResults) { item ->
-                    ListItem(
-                        headlineContent = { Text(item.name) },
-                        modifier = Modifier.clickable {
-                            navController.navigate("popupView/${item.ean}")
-                            active = false
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
                             keyboardController?.hide()
                             focusManager.clearFocus()
                         }
-                    )
+                        // .background(MaterialTheme.colorScheme.surface)
+                ) {
+
+                    items(searchResults) { item ->
+                        ListItem(
+                            headlineContent = { Text(item.name) },
+                            modifier = Modifier.clickable {
+                                navController.navigate("popupView/${item.ean}")
+                                active = false
+                                keyboardController?.hide()
+                                focusManager.clearFocus()
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun SearchViewPreview() {
+    val navController = rememberNavController()
+    FoodieDiaryTheme {
+        SearchView(
+            onSearch = {},
+            navController = navController
+        )
     }
 }
