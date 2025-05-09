@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
-import com.example.foodiediary.utils.DataInjectionUtilClass
 import com.example.foodiediary.views.DiaryView
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
@@ -37,11 +36,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val dataInjection = DataInjectionUtilClass(this)
-            lifecycleScope.launch {
-                //dataInjection.injectData()
-            }
-
             FoodieDiaryTheme {
                 AppNavigation()
             }
