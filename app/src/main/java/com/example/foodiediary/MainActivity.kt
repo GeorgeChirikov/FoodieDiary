@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.lifecycleScope
 import com.example.foodiediary.views.DiaryView
 import com.example.foodiediary.views.Prelude
 import com.example.foodiediary.views.ScreenWithDrawer
@@ -26,7 +25,6 @@ import com.example.foodiediary.views.SearchView
 import com.example.foodiediary.views.FavoritesView
 import com.example.foodiediary.views.FormView
 import com.example.foodiediary.views.PopUpView
-import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
