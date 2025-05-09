@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.foodiediary.viewmodels.CameraViewModel
 
+@Suppress("UNCHECKED_CAST")
 class CameraViewModelFactory (
     private val context: Context,
     private val navController: NavController,

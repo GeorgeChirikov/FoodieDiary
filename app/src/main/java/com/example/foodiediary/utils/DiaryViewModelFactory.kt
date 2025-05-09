@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodiediary.viewmodels.DiaryViewModel
 
+@Suppress("UNCHECKED_CAST")
 class DiaryViewModelFactory (
     private val context: Context
 ) : ViewModelProvider.Factory {

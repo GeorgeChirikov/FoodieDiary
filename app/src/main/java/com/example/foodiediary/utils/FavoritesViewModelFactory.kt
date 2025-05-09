@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodiediary.viewmodels.FavoritesViewModel
 
+@Suppress("UNCHECKED_CAST")
 class FavoritesViewModelFactory (
     private val context: Context
 ) : ViewModelProvider.Factory {
