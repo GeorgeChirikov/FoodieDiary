@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.foodiediary.models.Converters
 import com.example.foodiediary.models.data.dao.AddedDao
 import com.example.foodiediary.models.data.dao.FavoriteDao
 import com.example.foodiediary.models.data.dao.ItemDao
@@ -22,7 +21,7 @@ import com.example.foodiediary.models.data.entity.Water
     version = 6,
     exportSchema = false)
 
-@TypeConverters (Converters::class)
+//@TypeConverters (Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
