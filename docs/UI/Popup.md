@@ -45,6 +45,6 @@ add them to diary and delete them.
 
 *   **Empty State:** When there is no item data, it displays a text "No item found."
 
-## 7. Screenshots (Optional but Recommended)
+## 7. Screenshots
 
 ![popupView](/docs/images/popup.png)
