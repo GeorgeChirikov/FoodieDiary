@@ -38,7 +38,7 @@ import kotlin.text.toLong
  * This ViewModel is used in the Camera screen to handle camera operations and barcode scanning.
  */
 class CameraViewModel(
-    private val context:Context,
+    private val context: Context,
     private val navController: NavController,
     private val cameraController: LifecycleCameraController,
     showPopup: (barcode: Long) -> Unit
@@ -58,7 +58,6 @@ class CameraViewModel(
     private val coroutineScope = viewModelScope
 
     val buttonText = MutableStateFlow("Scan EAN")
-    val ean13Result = MutableStateFlow<String>("No EAN Code")
 
     // ensure that the database operations are thread-safe
     private val databaseMutex = Mutex()

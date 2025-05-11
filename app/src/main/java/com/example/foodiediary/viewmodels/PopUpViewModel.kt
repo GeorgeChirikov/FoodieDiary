@@ -75,21 +75,6 @@ class PopUpViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun deleteItemFromDiary(added: Added?) {
-        if (added != null) {
-            viewModelScope.launch {
-                addedRepository.delete(added)
-            }
-        }
-    }
-
-    fun deleteItem(itemByEan: Item?) {
-        if (itemByEan != null) {
-            viewModelScope.launch {
-                itemRepository.delete(itemByEan)
-            }
-        }
-    }
 
     fun deleteFromEverywhere(item: Item?) {
         if (item != null) {
@@ -107,9 +92,4 @@ class PopUpViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun deleteByTimeStamp(timeStamp: Long) {
-        viewModelScope.launch {
-            addedRepository.deleteByTimeStamp(timeStamp)
-        }
-    }
 }

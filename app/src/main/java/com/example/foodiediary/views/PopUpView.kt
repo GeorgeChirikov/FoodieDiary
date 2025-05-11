@@ -53,7 +53,6 @@ import com.example.foodiediary.viewmodels.PopUpViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.example.foodiediary.ui.theme.RoseRed
 
 
 /**
