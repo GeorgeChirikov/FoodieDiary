@@ -23,7 +23,7 @@
 
 <h3>SearchView</h3>
 
-![searchView](/docs/images/search.png)
+![searchView](/docs/images/search2.png)
 
 <h3>FavoritesView</h3>
 
@@ -35,4 +35,4 @@
 
 <h3>PopupView</h3>
 
-![popup](/docs/images/popup.jpg)
+![popup](/docs/images/popup2.jpg)

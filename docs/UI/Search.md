@@ -41,4 +41,5 @@ Search allows the user to look for items by their names. It displays at most fiv
 
 ## 7. Screenshots
 
-![searchView](/docs/images/search.png)
+![searchView1](/docs/images/search1.png)
+![searchView2](/docs/images/search2.png)
