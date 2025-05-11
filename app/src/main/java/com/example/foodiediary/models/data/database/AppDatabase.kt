@@ -10,15 +10,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.foodiediary.models.data.dao.AddedDao
 import com.example.foodiediary.models.data.dao.FavoriteDao
 import com.example.foodiediary.models.data.dao.ItemDao
-import com.example.foodiediary.models.data.dao.WaterDao
 import com.example.foodiediary.models.data.entity.Added
 import com.example.foodiediary.models.data.entity.Favorite
 import com.example.foodiediary.models.data.entity.Item
-import com.example.foodiediary.models.data.entity.Water
 
 @Database (
-    entities = [Item::class, Favorite::class, Added::class, Water::class],
-    version = 6,
+    entities = [Item::class, Favorite::class, Added::class],
+    version = 7,
     exportSchema = false)
 
 //@TypeConverters (Converters::class)
@@ -27,7 +25,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun favoriteDao(): FavoriteDao
     abstract fun addedDao(): AddedDao
-    abstract fun waterDao(): WaterDao
 
     // Pitää selvittää mitä tekee
     companion object {
@@ -171,6 +168,13 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // delete water table
+                db.execSQL("DROP TABLE IF EXISTS `water`")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
@@ -185,6 +189,7 @@ abstract class AppDatabase : RoomDatabase() {
                         .addMigrations(MIGRATION_3_4)
                         .addMigrations(MIGRATION_4_5)
                         .addMigrations(MIGRATION_5_6)
+                        .addMigrations(MIGRATION_6_7)
                         .build()
 
                     INSTANCE = instance
