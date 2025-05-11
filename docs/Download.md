@@ -26,25 +26,6 @@
 
 ****
 
-## Screenshots
-
-![homeView1](/docs/images/home1.png)
-
-![homeView2](/docs/images/home2.png)
-
-![navigationDrawer](/docs/images/navbar.png)
-
-![cameraView](/docs/images/camera.jpg)
-
-![formView](/docs/images/form.jpg)
-
-![searchView](/docs/images/search.png)
-
-![favoritesView](/docs/images/favorites.png)
-
-![diaryView](/docs/images/diary.png)
-
-![popup](/docs/images/popup.jpg)
 
 
 

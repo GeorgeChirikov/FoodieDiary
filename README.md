@@ -161,7 +161,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 ****
 
-### [Setup Instructions](/docs/Download)
+### [Setup Instructions](/docs/Download.md)
 
 ****
 
