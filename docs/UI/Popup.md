@@ -30,8 +30,6 @@ add them to diary and delete them.
 
 ## 4. Interaction Flows
 
-Describe how users interact with the screen and the resulting actions.
-
 *   **Tapping [X-icon]:** Closes the popup.
 *   **Tapping [Add to Diary button]:** Adds the specific item to the user's diary.
 *   **Tapping [Add to favorites/Remove from favorites]:** Either adds the item to favorites or removes it from favorites
