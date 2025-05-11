@@ -23,7 +23,7 @@
 
 <h3>SearchView</h3>
 
-![searchView](/docs/images/search2.png)
+![searchView](/docs/images/search.png)
 
 <h3>FavoritesView</h3>
 
