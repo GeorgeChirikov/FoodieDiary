@@ -25,17 +25,17 @@ The application uses the device's camera together with Google's ML Kit to scan a
 
 ****
 
-- 📷 EAN Barcode Scanning (ML Kit)
+- 📷 [EAN Barcode Scanning (ML Kit)](/docs/EanScanner.md)
 
-- 🏠 Home View
+- 🏠 [Home View](/docs/UI/Home.md)
 
 - 🔍 [Search View](/docs/UI/Search.md)
 
-- 📘 Diary View
+- 📘 [Diary View](/docs/UI/Diary.md)
 
-- ❤️ Favorites View
+- ❤️ [Favorites View](/docs/UI/Favorites.md)
 
-- 📸 Camera View (CameraX)
+- 📸 [Camera View (CameraX)](/docs/UI/Camera.md)
 
 - [Pop-up](/docs/UI/Popup.md)
 
@@ -102,13 +102,13 @@ com.example.foodiediary
 
 ****
 
-<h4>Barcode Scanner</h4>
+#### [Barcode Scanner](/docs/EanScanner.md)
 
 - Library: ML Kit Barcode Scanning
 
 - Integration: Connected to CameraX preview and processes barcodes on frame analysis.
 
-<h4>Database</h4>
+#### [Database](/docs/Database.md)
 
 - Room Entities:
 
@@ -150,7 +150,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 }
 ```
 
-<h4>Views</h4>
+#### [UI Components](/docs/UI)
 
 - Implemented with Jetpack Compose
 
@@ -161,27 +161,9 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 ****
 
-<h3>Setup Instructions</h3>
+### [Setup Instructions](/docs/Download.md)
 
 ****
-
-- Clone the repository.
-
-- Open the project in Android Studio.
-
-    - min SDK 28
-    - target SDK 35
-    - compile SDK 35
-    - Android Gradle Plugin version 8.9.2
-
-- Sync Gradle dependencies.
-
-- Build and run the app on an Android device or emulator.
-
-
-
-
-
 
 
 

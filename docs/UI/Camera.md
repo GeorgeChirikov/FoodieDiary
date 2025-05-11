@@ -62,3 +62,9 @@ fun CameraView(viewModel: CameraViewModel) {
         Text(text = "Scanned: ${it.ean}")
     }
 }
+
+```
+
+![Camera](/docs/images/camera.jpg)
+
+![Form](/docs/images/form.jpg)
