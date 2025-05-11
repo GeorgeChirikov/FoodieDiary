@@ -161,27 +161,9 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 ****
 
-<h3>Setup Instructions</h3>
+### [Setup Instructions](/docs/Download)
 
 ****
-
-- Clone the repository.
-
-- Open the project in Android Studio.
-
-    - min SDK 28
-    - target SDK 35
-    - compile SDK 35
-    - Android Gradle Plugin version 8.9.2
-
-- Sync Gradle dependencies.
-
-- Build and run the app on an Android device or emulator.
-
-
-
-
-
 
 
 
