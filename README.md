@@ -37,36 +37,7 @@ The application uses the device's camera together with Google's ML Kit to scan a
 
 - 📸 Camera View (CameraX)
 
-****
 
-<h3>Views</h3>
-
-****
-
-<h3>HomeView</h3>
-
-![homeView1](/docs/images/home1.png)
-![homeView2](/docs/images/home2.png)
-
-<h3>Navigation Drawer</h3>
-
-![navigationDrawer](/docs/images/navbar.png)
-
-<h3>CameraView</h3>
-
-![cameraView](/docs/images/camera.png)
-
-<h3>SearchView</h3>
-
-![searchView](/docs/images/search.png)
-
-<h3>FavoritesView</h3>
-
-![favoritesView](/docs/images/favorites.png)
-
-<h3>DiaryView</h3>
-
-![diaryView](/docs/images/diary.png)
 
 ****
 
