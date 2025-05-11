@@ -36,7 +36,7 @@ The application uses the device's camera together with Google's ML Kit to scan a
 - ❤️ Favorites View
 
 - 📸 Camera View (CameraX)
-[views](/docs/UI/)
+[views](/docs/UI/AllViews.md)
 
 
 ****
