@@ -36,7 +36,7 @@ The application uses the device's camera together with Google's ML Kit to scan a
 - ❤️ Favorites View
 
 - 📸 Camera View (CameraX)
-
+[views](/docs/UI/)
 
 
 ****
@@ -156,10 +156,22 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 ****
 
-<h3>Build & Run</h3>
+<h3>Setup Instructions</h3>
 
 ****
 
+- Clone the repository.
+
+- Open the project in Android Studio.
+
+    - min SDK 28
+    - target SDK 35
+    - compile SDK 35
+    - Android Gradle Plugin version 8.9.2
+
+- Sync Gradle dependencies.
+
+- Build and run the app on an Android device or emulator.
 
 
 
@@ -167,33 +179,5 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 
 
 
-
-
-
-
-
-****
-
-<h3>Documents</h3>
-
-****
-TO DO:
-
-- **User manual** is located in the directory `docs/UserManual.md`
-- **Sprint documentation** is located in the directory `docs/SprintProcess.md`
-- **Product backlog** is located in the directory `docs/ProductBacklog.md`
-
-****
-
-<h3>Links:</h3>
-
-****
-
-- to be added later if needed
-
-****
-<h3>Database design</h3>
-
-- to be added later
 
 
