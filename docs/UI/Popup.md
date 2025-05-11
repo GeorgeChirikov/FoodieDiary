@@ -1,4 +1,4 @@
-# [Foodie Diary] - [Popup] UI Description
+# [Foodie Diary] - [Popup] UI Documentation
 
 This document describes the user interface for the **[Popup]** within the **[Foodie Diary]** application.
 
@@ -13,10 +13,10 @@ add them to diary and delete them.
 *   **Dialog:**
     * Handles the popup card content and displays it on the screen 
 *   **Popup Card:**
-    *   Has all the item specific informations
-    *   The X shaped close button, product name and EAN barcode are in a seperate row from nutrient facts
+    *   Has all the item specific information
+    *   The X shaped close button, product name and EAN barcode are in a separate row from nutrient facts
     *   Nutrient facts are on their own NutrientRows, which displays the nutrient and the nutrient amount in a clean way
-    *   Buttons, inlcuding add to diary, remove from favorites or add to favorites and delete item, are displayed after the nutrient rows
+    *   Buttons, including add to diary, remove from favorites or add to favorites and delete item, are displayed after the nutrient rows
 
 ## 3. UI Elements
 
