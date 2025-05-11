@@ -8,8 +8,6 @@ The **Camera View** in the Foodie Diary app allows users to scan EAN barcodes of
 ## Features
 - **Real-time Camera Preview**: Displays a live feed from the device's camera.
 - **Barcode Scanning**: Detects and processes EAN13 barcodes using ML Kit.
-- **User Feedback**: Highlights detected barcodes and provides visual feedback.
-- **Error Handling**: Displays messages for invalid or unrecognized barcodes.
 
 ---
 
@@ -32,18 +30,17 @@ The **Camera View** in the Foodie Diary app allows users to scan EAN barcodes of
    - ML Kit processes frames from the camera feed.
    - Detects EAN13 barcodes and extracts relevant data.
 
-3. **UI Feedback**:
-   - Highlights detected barcodes in the camera preview.
-   - Displays a success message when a barcode is scanned.
 
-4. **Data Storage**:
-   - Scanned barcodes are saved in the Room database for future reference.
+3. **Data Storage**:
+   - Scanned new barcodes open a form to save the item to the database.
+   - Existing barcodes display a popup with item details.
 
 ---
 
 ## Navigation
 The Camera View is accessible from:
-- **Home View**: Tap the camera icon to open the Camera View.
+- **Home View**: Tap the "Scan Barcode" button to open the Camera View.
+- **Navigation Drawer**: Select "Scan EAN" to access the Camera View.
 
 ---
 
