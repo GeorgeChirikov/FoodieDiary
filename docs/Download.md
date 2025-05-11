@@ -19,10 +19,14 @@
    ```bash
    git clone https://github.com/GeorgeChirikov/FoodieDiary.git
    ```
+   
+4. Gradle Sync:
+   - Open the project in Android Studio.
+   - Sync the Gradle files.
 
-4. Run the `app` package to start the application.
+5. Run the `app` package to start the application.
 
-5. Enjoy!
+6. Enjoy!
 
 ****
 
