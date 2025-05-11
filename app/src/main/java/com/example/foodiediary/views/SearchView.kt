@@ -40,6 +40,19 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
 
+/**
+ * SearchView is a composable function that displays a search bar and a list of search results.
+ * It allows users to search for items and navigate to a detailed view of the selected item.
+ *
+ * @Composable
+ * SearchView: The main composable function for the search view.
+ *
+ * @param onSearch: A lambda function that is called when a search is performed.
+ * @param navController: The NavController used for navigation between screens.
+ *
+ * This function uses the SearchViewModel to manage the search results and handle the search logic.
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(

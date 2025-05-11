@@ -40,6 +40,20 @@ import com.example.foodiediary.viewmodels.HomeViewModel
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import com.example.foodiediary.ui.theme.GradientBackground
 
+
+/**
+ * HomeView is a composable function that displays the home screen of the app.
+ * It includes a header, daily nutrient totals, water intake, a button to scan a barcode,
+ * and lists of all items and favorite items.
+ *
+ * @Composable
+ * HomeView: The main composable function for the home view.
+ *
+ * @param navController: The NavController used for navigation between screens.
+ *
+ * This function uses the HomeViewModel to manage the state of the items and nutrient totals.
+ * It also provides a button to navigate to the camera view for scanning barcodes.
+ */
 @SuppressLint("DefaultLocale")
 @Composable
 fun HomeView(navController: NavController) {

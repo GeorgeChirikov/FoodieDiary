@@ -14,6 +14,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * PopUpViewModel is a ViewModel class that manages the data and operations for the pop-up view.
+ * It interacts with the database to perform CRUD operations on items, added items, and favorites.
+ *
+ * @param context The context used to access the database.
+ *
+ * This ViewModel uses the ItemRepository, AddedRepository, and FavoriteRepository to interact with the database.
+ * It exposes a StateFlow for the barcode item and a MutableStateFlow for the favorite button text.
+ *
+ * It provides methods to update the favorite button text, get barcode data, add items to the diary and favorites,
+ * delete items from favorites and diary, and delete items from the database.
+ */
 class PopUpViewModel(context: Context) : ViewModel() {
 
     val appDB = AppDatabase.getInstance(context)

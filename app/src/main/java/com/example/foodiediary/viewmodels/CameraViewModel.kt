@@ -23,6 +23,20 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.text.toLong
 
+/**
+ * CameraViewModel is a ViewModel class that manages the camera functionality for scanning EAN codes.
+ * It interacts with the camera controller and the barcode scanner to process images and extract EAN codes.
+ *
+ * @param context The context used to access the database and camera.
+ * @param navController The NavController used for navigation.
+ * @param cameraController The LifecycleCameraController used to control the camera.
+ * @param showPopup A lambda function to show a popup with the scanned barcode.
+ *
+ * This ViewModel uses the BarcodeScanner from ML Kit to scan EAN codes from camera frames.
+ * It provides methods to start and stop scanning, handle scanned codes, and reset the scanner.
+ *
+ * This ViewModel is used in the Camera screen to handle camera operations and barcode scanning.
+ */
 class CameraViewModel(
     private val context:Context,
     private val navController: NavController,

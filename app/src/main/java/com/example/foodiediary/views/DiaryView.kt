@@ -52,6 +52,20 @@ import com.example.foodiediary.models.data.entity.Item
 import kotlinx.coroutines.launch
 
 
+/**
+ * DiaryView is a composable function that displays a diary view.
+ * It allows users to pick a date and view the diary entries for that date.
+ * It uses the DiaryViewModel to manage the state and data.
+ *
+ * @Composable
+ * DiaryView: The main composable function for the diary view.
+ *
+ * @param navController: The NavController used for navigation between screens.
+ *
+ * This function uses the DiaryViewModel to manage the selected date and filtered data.
+ * It also provides a button to pick a date and displays the diary entries for the selected date.
+ * It uses a DatePickerDialog to allow users to pick a date.
+ */
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @SuppressLint("ViewModelConstructorInComposable", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)

@@ -39,6 +39,12 @@ import com.example.foodiediary.utils.CameraViewModelFactory
  * This function displays the camera view using CameraX and allows the user to scan EAN-13 barcodes.
  * It uses a ViewModel to manage the camera state and handle barcode scanning.
  *
+ * @Composable
+ * CameraView: The main composable function for the camera view.
+ *
+ * @Composable
+ * Prelude: A composable function that checks for camera permission and displays the camera view.
+ *
  * @param navController The NavController used for navigation.
  * @param modifier The modifier to be applied to the camera view.
  * @param showPopup A lambda function to show a popup with the scanned barcode.

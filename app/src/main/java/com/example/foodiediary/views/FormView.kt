@@ -52,6 +52,20 @@ import com.example.foodiediary.utils.FormViewModelFactory
 import com.example.foodiediary.viewmodels.FormViewModel
 import kotlinx.coroutines.launch
 
+
+/**
+ * FormView is a composable function that displays a form for entering food item information.
+ * It allows users to input various nutritional values and save the item.
+ *
+ * @Composable
+ * FormView: The main composable function for the form view.
+ *
+ * @param ean: The EAN code of the food item.
+ * @param navController: The NavController used for navigation between screens.
+ *
+ * This function uses the FormViewModel to manage the state of the form and handle the saving of the item.
+ * It also provides validation for the input fields to ensure that they are not empty and contain valid numbers.
+ */
 @Composable
 fun FormView(
     ean: String,

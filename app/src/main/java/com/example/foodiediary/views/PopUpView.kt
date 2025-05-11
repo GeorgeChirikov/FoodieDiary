@@ -55,6 +55,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.foodiediary.ui.theme.RoseRed
 
+
+/**
+ * PopUpView is a composable function that displays a dialog with information about a food item.
+ * It shows the item's name, barcode, and nutritional information.
+ * It also provides buttons to add the item to the diary, add it to favorites, or delete it.
+ *
+ * @param ean: The barcode of the food item.
+ * @param showPopup: A boolean value indicating whether to show the popup or not.
+ * @param closePopup: A lambda function that is called when the popup is closed.
+ *
+ * This function uses the PopUpViewModel to manage the state of the popup and handle the actions performed on the buttons.
+ */
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
 fun PopUpView(

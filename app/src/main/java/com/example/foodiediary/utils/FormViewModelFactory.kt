@@ -5,6 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodiediary.viewmodels.FormViewModel
 
+/**
+ * ViewModelFactory is for injecting parameters into the ViewModel.
+ * It is used to create an instance of the ViewModel with the required parameters.
+ *
+ * @param context The context of the application.
+ */
 @Suppress("UNCHECKED_CAST")
 class FormViewModelFactory (
     private val context: Context

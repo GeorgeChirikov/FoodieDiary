@@ -41,6 +41,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Main navigation function for the app.
+ * This function sets up the navigation graph and handles the navigation between different screens.
+ *
+ * @Composable
+ * AppNavigation: The main navigation function for the app.
+ *
+ */
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun AppNavigation() {

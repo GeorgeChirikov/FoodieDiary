@@ -13,6 +13,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.text.contains
 
+/**
+ * SearchViewModel is a ViewModel class that manages the search functionality for items.
+ * It retrieves all items from the database and filters them based on the search query.
+ *
+ * @param context The context used to access the database.
+ *
+ * This ViewModel uses the ItemRepository to interact with the database and fetch all items.
+ *
+ * It exposes a StateFlow of search results that can be observed by the UI.
+ */
 class SearchViewModel(context: Context) : ViewModel() {
 
     private val itemRepository = ItemRepository(AppDatabase.getInstance(context).itemDao())

@@ -33,7 +33,20 @@ import com.example.foodiediary.ui.theme.AppleRed
 import com.example.foodiediary.ui.theme.FoodieDiaryTheme
 import kotlinx.coroutines.launch
 
-//Drawer composable
+/**
+ * ScreenWithDrawer is a composable function that creates a screen with a navigation drawer.
+ * It uses a ModalNavigationDrawer to display the drawer and allows for navigation between different screens.
+ *
+ * @Composable
+ * ScreenWithDrawer: The main composable function for the screen with a drawer.
+ *
+ * @param navController: The NavController used for navigation between screens.
+ * @param currentRoute: The current route of the screen.
+ * @param content: The content to be displayed on the screen.
+ *
+ * This function uses a coroutine scope to handle the opening and closing of the drawer.
+ * It also provides a TopAppBar with a menu button to open the drawer.
+ */
 @Composable
 fun ScreenWithDrawer(
     navController: NavController,

@@ -31,6 +31,19 @@ import com.example.foodiediary.ui.theme.GradientBackground
 import com.example.foodiediary.utils.FavoritesViewModelFactory
 import com.example.foodiediary.viewmodels.FavoritesViewModel
 
+
+/**
+ * FavoritesView is a composable function that displays a list of favorite items.
+ * It uses the FavoritesViewModel to fetch the list of favorite items from the database.
+ *
+ * @Composable
+ * FavoritesView: The main composable function for the favorites view.
+ *
+ * @param navController: The NavController used for navigation between screens.
+ *
+ * This function uses the FavoritesViewModel to manage the list of favorite items and handle the navigation logic.
+ * It also provides a header and a card to display the list of favorite items.
+ */
 @Composable
 fun FavoritesView(navController: NavController) {
 

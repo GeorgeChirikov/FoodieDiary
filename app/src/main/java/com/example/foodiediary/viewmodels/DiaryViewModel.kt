@@ -19,6 +19,19 @@ import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.Instant
 
+/**
+ * DiaryViewModel is a ViewModel class that manages the data and operations for the diary screen.
+ * It interacts with the database to perform CRUD operations on added items.
+ *
+ * @param context The context used to access the database.
+ *
+ * This ViewModel uses the AddedRepository and ItemRepository to interact with the database.
+ * It exposes a StateFlow for the selected date and a StateFlow for the filtered data.
+ *
+ * This ViewModel is used in the Diary screen to display the list of added items for a specific date.
+ *
+ * @property selectedDate StateFlow<LocalDate>: A StateFlow that emits the currently selected date.
+ */
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class DiaryViewModel(context: Context) : ViewModel() {
 
