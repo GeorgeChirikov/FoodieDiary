@@ -15,7 +15,11 @@
 
 <h3>CameraView</h3>
 
-![cameraView](/docs/images/camera.png)
+![cameraView](/docs/images/camera.jpg)
+
+<h3>FormView</h3>
+
+![formView](/docs/images/form.jpg)
 
 <h3>SearchView</h3>
 
@@ -28,3 +32,7 @@
 <h3>DiaryView</h3>
 
 ![diaryView](/docs/images/diary.png)
+
+<h3>PopupView</h3>
+
+![popup](/docs/images/popup.jpg)
