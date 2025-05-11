@@ -33,6 +33,7 @@ add them to diary and delete them.
 *   **Tapping [X-icon]:** Closes the popup.
 *   **Tapping [Add to Diary button]:** Adds the specific item to the user's diary.
 *   **Tapping [Add to favorites/Remove from favorites]:** Either adds the item to favorites or removes it from favorites
+*   **Tapping [Outside Popup]:** Closes popup
 
 ## 5. Visual Design and Styling
 
@@ -47,4 +48,5 @@ add them to diary and delete them.
 
 ## 7. Screenshots
 
-![popupView](/docs/images/popup.png)
+![popupView1](/docs/images/popup1.png)
+![popupView2](/docs/images/popup2.jpg)

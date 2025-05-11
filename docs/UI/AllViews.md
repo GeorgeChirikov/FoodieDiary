@@ -35,4 +35,4 @@
 
 <h3>PopupView</h3>
 
-![popup](/docs/images/popup.jpg)
+![popup](/docs/images/popup2.jpg)
